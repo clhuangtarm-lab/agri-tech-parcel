@@ -1,0 +1,1092 @@
+{
+ "zones": [
+  {
+   "name": "01 品種創新",
+   "officialName": "品種改良與生產調適｜薯於你的好味道",
+   "pages": "11–16",
+   "theme": "口味、氣候、缺工在變，持續保存種原、選育品種，讓農業有更多選擇",
+   "count": 28
+  },
+  {
+   "name": "02 智慧生產",
+   "officialName": "智慧生產與資源管理｜豆陣來省力",
+   "pages": "17–23",
+   "theme": "面對缺工、缺水與極端天氣，用機械、數據與精準管理少一點辛苦與浪費",
+   "count": 10
+  },
+  {
+   "name": "03 健康安心",
+   "officialName": "健康生產與友善環境｜果真健康，好苗先行",
+   "pages": "24–30",
+   "theme": "作物健康從種苗、田間到環境一層一層守護（五道健康防線）",
+   "count": 11
+  },
+  {
+   "name": "04 韌性永續",
+   "officialName": "韌性永續與資源循環｜菇掰浪費，資源再生",
+   "pages": "31–37",
+   "theme": "農業剩餘物經分類、處理、轉化與安全評估，多走一段路",
+   "count": 8
+  },
+  {
+   "name": "05 多元應用",
+   "officialName": "農產品品質與多元應用｜茶點不一樣",
+   "pages": "38–43",
+   "theme": "採收後的風味、加工與生活應用，讓農產品走進更多情境",
+   "count": 7
+  }
+ ],
+ "techs": [
+  {
+   "no": 1,
+   "zone": "01 品種創新",
+   "name": "高油酸落花生「台農11號」",
+   "oneLine": "新品種落花生，油酸含量高，回應想吃得健康的需求",
+   "facts": [],
+   "unit": "農試所",
+   "page": 14,
+   "group": "想吃得更好、更多選擇",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "pod:peanut"
+  },
+  {
+   "no": 2,
+   "zone": "01 品種創新",
+   "name": "草莓「台農1號」與作物種原保存",
+   "oneLine": "草莓品種與種原保存，先留下種原才有未來的選擇",
+   "facts": [],
+   "unit": "農試所",
+   "page": 15,
+   "group": "種原保存與選育",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "fruit:berry"
+  },
+  {
+   "no": 3,
+   "zone": "01 品種創新",
+   "name": "葡萄「台農2號－青玉」",
+   "oneLine": "葡萄新品種，提供更多口味選擇",
+   "facts": [],
+   "unit": "農試所",
+   "page": 14,
+   "group": "想吃得更好、更多選擇",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "shelter:trellis"
+  },
+  {
+   "no": 4,
+   "zone": "01 品種創新",
+   "name": "耐熱稻米「台農88號」",
+   "oneLine": "稻米新品種，面對夏天更熱的氣候",
+   "facts": [],
+   "unit": "農試所",
+   "page": 14,
+   "group": "氣候適應",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "stalks:rice"
+  },
+  {
+   "no": 5,
+   "zone": "01 品種創新",
+   "name": "新興水果黃金果「大金莎」",
+   "oneLine": "新興水果品種，增加水果選擇",
+   "facts": [],
+   "unit": "農試所",
+   "page": 14,
+   "group": "想吃得更好、更多選擇",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "fruit:round"
+  },
+  {
+   "no": 6,
+   "zone": "01 品種創新",
+   "name": "水稻「台農82號」",
+   "oneLine": "水稻新品種",
+   "facts": [],
+   "unit": "農試所",
+   "page": 14,
+   "group": "想吃得更好、更多選擇",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "stalks:rice"
+  },
+  {
+   "no": 7,
+   "zone": "01 品種創新",
+   "name": "秈稻香米「台農秈23號」",
+   "oneLine": "有香味的秈稻米品種",
+   "facts": [],
+   "unit": "農試所",
+   "page": 14,
+   "group": "想吃得更好、更多選擇",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "stalks:rice"
+  },
+  {
+   "no": 8,
+   "zone": "01 品種創新",
+   "name": "機械採收胡麻「臺南2號」",
+   "oneLine": "可一次機械採收的胡麻，種子不易掉落（低落粒）為選拔性狀",
+   "facts": [],
+   "unit": "臺南場",
+   "page": 15,
+   "group": "配合省工新種法",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "pod:sesame"
+  },
+  {
+   "no": 9,
+   "zone": "01 品種創新",
+   "name": "蘆筍新品種「臺南5號」",
+   "oneLine": "蘆筍新品種",
+   "facts": [],
+   "unit": "臺南場",
+   "page": 14,
+   "group": "想吃得更好、更多選擇",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "stalks:asparagus"
+  },
+  {
+   "no": 10,
+   "zone": "01 品種創新",
+   "name": "臺灣氣候適栽水晶花品種",
+   "oneLine": "適合臺灣氣候栽培的水晶花品種",
+   "facts": [],
+   "unit": "臺南場",
+   "page": 14,
+   "group": "想吃得更好、更多選擇",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "flower:crystal"
+  },
+  {
+   "no": 11,
+   "zone": "01 品種創新",
+   "name": "苞舌蘭「臺南6號」",
+   "oneLine": "苞舌蘭新品種",
+   "facts": [],
+   "unit": "臺南場",
+   "page": 14,
+   "group": "想吃得更好、更多選擇",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "flower:orchid"
+  },
+  {
+   "no": 12,
+   "zone": "01 品種創新",
+   "name": "萱草「花蓮7號－豐美」",
+   "oneLine": "萱草新品種",
+   "facts": [],
+   "unit": "花蓮場",
+   "page": 14,
+   "group": "想吃得更好、更多選擇",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "flower:daylily"
+  },
+  {
+   "no": 13,
+   "zone": "01 品種創新",
+   "name": "芒果簡易遮雨設施",
+   "oneLine": "芒果簡易遮雨設施，因應豪雨",
+   "facts": [],
+   "unit": "花蓮場",
+   "page": 14,
+   "group": "氣候適應",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "shelter:rain"
+  },
+  {
+   "no": 14,
+   "zone": "01 品種創新",
+   "name": "仙草新品種花蓮1–4號",
+   "oneLine": "仙草新品種（花蓮1至4號）",
+   "facts": [],
+   "unit": "花蓮場",
+   "page": 14,
+   "group": "想吃得更好、更多選擇",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "pot:herb"
+  },
+  {
+   "no": 15,
+   "zone": "01 品種創新",
+   "name": "分子標記育成友愛番茄",
+   "oneLine": "用分子標記輔助育成番茄品種",
+   "facts": [],
+   "unit": "花蓮場",
+   "page": 15,
+   "group": "配合省工新種法",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "fruit:tomato"
+  },
+  {
+   "no": 16,
+   "zone": "01 品種創新",
+   "name": "水稻「臺東36號」",
+   "oneLine": "水稻新品種，歸在氣候適應段",
+   "facts": [],
+   "unit": "臺東場",
+   "page": 14,
+   "group": "氣候適應",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "stalks:rice"
+  },
+  {
+   "no": 17,
+   "zone": "01 品種創新",
+   "name": "洛神葵「臺東6號－黑晶」",
+   "oneLine": "洛神葵新品種",
+   "facts": [],
+   "unit": "臺東場",
+   "page": 14,
+   "group": "想吃得更好、更多選擇",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "flower:roselle"
+  },
+  {
+   "no": 18,
+   "zone": "01 品種創新",
+   "name": "春季百香果網室栽培",
+   "oneLine": "百香果網室栽培，歸在氣候適應段",
+   "facts": [],
+   "unit": "高雄場",
+   "page": 14,
+   "group": "氣候適應",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "shelter:net"
+  },
+  {
+   "no": 19,
+   "zone": "01 品種創新",
+   "name": "毛豆「高雄13號」育成外銷",
+   "oneLine": "適合新種法與外銷的毛豆品種",
+   "facts": [],
+   "unit": "高雄場",
+   "page": 15,
+   "group": "配合省工新種法",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "pod:edamame"
+  },
+  {
+   "no": 20,
+   "zone": "01 品種創新",
+   "name": "水稻高雄148號、臺大高雄1號",
+   "oneLine": "水稻品系，歸在氣候適應段",
+   "facts": [],
+   "unit": "高雄場",
+   "page": 14,
+   "group": "氣候適應",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "stalks:rice"
+  },
+  {
+   "no": 21,
+   "zone": "01 品種創新",
+   "name": "洋蔥穴盤育苗調適技術",
+   "oneLine": "洋蔥穴盤育苗，配合機械化種法",
+   "facts": [],
+   "unit": "種苗場",
+   "page": 15,
+   "group": "配合省工新種法",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "pot:tray"
+  },
+  {
+   "no": 22,
+   "zone": "01 品種創新",
+   "name": "家蠶種原保存與高溫韌性",
+   "oneLine": "家蠶種原保存並提升高溫韌性",
+   "facts": [],
+   "unit": "苗栗場",
+   "page": 14,
+   "group": "氣候適應",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "insect:silkworm"
+  },
+  {
+   "no": 23,
+   "zone": "01 品種創新",
+   "name": "苗栗地區高產大豆選育",
+   "oneLine": "選育高產大豆",
+   "facts": [],
+   "unit": "苗栗場",
+   "page": 15,
+   "group": "配合省工新種法",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "pod:soy"
+  },
+  {
+   "no": 24,
+   "zone": "01 品種創新",
+   "name": "番椒及大豆種原繁殖",
+   "oneLine": "番椒與大豆種原保存繁殖",
+   "facts": [],
+   "unit": "苗栗場",
+   "page": 15,
+   "group": "種原保存與選育",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "jar:seeds"
+  },
+  {
+   "no": 25,
+   "zone": "01 品種創新",
+   "name": "耐病高產蜂種育成",
+   "oneLine": "耐病且高產的蜂種",
+   "facts": [],
+   "unit": "苗栗場",
+   "page": 15,
+   "group": "種原保存與選育",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "insect:bee"
+  },
+  {
+   "no": 26,
+   "zone": "01 品種創新",
+   "name": "草莓「苗栗1號－戀香」",
+   "oneLine": "草莓新品種",
+   "facts": [],
+   "unit": "苗栗場",
+   "page": 15,
+   "group": "種原保存與選育",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "fruit:berry"
+  },
+  {
+   "no": 27,
+   "zone": "01 品種創新",
+   "name": "大豆「台中1號」",
+   "oneLine": "大豆新品種",
+   "facts": [],
+   "unit": "臺中場",
+   "page": 15,
+   "group": "種原保存與選育",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "pod:soy"
+  },
+  {
+   "no": 28,
+   "zone": "01 品種創新",
+   "name": "蕎麥「台中7號」",
+   "oneLine": "蕎麥新品種",
+   "facts": [],
+   "unit": "臺中場",
+   "page": 15,
+   "group": "種原保存與選育",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "flower:buckwheat"
+  },
+  {
+   "no": 29,
+   "zone": "02 智慧生產",
+   "name": "荔枝節水灌溉管理模式",
+   "oneLine": "荔枝節水灌溉，把水用在需要的地方",
+   "facts": [],
+   "unit": "農試所",
+   "page": 20,
+   "group": "用水精準",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "drip:lychee"
+  },
+  {
+   "no": 30,
+   "zone": "02 智慧生產",
+   "name": "柑橘果實日燒預警系統",
+   "oneLine": "預警柑橘果實曬傷（日燒）",
+   "facts": [],
+   "unit": "農試所",
+   "page": 20,
+   "group": "先看懂",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "sensor:sun"
+  },
+  {
+   "no": 31,
+   "zone": "02 智慧生產",
+   "name": "大蒜種收一貫化省工機械",
+   "oneLine": "大蒜種植與收穫一貫化機械，取代人工種蒜挖蒜",
+   "facts": [],
+   "unit": "臺南場",
+   "page": 21,
+   "group": "交給機械",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "machine:garlic"
+  },
+  {
+   "no": 32,
+   "zone": "02 智慧生產",
+   "name": "無人機省工撒播蕎麥",
+   "oneLine": "無人機撒播蕎麥種子，取代人工播種",
+   "facts": [],
+   "unit": "花蓮場",
+   "page": 21,
+   "group": "交給機械",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "drone"
+  },
+  {
+   "no": 33,
+   "zone": "02 智慧生產",
+   "name": "第2代鳳梨釋迦清潔機械",
+   "oneLine": "鳳梨釋迦採收後清潔機械",
+   "facts": [],
+   "unit": "臺東場",
+   "page": 21,
+   "group": "採後整理",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "machine:cleaner"
+  },
+  {
+   "no": 34,
+   "zone": "02 智慧生產",
+   "name": "無人自動化割草機",
+   "oneLine": "自動割草機，取代人工除草",
+   "facts": [],
+   "unit": "高雄場",
+   "page": 21,
+   "group": "交給機械",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "machine:mower"
+  },
+  {
+   "no": 35,
+   "zone": "02 智慧生產",
+   "name": "茶園精準灌溉技術",
+   "oneLine": "茶園精準澆水",
+   "facts": [],
+   "unit": "茶改場",
+   "page": 20,
+   "group": "用水精準",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "drip:tea"
+  },
+  {
+   "no": 36,
+   "zone": "02 智慧生產",
+   "name": "氮施用量與釀酒高粱產量",
+   "oneLine": "研究氮肥施用量與釀酒高粱產量的關係",
+   "facts": [],
+   "unit": "苗栗場",
+   "page": 20,
+   "group": "先看懂",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "stalks:sorghum"
+  },
+  {
+   "no": 37,
+   "zone": "02 智慧生產",
+   "name": "草莓花芽鏡檢技術",
+   "oneLine": "用鏡檢判斷草莓花芽分化",
+   "facts": [],
+   "unit": "苗栗場",
+   "page": 20,
+   "group": "先看懂",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "scope:bud"
+  },
+  {
+   "no": 38,
+   "zone": "02 智慧生產",
+   "name": "盆花智慧底部灌溉",
+   "oneLine": "盆花由底部灌溉的智慧系統",
+   "facts": [],
+   "unit": "桃園場（樹林分場）",
+   "page": 20,
+   "group": "用水精準",
+   "listPage": 63,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "drip:potflower"
+  },
+  {
+   "no": 39,
+   "zone": "03 健康安心",
+   "name": "茄科重要病害分子檢測鑑定",
+   "oneLine": "用分子檢測找出肉眼看不見的茄科病害",
+   "facts": [],
+   "unit": "農試所",
+   "page": 27,
+   "group": "早期發現",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "scope:dna"
+  },
+  {
+   "no": 40,
+   "zone": "03 健康安心",
+   "name": "農作物重金屬安全管理技術",
+   "oneLine": "處理農地重金屬風險",
+   "facts": [],
+   "unit": "農試所",
+   "page": 28,
+   "group": "顧好土地",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "shield:check"
+  },
+  {
+   "no": 41,
+   "zone": "03 健康安心",
+   "name": "鹽化土壤氣候智慧型耕作制度",
+   "oneLine": "鹽化土壤的耕作制度",
+   "facts": [],
+   "unit": "農試所",
+   "page": 28,
+   "group": "顧好土地",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "recycle:soil"
+  },
+  {
+   "no": 42,
+   "zone": "03 健康安心",
+   "name": "農業生態系長期生態研究",
+   "oneLine": "長期觀察農業生態環境",
+   "facts": [],
+   "unit": "農試所",
+   "page": 28,
+   "group": "顧好土地",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "sensor:station"
+  },
+  {
+   "no": 43,
+   "zone": "03 健康安心",
+   "name": "水稻紙膜插秧技術 ESG 實踐",
+   "oneLine": "水稻紙膜插秧，友善環境的ESG作法",
+   "facts": [],
+   "unit": "臺南場",
+   "page": 28,
+   "group": "友善防護",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "stalks:paperrice"
+  },
+  {
+   "no": 44,
+   "zone": "03 健康安心",
+   "name": "淡紫菌防治荔枝椿象",
+   "oneLine": "用微生物（淡紫菌）防治荔枝椿象",
+   "facts": [],
+   "unit": "臺南場",
+   "page": 28,
+   "group": "友善防護",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "jar:microbe"
+  },
+  {
+   "no": 45,
+   "zone": "03 健康安心",
+   "name": "青蔥甜菜夜蛾預警防治",
+   "oneLine": "青蔥甜菜夜蛾預警，先觀察再判斷、適時處理",
+   "facts": [],
+   "unit": "花蓮場",
+   "page": 27,
+   "group": "早期發現",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "sensor:trap"
+  },
+  {
+   "no": 46,
+   "zone": "03 健康安心",
+   "name": "果園野生動物防範技術",
+   "oneLine": "與野生動物更安全相處的果園防範技術",
+   "facts": [],
+   "unit": "臺東場",
+   "page": 28,
+   "group": "友善防護",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "shield:paw"
+  },
+  {
+   "no": 47,
+   "zone": "03 健康安心",
+   "name": "組培無特定病毒百香果苗",
+   "oneLine": "組織培養的無特定病毒百香果健康種苗（本區破題亮點）",
+   "facts": [],
+   "unit": "種苗場",
+   "page": 27,
+   "group": "好苗先行",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "jar:plantlet"
+  },
+  {
+   "no": 48,
+   "zone": "03 健康安心",
+   "name": "健康種薑生產體系",
+   "oneLine": "健康種薑生產體系",
+   "facts": [],
+   "unit": "種苗場",
+   "page": 27,
+   "group": "好苗先行",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "pot:ginger"
+  },
+  {
+   "no": 49,
+   "zone": "03 健康安心",
+   "name": "抗青枯病茄砧番茄嫁接苗",
+   "oneLine": "以抗青枯病茄子砧木嫁接番茄",
+   "facts": [],
+   "unit": "種苗場",
+   "page": 27,
+   "group": "好苗先行",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "pot:graft"
+  },
+  {
+   "no": 50,
+   "zone": "04 韌性永續",
+   "name": "廢棄培養土回收再利用",
+   "oneLine": "用過的培養土處理後再利用",
+   "facts": [],
+   "unit": "臺南場",
+   "page": 35,
+   "group": "回到生產",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "recycle:soilbag"
+  },
+  {
+   "no": 51,
+   "zone": "04 韌性永續",
+   "name": "農業副產物循環再利用技術",
+   "oneLine": "農業副產物循環利用",
+   "facts": [],
+   "unit": "臺南場",
+   "page": 34,
+   "group": "處理轉化",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "recycle:bag"
+  },
+  {
+   "no": 52,
+   "zone": "04 韌性永續",
+   "name": "稻草循環再利用",
+   "oneLine": "稻草轉成循環資材",
+   "facts": [],
+   "unit": "臺東場",
+   "page": 35,
+   "group": "回到生產",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "recycle:bale"
+  },
+  {
+   "no": 53,
+   "zone": "04 韌性永續",
+   "name": "茶及咖啡副產物產品",
+   "oneLine": "茶與咖啡加工副產物做成新材料與生活產品",
+   "facts": [],
+   "unit": "茶改場",
+   "page": 35,
+   "group": "走進生活",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "cup:mix"
+  },
+  {
+   "no": 54,
+   "zone": "04 韌性永續",
+   "name": "履帶式粉碎機",
+   "oneLine": "粉碎枝條等大體積材料，方便後續處理",
+   "facts": [],
+   "unit": "桃園場",
+   "page": 34,
+   "group": "處理轉化",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "machine:crusher"
+  },
+  {
+   "no": 55,
+   "zone": "04 韌性永續",
+   "name": "剩餘資源炭化集煙技術",
+   "oneLine": "剩餘資源炭化並集煙",
+   "facts": [],
+   "unit": "桃園場",
+   "page": 34,
+   "group": "處理轉化",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "machine:kiln"
+  },
+  {
+   "no": 56,
+   "zone": "04 韌性永續",
+   "name": "育苗介質「桃改4號」配方",
+   "oneLine": "回收材料調配的育苗介質配方",
+   "facts": [],
+   "unit": "桃園場",
+   "page": 35,
+   "group": "回到生產",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "pot:media"
+  },
+  {
+   "no": 57,
+   "zone": "04 韌性永續",
+   "name": "香菇剩餘物轉化介質",
+   "oneLine": "廢菇包轉為新的栽培介質（本區破題亮點）",
+   "facts": [],
+   "unit": "花創中心",
+   "page": 35,
+   "group": "回到生產",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "mushroom"
+  },
+  {
+   "no": 58,
+   "zone": "05 多元應用",
+   "name": "健康無負擔全米麵包",
+   "oneLine": "以米做成的麵包",
+   "facts": [],
+   "unit": "農試所",
+   "page": 41,
+   "group": "形式變不同",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "bread",
+   "researchRef": "research_zone05_2026-10-23.json"
+  },
+  {
+   "no": 59,
+   "zone": "05 多元應用",
+   "name": "黑豆植物性飲品調製技術",
+   "oneLine": "用臺南場育成的黑豆，做成能沖泡、也能直接喝的植物性飲品。",
+   "facts": [
+    {
+     "value": "即泡・即飲",
+     "label": "冷熱水都可以"
+    },
+    {
+     "value": "常溫保存",
+     "label": "不用冰箱"
+    }
+   ],
+   "unit": "臺南場",
+   "page": 41,
+   "group": "形式變不同",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "bottle:soymilk",
+   "researchRef": "research_zone05_2026-10-23.json",
+   "story": {
+    "problem": "越來越多人想嘗試植物性飲食，臺灣自己育成的黑豆，能不能變成方便喝的飲品？",
+    "solution": "臺南場用自己育成的黑豆，經過定溫熟化、萃取出濃縮精華，做成可以沖泡或直接喝的黑豆飲品。",
+    "features": [
+     "原料是臺南場育成的黑豆：臺南5號（黃仁）、臺南3號、臺南11號（青仁）",
+     "低卡、可以常溫保存",
+     "即泡或開罐即飲，冷水熱水都可以",
+     "也能加進其他食品裡",
+     "已有業者取得技術授權，投入產品開發"
+    ],
+    "life": "早餐或點心時間，沖一杯黑豆飲；常溫就能放，外出帶著也方便。"
+   },
+   "sources": [
+    {
+     "title": "黑豆植物性飲品調製技術（豆陣健康植物性飲食新潮流）",
+     "url": "https://agritech-foresight.atri.org.tw/article/contents/6012",
+     "publisher": "農業科技新脈動平台（農業科技研究院維運，農業部版權；作者為臺南場陳曉菁）",
+     "date": "2025-10-13",
+     "accessed": "2026-10-23"
+    }
+   ]
+  },
+  {
+   "no": 60,
+   "zone": "05 多元應用",
+   "name": "觀葉植物觀賞瓶",
+   "oneLine": "觀葉植物裝入容器，走進家庭與辦公室",
+   "facts": [],
+   "unit": "高雄場",
+   "page": 42,
+   "group": "生活情境",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "bottle:terrarium",
+   "researchRef": "research_zone05_2026-10-23.json"
+  },
+  {
+   "no": 61,
+   "zone": "05 多元應用",
+   "name": "咖啡豆窨製天然香氣技術",
+   "oneLine": "用國產水果和香花草的天然香氣，窨製咖啡豆。",
+   "facts": [
+    {
+     "value": "2 個月",
+     "label": "冷藏後香氣仍穩定"
+    }
+   ],
+   "unit": "茶改場",
+   "page": 41,
+   "group": "風味變多",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "cup:coffee",
+   "researchRef": "research_zone05_2026-10-23.json",
+   "story": {
+    "problem": "台灣的咖啡多半種在中低海拔，怎麼讓國產咖啡豆有更特別的香氣？",
+    "solution": "茶改場把茶葉窨製花香的老方法，用在咖啡豆上：以國產水果、香花草等新鮮香材，搭配特別處理過的咖啡豆，讓豆子慢慢吸附天然香氣。",
+    "features": [
+     "香氣來自國產水果與香花草",
+     "特別針對中低海拔產區的咖啡豆設計",
+     "成品放在冷藏環境 2 個月，香氣風味仍相當穩定"
+    ],
+    "life": "下次喝國產咖啡，可以留意杯中的水果香和花草香。"
+   },
+   "sources": [
+    {
+     "title": "公告「咖啡豆窨製天然香氣技術」非專屬授權（附件一：簡介資料PDF）",
+     "url": "https://www.tbrs.gov.tw/theme_data.php?theme=technology_transfer&id=3529",
+     "publisher": "農業部茶及飲料作物改良場",
+     "date": "2025-05-15",
+     "accessed": "2026-10-23"
+    }
+   ]
+  },
+  {
+   "no": 62,
+   "zone": "05 多元應用",
+   "name": "茶及粉末造粒技術",
+   "oneLine": "把製茶時篩下來的茶末，只加水做成小顆粒，可當茶葉枕的填充物。",
+   "facts": [
+    {
+     "value": "0.4×1.5 公分",
+     "label": "顆粒大小"
+    },
+    {
+     "value": "不加黏著劑",
+     "label": "只用水造粒"
+    }
+   ],
+   "unit": "茶改場",
+   "page": 41,
+   "group": "形式變不同",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "jar:granule",
+   "researchRef": "research_zone05_2026-10-23.json",
+   "story": {
+    "problem": "傳統茶葉枕用的是泡過又曬乾的茶葉，香氣很淡又容易碎；製茶時篩下來的茶末很細碎，也不好利用。",
+    "solution": "茶改場把還沒沖泡過的茶末，只用水當媒介、不加化學黏著劑，做成有一定硬度的小顆粒。",
+    "features": [
+     "顆粒直徑 0.4 公分、長 1.5 公分",
+     "茶末沒泡過，保留茶香",
+     "可以吸附異味，也能當寵物墊料",
+     "約 8–10 個月用微波爐加熱去除水分，就能繼續使用",
+     "多次使用後，還可以回歸土壤"
+    ],
+    "life": "填進枕頭，枕邊有淡淡的茶香；家裡有毛小孩，也能當寵物墊料。"
+   },
+   "sources": [
+    {
+     "title": "茶粉造粒新商機 茶葉枕飄香滿室生馨（農業知識入口網轉載茶改場新聞）",
+     "url": "https://kmweb.moa.gov.tw/theme_data.php?theme=news&sub_theme=attention&id=59106",
+     "publisher": "行政院農業委員會茶業改良場（刊於農業部農業知識入口網）",
+     "date": "2020-08-28",
+     "accessed": "2026-10-23"
+    }
+   ],
+   "media": {
+    "photos": [
+     {
+      "file": "media/tech62_1.jpg",
+      "alt": "茶粉造粒成小顆粒",
+      "credit": "農業部茶及飲料作物改良場（2020 年新聞稿）"
+     },
+     {
+      "file": "media/tech62_2.jpg",
+      "alt": "用茶粉顆粒做成的茶葉枕頭",
+      "credit": "農業部茶及飲料作物改良場（2020 年新聞稿）"
+     }
+    ],
+    "videos": []
+   }
+  },
+  {
+   "no": 63,
+   "zone": "05 多元應用",
+   "name": "臺灣橙茶製造技術",
+   "oneLine": "省工、低碳的新茶類，茶湯橙紅琥珀色，帶有木質香。",
+   "facts": [
+    {
+     "value": "時隔 16 年",
+     "label": "繼紅烏龍之後的新茶類製程"
+    },
+    {
+     "value": "橙紅琥珀色",
+     "label": "茶湯顏色"
+    }
+   ],
+   "unit": "茶改場",
+   "page": 41,
+   "group": "風味變多",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "cup:orangetea",
+   "researchRef": "research_zone05_2026-10-23.json",
+   "story": {
+    "problem": "茶園缺工，製茶又很耗能源。",
+    "solution": "茶改場開發出橙茶：以機器採收茶菁，長時間萎凋，再輕輕炒菁、揉捻，陰乾控制發酵，最後烘乾。",
+    "features": [
+     "省工、低碳的新茶類製程",
+     "茶湯呈橙紅琥珀色，所以叫「橙茶」",
+     "帶有類似松木的木質香氣",
+     "青心柑仔、臺茶17／18／19／20／23號與山茶都適用",
+     "不同品種風味各有特色：臺茶18號有薄荷、肉桂香，臺茶19號有糖香、松木香，臺茶23號有柑橘、楓糖香，山茶有楓糖、番茄乾香",
+     "六月白（約 7 月上旬到 8 月中旬）品質最佳",
+     "新北三峽「白美人」、桃園龍潭「雪美人」、高雄六龜山茶都採用這種工藝"
+    ],
+    "life": "買茶時，看見茶湯橙紅、帶木質香的橙茶，就是這項技術做出來的新風味。"
+   },
+   "sources": [
+    {
+     "title": "茶改場研發臺灣橙茶為百年茶產業注入新生命",
+     "url": "https://kmweb.moa.gov.tw/theme_data.php?theme=news&sub_theme=attention&id=89215",
+     "publisher": "農業部茶及飲料作物改良場（新聞稿，刊於農業知識入口網；同稿另見 m.moa.gov.tw/News/Detail/188729）",
+     "date": "2024-12-31",
+     "accessed": "2026-10-23"
+    },
+    {
+     "title": "公告「臺灣橙茶製作技術」非專屬授權案（附件一：簡介資料PDF）",
+     "url": "https://www.tbrs.gov.tw/theme_data.php?theme=technology_transfer&id=3528",
+     "publisher": "農業部茶及飲料作物改良場",
+     "date": "2025-03-24",
+     "accessed": "2026-10-23"
+    }
+   ],
+   "media": {
+    "photos": [
+     {
+      "file": "media/tech63_3.png",
+      "alt": "臺茶18、19、23號與山茶橙茶的風味雷達圖",
+      "credit": "農業部茶及飲料作物改良場（臺灣橙茶新聞稿）"
+     }
+    ],
+    "videos": []
+   }
+  },
+  {
+   "no": 64,
+   "zone": "05 多元應用",
+   "name": "香草莢一貫化加工技術",
+   "oneLine": "把香草莢的清洗、殺菁到乾燥串成一貫化流程，香草醛含量更高。",
+   "facts": [
+    {
+     "value": "約 5 倍",
+     "label": "清洗效率比人工提升"
+    },
+    {
+     "value": "2.0%–3.5%",
+     "label": "香草醛含量"
+    },
+    {
+     "value": "約 20 秒",
+     "label": "果莢中心升到 60℃"
+    }
+   ],
+   "unit": "桃園場",
+   "page": 41,
+   "group": "風味變多",
+   "listPage": 64,
+   "detailLevel": "僅有名稱與分組，簡報無成效數據（待各場所補充）",
+   "model": "pod:vanilla",
+   "researchRef": "research_zone05_2026-10-23.json",
+   "story": {
+    "problem": "香草莢加工步驟多：傳統清洗靠人工，殺菁加熱要花比較多時間，香草醛含量也比較低。",
+    "solution": "桃園場設計了清洗裝置（多組滾輪搭配柔性毛刷與多點水柱），再用三段式水槽讓果莢由約 40℃ 漸進升到 65℃ 殺菁，接著在環控設備中發酵、乾燥。",
+    "features": [
+     "清洗效率比人工提升約 5 倍",
+     "香草醛含量約 2.0%–3.5%，比傳統方式增加約三成",
+     "果莢中心升到 60℃ 只要約 20 秒（傳統方式 40–50 秒）",
+     "果莢損耗率 1% 以下",
+     "清洗裝置與殺菁設備都已取得專利"
+    ],
+    "life": "蛋糕、冰淇淋裡的香草香氣，也可以來自台灣自己種、自己加工的香草莢。"
+   },
+   "sources": [
+    {
+     "title": "香草莢一貫化加工技術 提升國產香草品質與產業競爭力",
+     "url": "https://www.tydares.gov.tw/theme_data.php?theme=news&sub_theme=agri&id=6970",
+     "publisher": "農業部桃園區農業改良場（新聞稿）",
+     "date": "2026-03-27",
+     "accessed": "2026-10-23"
+    },
+    {
+     "title": "以加工技術推動國產香草莢高值化（農科快訊，《農政與農情》第83-87頁；作者林宜樺、葉志新）",
+     "url": "https://www.moa.gov.tw/ws.php?id=2516929",
+     "publisher": "農業部（刊物）／文章作者為桃園區農業改良場",
+     "date": "刊期日期未能確認",
+     "accessed": "2026-10-23"
+    }
+   ],
+   "media": {
+    "photos": [
+     {
+      "file": "media/tech64_1.jpg",
+      "alt": "香草莢清洗設備",
+      "credit": "農業部桃園區農業改良場（2026-03-27 新聞稿）"
+     },
+     {
+      "file": "media/tech64_2.jpg",
+      "alt": "香草莢複段式殺菁設備",
+      "credit": "農業部桃園區農業改良場（2026-03-27 新聞稿）"
+     },
+     {
+      "file": "media/tech64_3.jpg",
+      "alt": "香草莢在環控設備下乾燥",
+      "credit": "農業部桃園區農業改良場（2026-03-27 新聞稿）"
+     }
+    ],
+    "videos": []
+   }
+  }
+ ],
+ "version": "v5",
+ "date": "2026-10-23",
+ "note": "由 techs_v4 加入 media.photos（64、62、63 案共 6 張，已縮小並去除 EXIF；原檔在 media/_original）。"
+}
