@@ -319,6 +319,9 @@ body{
 
 @keyframes pop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
 
+body.lite .brand,body.lite .zcard,body.lite .side,body.lite .hint,body.lite .chips .puz{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+body.lite .brand{background:rgba(255,248,244,.94)}
+body.lite .zcard,body.lite .side{background:rgba(255,248,244,.97)}
 @media (max-width:800px){
   .brand{left:10px;top:10px;padding:9px 14px 11px;max-width:calc(100vw - 86px)}
   .brand h1{font-size:16px}.brand p{font-size:12px}
@@ -372,6 +375,7 @@ body{
 </header>
 
 <nav class="tools" aria-label="工具列">
+  <button class="btn tool" id="btnQ" type="button" aria-pressed="false" title="畫面卡的時候開啟"><span class="ico">⚡</span>流暢</button>
   <button class="btn tool" id="btnHome" type="button" hidden><span class="ico">⌂</span>全景</button>
   <button class="btn tool" id="btnList" type="button" aria-pressed="false" hidden><span class="ico">☰</span>清單</button>
   <button class="btn tool" id="btnTrack" type="button" hidden><span class="ico">⌖</span>追蹤</button>
@@ -687,8 +691,14 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
 
   /* ---------- 渲染器、場景、相機 ---------- */
   const stage = $('#stage');
+  let quality = 2, autoQ = true;   // 畫質等級（2 高、1 中、0 流暢）；autoQ 為畫面太慢時自動降級
+  const prFor = () => {
+    const base = Math.min(devicePixelRatio || 1, [1, 1.25, isMobile() ? 1.4 : 1.6][quality]);
+    const px = (stage.clientWidth || innerWidth) * (stage.clientHeight || innerHeight) * base * base;   // 畫素總量上限，避免 4K 螢幕過重
+    return px > 3.2e6 ? Math.sqrt(3.2e6 / ((stage.clientWidth || innerWidth) * (stage.clientHeight || innerHeight))) : base;
+  };
   const renderer = new T.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, isMobile() ? 1.4 : 1.75));
+  renderer.setPixelRatio(prFor());
   renderer.outputColorSpace = T.SRGBColorSpace;
   renderer.toneMapping = T.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1;
@@ -717,6 +727,18 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   const fill = new T.DirectionalLight(0xbfd6ff, .35);
   fill.position.set(8, 5, 10);
   scene.add(fill);
+
+  function applyQuality(q, auto) {
+    quality = q;
+    renderer.setPixelRatio(prFor());
+    sun.castShadow = q > 0;
+    const size = q >= 2 ? 2048 : 1024;
+    if (sun.shadow.mapSize.x !== size) { sun.shadow.mapSize.set(size, size); if (sun.shadow.map) { sun.shadow.map.dispose(); sun.shadow.map = null; } }
+    document.body.classList.toggle('lite', q <= 1);
+    const w = stage.clientWidth || innerWidth, h = stage.clientHeight || innerHeight;
+    renderer.setSize(w, h); labelR.setSize(w, h);
+    try { invalidate(); } catch (e) { /* 初始化前呼叫時略過 */ }
+  }
 
   /* ---------- 材質與幾何輔助 ---------- */
   const matCache = new Map();
@@ -2210,6 +2232,12 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   qEl.addEventListener('input', () => renderSide(true));
   filtersEl.addEventListener('change', (e) => { if (e.target.id === 'fUnitSel') { fUnit = e.target.value; renderSide(true); } });
   btnList.addEventListener('click', () => { if (sideOpen) closeSide(); else openSide(); });
+  $('#btnQ').addEventListener('click', () => {
+    if (autoQ || quality > 0) { autoQ = false; applyQuality(0); LS.set('parcel-lite', '1'); toast('流暢模式已開'); }
+    else { autoQ = true; qWarm = 0; applyQuality(2); LS.set('parcel-lite', '0'); toast('已恢復自動畫質'); }
+    $('#btnQ').setAttribute('aria-pressed', String(!autoQ));
+  });
+  if (LS.get('parcel-lite') === '1' || new URLSearchParams(location.search).has('lite')) { autoQ = false; applyQuality(0); $('#btnQ').setAttribute('aria-pressed', 'true'); }
   btnHome.addEventListener('click', () => { if (sel >= 0) closeZone(); else refit(); });
 
   /* 手機底部面板：拖曳把手調高度，點一下在預設與接近全螢幕之間切換 */
@@ -2450,7 +2478,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   let lastPortrait = null;
   function resize() {
     const w = stage.clientWidth || innerWidth, h = stage.clientHeight || innerHeight;
-    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, isMobile() ? 1.4 : 1.75));
+    renderer.setPixelRatio(prFor());
     renderer.setSize(w, h); labelR.setSize(w, h);
     camera.aspect = w / h; camera.updateProjectionMatrix();
     if (!isMobile() && phase !== 'idle') { zcard.style.height = zcard.style.maxHeight = ''; if (side) { side.style.height = side.style.maxHeight = ''; } }
@@ -2468,12 +2496,14 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   addEventListener('resize', resize);
   resize();
 
+  let qAcc = 0, qN = 0, qWarm = 0;
   const statsOn = new URLSearchParams(location.search).has('stats');   // 除錯：標題列顯示繪製次數
   /* 主迴圈：只在需要時 render */
   let last = performance.now();
   function frame(now) {
     requestAnimationFrame(frame);
-    const dt = Math.min((now - last) / 1000, .08); last = now;
+    const rawMs = now - last;
+    const dt = Math.min(rawMs / 1000, .08); last = now;
     let busy = now < activeUntil;
     if (phase === 'A' || phase === 'wait' || phase === 'B') { gt += dt; busy = true; }
     if (phase === 'A') {
@@ -2528,7 +2558,17 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     if (busy || needRender) {
       updateScene();
       renderer.render(scene, camera); labelR.render(scene, camera);
-      if (statsOn) document.title = `calls=${renderer.info.render.calls} tris=${renderer.info.render.triangles}`;
+      if (statsOn) document.title = `calls=${renderer.info.render.calls} tris=${renderer.info.render.triangles} q=${quality}`;
+      if (autoQ && quality > 0 && busy) {
+        if (rawMs > 400 || document.hidden) { qAcc = 0; qN = 0; }
+        else if (++qWarm > 20) {
+          qAcc += rawMs; qN++;
+          if (qN >= 40) {
+            const avg = qAcc / qN; qAcc = 0; qN = 0;
+            if (avg > 36) { applyQuality(quality - 1, true); toast('已自動降低畫質，讓動畫更順'); }
+          }
+        }
+      }
       needRender = false;
     }
   }
