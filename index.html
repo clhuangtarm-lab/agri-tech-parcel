@@ -15,6 +15,9 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Huninn&display=swap">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>來自田間的神奇包裹</title>
 <meta name="description" content="開箱農業科技新生活：農糧農環科技成果特展 64 項技術網站">
@@ -122,7 +125,7 @@ body{
   background:rgba(255,248,244,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow)}
 .zcard .close{position:absolute;right:10px;top:10px;min-width:44px;padding:0;font-size:20px}
 .zcard .swatch{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-1px;margin-right:6px}
-.zcard h2{margin:8px 44px 4px 0;font-size:24px;line-height:1.25}
+.zcard h2{margin:8px 44px 4px 0;font-size:24px;line-height:1.25;font-family:"Huninn","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
 .zcard .full{margin:0 0 14px;font-size:13px;color:#6b5d55}
 .zcard .num{display:flex;align-items:baseline;gap:6px;margin-bottom:12px}
 .zcard .num strong{font:italic 700 56px/1 Georgia,serif;color:var(--c)}
@@ -287,14 +290,22 @@ body{
 .pcase summary b{font:italic 700 14px Georgia,serif;color:var(--c,var(--coral))}
 .pcase summary small{width:100%;color:#8a7a70;font-weight:500;font-size:12px}
 .zcard.static{position:static;width:auto;max-height:none;overflow:visible;padding:0 14px 14px;background:none;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;border-radius:0}
+.kid,.knick,.gcard .gf,.game-card h2,.gwin h3{font-family:"Huninn","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
 .kid{margin:12px 0 0}
-.kline{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:18px;background:#fff3d6}
-.kline .kemo{flex:none;font-size:42px;line-height:1}
-.kline p{margin:0;font-size:18px;font-weight:800;line-height:1.5}
-.kpts{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}
-.kpts li{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:#fffdf9;border:2px solid var(--c);font-size:14.5px;font-weight:700;line-height:1.4}
-.kpts li::before{content:"";flex:none;width:10px;height:10px;border-radius:50%;background:var(--c)}
-.klife{margin:10px 0 0;padding:10px 14px;border-radius:14px;background:#ffe3e6;font-size:14.5px;font-weight:700;line-height:1.6}
+.knick{display:inline-block;margin:0 0 10px;padding:5px 14px;border-radius:999px;background:var(--c);color:var(--ink);font-size:15px;font-weight:700;transform:rotate(-2deg);box-shadow:0 3px 0 #0000001f}
+.kline{position:relative;display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:26px;background:#fff3d6;border:3px solid #fde29a}
+.kline::after{content:"";position:absolute;left:34px;bottom:-14px;width:18px;height:18px;background:#fff3d6;border-right:3px solid #fde29a;border-bottom:3px solid #fde29a;transform:rotate(45deg) skew(8deg,8deg);border-bottom-right-radius:6px}
+.kline .kemo{flex:none;font-size:46px;line-height:1;display:inline-block;animation:kbob 2.4s ease-in-out infinite}
+.kline p{margin:0;font-size:18px;font-weight:700;line-height:1.5}
+@keyframes kbob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-5px) rotate(4deg)}}
+.kpts{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:8px}
+.kpts li{display:flex;align-items:center;gap:10px;padding:9px 14px;border-radius:999px;background:#fffdf9;border:2.5px solid var(--c);font-size:14.5px;font-weight:700;line-height:1.4;box-shadow:0 3px 0 var(--c)}
+.kpts li::before{flex:none;font-size:17px;line-height:1}
+.kpts li:nth-child(1)::before{content:"🌟"}
+.kpts li:nth-child(2)::before{content:"🍀"}
+.kpts li:nth-child(3)::before{content:"💗"}
+.klife{margin:12px 0 0;padding:11px 16px;border-radius:20px;background:#ffe3e6;border:2.5px dashed #f5a9b8;font-size:14.5px;font-weight:700;line-height:1.6}
+@media (prefers-reduced-motion:reduce){.kline .kemo{animation:none}}
 .more{margin:14px 0 0;border-top:2px dotted var(--stone);padding-top:6px}
 .more>summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:800;font-size:14px;color:var(--coral)}
 .sec{margin:14px 0 0}
@@ -339,7 +350,15 @@ body{
 .gcard .gin{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .35s}
 .gcard.up .gin,.gcard.done .gin{transform:rotateY(180deg)}
 .gcard .gf,.gcard .gb{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px 6px;border-radius:12px;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 2px 8px #4a2a1420}
-.gcard .gb{background:repeating-linear-gradient(135deg,#e8c9a0 0 8px,#f0d7b4 8px 16px);border:2px solid #d3a975;font:italic 700 26px Georgia,serif;color:#fff8f4;text-shadow:0 1px 2px #8a5a2a88}
+.gcard .gb{background:linear-gradient(90deg,transparent 44%,#f4b6c2 44% 56%,transparent 56%),linear-gradient(0deg,transparent 44%,#f4b6c2 44% 56%,transparent 56%),repeating-linear-gradient(135deg,#e8c9a0 0 8px,#f0d7b4 8px 16px);border:2px solid #d3a975;font:700 20px "Huninn",sans-serif;color:#7a4a22}
+.gcard .gb span{display:inline-block;padding:2px 8px;border-radius:999px;background:#fff8f4;box-shadow:0 2px 0 #d3a97577}
+.gcard:hover .gb{animation:gwob .5s}
+@keyframes gwob{25%{transform:rotate(-4deg)}75%{transform:rotate(4deg)}}
+.gcard.done .gin{animation:gpop .5s .3s}
+@keyframes gpop{0%{transform:rotateY(180deg) scale(1)}50%{transform:rotateY(180deg) scale(1.12)}100%{transform:rotateY(180deg) scale(1)}}
+.confetti{position:fixed;inset:0;z-index:50;pointer-events:none;overflow:hidden}
+.confetti i{position:absolute;top:-30px;font-style:normal;font-size:26px;animation:cfall 2.6s linear forwards}
+@keyframes cfall{to{transform:translateY(110vh) rotate(360deg)}}
 .gcard .gf{transform:rotateY(180deg);background:#fffdf9;border:2px solid var(--c,#d3a975);font-size:13px;font-weight:700;line-height:1.45}
 .gcard .gf small{font-size:10.5px;font-weight:600;color:#8a7a70;letter-spacing:.04em}
 .gcard .gemo{font-size:30px;line-height:1}
@@ -488,7 +507,7 @@ body.lite .zcard,body.lite .side{background:rgba(255,248,244,.97)}
 <div class="help" id="game" hidden role="dialog" aria-modal="true" aria-labelledby="gameTitle">
   <div class="game-card">
     <div class="eyebrow">Mini game</div>
-    <h2 id="gameTitle">田間配對</h2>
+    <h2 id="gameTitle">🧺 田間配對</h2>
     <p class="gsub">翻兩張牌，找出一對：小主角和它做的事。</p>
     <div class="gbar"><div class="gstat"><span>步數 <b id="gMoves">0</b></span><span>配對 <b id="gPairs">0</b> / <b id="gTotal">6</b></span></div><button class="btn" id="gAgain" type="button">換一批</button></div>
     <div class="ggrid" id="gGrid"></div>
@@ -680,7 +699,7 @@ function storyHTML(t, opener) {
 function kidHTML(t) {
   const k = t.kid;
   if (!k) return t.oneLine ? `<p class="oneline">${t.oneLine}</p>` : '';
-  return `<div class="kid"><div class="kline"><span class="kemo" aria-hidden="true">${k.e}</span><p>${k.line}</p></div>
+  return `<div class="kid"><p class="knick" aria-hidden="true">${k.e} ${k.nick}</p><div class="kline"><span class="kemo" aria-hidden="true">${k.e}</span><p>${k.line}</p></div>
     <ul class="kpts">${k.pts.map((x) => `<li>${x}</li>`).join('')}</ul><p class="klife">💛 ${k.life}</p></div>`;
 }
 
@@ -2541,13 +2560,18 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     $('#gTotal').textContent = n; $('#gMoves').textContent = 0; $('#gPairs').textContent = 0; gWin.hidden = true;
     gGrid.innerHTML = G.cards.map((c, i) => {
       const col = zones[zoneIdxOf(c.t)].color;
-      return `<button class="gcard ${c.k === 'name' ? 't' : ''}" type="button" data-i="${i}" style="--c:${col}" aria-label="第 ${i + 1} 張牌，還沒翻開"><div class="gin"><div class="gb">?</div><div class="gf">${c.k === 'name' ? `<span class="gemo" aria-hidden="true">${c.t.kid.e}</span><strong>${c.t.kid.nick}</strong>` : `<small>它在做什麼</small><span>${c.t.kid.line}</span>`}</div></div></button>`;
+      return `<button class="gcard ${c.k === 'name' ? 't' : ''}" type="button" data-i="${i}" style="--c:${col}" aria-label="第 ${i + 1} 張牌，還沒翻開"><div class="gin"><div class="gb"><span>•ᴗ•</span></div><div class="gf">${c.k === 'name' ? `<span class="gemo" aria-hidden="true">${c.t.kid.e}</span><strong>${c.t.kid.nick}</strong>` : `<small>它在做什麼</small><span>${c.t.kid.line}</span>`}</div></div></button>`;
     }).join('');
   }
   function gameWin() {
-    const win = `<h3>全部配對成功，用了 ${G.moves} 步</h3><p>點下面的名稱，可以直接看這項技術的內容。</p><div class="gchips">${G.picked.map((t) => phase === 'done'
+    const win = `<h3>🎉 太棒了！全部配對成功，用了 ${G.moves} 步</h3><p>點下面的名字，可以直接看它的故事。</p><div class="gchips">${G.picked.map((t) => phase === 'done'
       ? `<button class="gchip" type="button" data-no="${t.no}" style="--c:${zones[zoneIdxOf(t)].color}">${t.no} ${t.name.length > 12 ? t.name.slice(0, 12) + '…' : t.name}</button>`
       : `<span class="gchip" style="--c:${zones[zoneIdxOf(t)].color}">${t.no} ${t.name.length > 12 ? t.name.slice(0, 12) + '…' : t.name}</span>`).join('')}</div>`;
+    if (!reduceMQ.matches) {
+      const cf = document.createElement('div'); cf.className = 'confetti'; cf.setAttribute('aria-hidden', 'true');
+      cf.innerHTML = Array.from({ length: 22 }, (_, i) => `<i style="left:${Math.random() * 96}%;animation-delay:${(Math.random() * 1.2).toFixed(2)}s">${['🎉', '⭐', '💖', '🌸', '🍓', '🌟'][i % 6]}</i>`).join('');
+      document.body.appendChild(cf); setTimeout(() => cf.remove(), 4200);
+    }
     gWin.innerHTML = win; gWin.hidden = false; gWin.scrollIntoView({ block: 'nearest', behavior: reduceMQ.matches ? 'auto' : 'smooth' });
   }
   gGrid.addEventListener('click', (e) => {
