@@ -508,7 +508,7 @@ body.lite .zcard,body.lite .side{background:rgba(255,248,244,.97)}
   <div class="game-card">
     <div class="eyebrow">Mini game</div>
     <h2 id="gameTitle">🧺 田間配對</h2>
-    <p class="gsub">翻兩張牌，找出一對：小主角和它做的事。</p>
+    <p class="gsub">翻兩張牌，找出一對：技術名稱和它的重點說明。</p>
     <div class="gbar"><div class="gstat"><span>步數 <b id="gMoves">0</b></span><span>配對 <b id="gPairs">0</b> / <b id="gTotal">6</b></span></div><button class="btn" id="gAgain" type="button">換一批</button></div>
     <div class="ggrid" id="gGrid"></div>
     <div id="gWin" class="gwin" hidden></div>
@@ -577,7 +577,7 @@ const DATA = {
       { name: '風味與生活', text: '採收後的風味與加工，走進日常。', zone: 4 } ] }
   ],
   /* 64 案資料（由 PDF 簡報 p.61–64 抽出；每案自帶 model 欄位，格式「種類:變體」） */
-  dataFile: 'data/techs_v8_2026-11-01.json',
+  dataFile: 'data/techs_v9_2026-11-01.json',
   /* 寄件單位：key 為資料檔 unit 欄的開頭；n 為簡報 p.60 載明的案數；
      full 為機關全名；county、lat、lon 為場址所在縣市鄉鎮與座標（OpenStreetMap，見 data/units_geo_2026-10-23.json）；
      花創中心的場址尚未確認，不顯示位置 */
@@ -2560,7 +2560,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     $('#gTotal').textContent = n; $('#gMoves').textContent = 0; $('#gPairs').textContent = 0; gWin.hidden = true;
     gGrid.innerHTML = G.cards.map((c, i) => {
       const col = zones[zoneIdxOf(c.t)].color;
-      return `<button class="gcard ${c.k === 'name' ? 't' : ''}" type="button" data-i="${i}" style="--c:${col}" aria-label="第 ${i + 1} 張牌，還沒翻開"><div class="gin"><div class="gb"><span>•ᴗ•</span></div><div class="gf">${c.k === 'name' ? `<span class="gemo" aria-hidden="true">${c.t.kid.e}</span><strong>${c.t.kid.nick}</strong>` : `<small>它在做什麼</small><span>${c.t.kid.line}</span>`}</div></div></button>`;
+      return `<button class="gcard ${c.k === 'name' ? 't' : ''}" type="button" data-i="${i}" style="--c:${col}" aria-label="第 ${i + 1} 張牌，還沒翻開"><div class="gin"><div class="gb"><span>•ᴗ•</span></div><div class="gf">${c.k === 'name' ? `<span class="gemo" aria-hidden="true">${c.t.kid.e}</span><strong>${c.t.kid.nick}</strong>` : `<small>重點說明</small><span>${c.t.kid.line}</span>`}</div></div></button>`;
     }).join('');
   }
   function gameWin() {
