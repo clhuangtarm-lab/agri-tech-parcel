@@ -124,6 +124,7 @@ body{
 .zcard{position:fixed;z-index:15;left:16px;top:96px;width:460px;min-width:340px;max-width:calc(100vw - 32px);max-height:calc(100% - 176px);resize:both;overflow:auto;padding:20px 22px 18px;border-radius:22px;
   background:rgba(255,248,244,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow)}
 .zcard .close{position:absolute;right:10px;top:10px;min-width:44px;padding:0;font-size:20px}
+#btnTrack,#finaleTrack{display:none!important}   /* 追蹤與清單的「寄件單位」重複，先隱藏 */
 .zcard .expand{position:absolute;right:58px;top:10px;min-width:44px;padding:0;font-size:18px}
 .zcard.big{width:min(720px,62vw);max-height:calc(100% - 130px);top:88px}
 .zcard .swatch{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-1px;margin-right:6px}
@@ -633,7 +634,7 @@ const DATA = {
       { name: '風味與生活', text: '採收後的風味與加工，走進日常。', zone: 4 } ] }
   ],
   /* 64 案資料（由 PDF 簡報 p.61–64 抽出；每案自帶 model 欄位，格式「種類:變體」） */
-  dataFile: 'data/techs_v10_2026-11-01.json',
+  dataFile: 'data/techs_v11_2026-11-01.json',
   questFile: 'data/quest_v5_2026-11-01.json',
   /* 寄件單位：key 為資料檔 unit 欄的開頭；n 為簡報 p.60 載明的案數；
      full 為機關全名；county、lat、lon 為場址所在縣市鄉鎮與座標（OpenStreetMap，見 data/units_geo_2026-10-23.json）；

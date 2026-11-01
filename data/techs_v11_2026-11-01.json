@@ -162,7 +162,17 @@
     ],
     "life": "守住作物的遺傳多樣性，也讓大家吃得到優質國產草莓。"
    },
-   "icon": "🍓"
+   "icon": "🍓",
+   "media": {
+    "photos": [
+     {
+      "file": "media/tech2_d1.jpg",
+      "alt": "投影片1",
+      "credit": "圖片：農業試驗所提供"
+     }
+    ],
+    "videos": []
+   }
   },
   {
    "no": 3,
@@ -267,6 +277,16 @@
       "file": "media/tech5_4.jpg",
       "alt": "寒害症狀：果肉水浸狀",
       "credit": "圖片：農業部農業試驗所提供"
+     },
+     {
+      "file": "media/tech5_d1.jpg",
+      "alt": "寒害症狀－針狀凹陷斑點",
+      "credit": "圖片：農業試驗所提供"
+     },
+     {
+      "file": "media/tech5_d2.jpg",
+      "alt": "果皮皺或轉全黃代表較不耐放（要盡快吃掉）",
+      "credit": "圖片：農業試驗所提供"
      }
     ],
     "videos": []
@@ -336,6 +356,11 @@
       "file": "media/tech6_2.jpg",
       "alt": "台農82號的白米",
       "credit": "圖片：農業部農業試驗所提供"
+     },
+     {
+      "file": "media/tech6_d1.jpg",
+      "alt": "台農82號植株",
+      "credit": "圖片：農業試驗所提供"
      }
     ],
     "videos": []
@@ -401,6 +426,11 @@
       "file": "media/tech7_2.jpg",
       "alt": "台農秈23號的白米",
       "credit": "圖片：農業部農業試驗所提供"
+     },
+     {
+      "file": "media/tech7_d1.jpg",
+      "alt": "台農秈23號的照片",
+      "credit": "圖片：農業試驗所提供"
      }
     ],
     "videos": []
@@ -737,7 +767,22 @@
     ],
     "life": "朝全年穩定供應國產百香果的目標邁進。"
    },
-   "icon": "🍈"
+   "icon": "🍈",
+   "media": {
+    "photos": [
+     {
+      "file": "media/tech18_d1.jpg",
+      "alt": "20161217-高改場明信片-珍蜜-1-01",
+      "credit": "圖片：高雄區農業改良場提供"
+     },
+     {
+      "file": "media/tech18_d2.jpg",
+      "alt": "春季百香果的照片",
+      "credit": "圖片：高雄區農業改良場提供"
+     }
+    ],
+    "videos": []
+   }
   },
   {
    "no": 19,
@@ -846,7 +891,17 @@
     ],
     "life": "改善國產洋蔥的供應穩定性。"
    },
-   "icon": "🧅"
+   "icon": "🧅",
+   "media": {
+    "photos": [
+     {
+      "file": "media/tech21_d1.jpg",
+      "alt": "洋蔥種子穿新衣，穴盤育苗好整齊！",
+      "credit": "圖片：種苗改良繁殖場提供"
+     }
+    ],
+    "videos": []
+   }
   },
   {
    "no": 22,
@@ -1057,6 +1112,16 @@
       "file": "media/tech26_3.jpg",
       "alt": "苗栗1號戀香切開的果實",
       "credit": "圖片：農業部苗栗區農業改良場提供"
+     },
+     {
+      "file": "media/tech26_d1.jpg",
+      "alt": "草莓苗栗1號戀香的照片",
+      "credit": "圖片：苗栗區農業改良場提供"
+     },
+     {
+      "file": "media/tech26_d2.jpg",
+      "alt": "草莓苗栗1號戀香的照片",
+      "credit": "圖片：苗栗區農業改良場提供"
      }
     ],
     "videos": []
@@ -1190,6 +1255,11 @@
       "file": "media/tech31_3.jpg",
       "alt": "收下來的大蒜",
       "credit": "圖片：農業部臺南區農業改良場提供"
+     },
+     {
+      "file": "media/tech31_d1.jpg",
+      "alt": "115年新案簡報_蒜R - 複製",
+      "credit": "圖片：臺南區農業改良場提供"
      }
     ],
     "videos": []
@@ -1337,6 +1407,11 @@
       "file": "media/tech35_2.jpg",
       "alt": "茶園灌溉機組",
       "credit": "圖片：農業部茶及飲料作物改良場提供"
+     },
+     {
+      "file": "media/tech35_d1.jpg",
+      "alt": "茶園智慧灌溉控制技術代表圖",
+      "credit": "圖片：茶及飲料作物改良場提供"
      }
     ],
     "videos": []
@@ -1465,6 +1540,11 @@
       "file": "media/tech37_2.jpg",
       "alt": "顯微鏡下的草莓生長點",
       "credit": "圖片：農業部苗栗區農業改良場提供"
+     },
+     {
+      "file": "media/tech37_d1.jpg",
+      "alt": "專訊圖1",
+      "credit": "圖片：苗栗區農業改良場提供"
      }
     ],
     "videos": []
@@ -1926,6 +2006,16 @@
       "file": "media/tech49_2.jpg",
       "alt": "茄子材料接種病原菌的過程",
       "credit": "圖片：農業部種苗改良繁殖場提供"
+     },
+     {
+      "file": "media/tech49_d1.jpg",
+      "alt": "抗青枯病茄砧的照片",
+      "credit": "圖片：種苗改良繁殖場提供"
+     },
+     {
+      "file": "media/tech49_d2.jpg",
+      "alt": "抗性堆疊",
+      "credit": "圖片：種苗改良繁殖場提供"
      }
     ],
     "videos": []
@@ -2001,6 +2091,11 @@
       "file": "media/tech50_4.jpg",
       "alt": "回收培養土盆植草莓",
       "credit": "圖片：農業部臺南區農業改良場提供"
+     },
+     {
+      "file": "media/tech50_d1.jpg",
+      "alt": "培養土回收再利用的照片",
+      "credit": "圖片：臺南區農業改良場提供"
      }
     ],
     "videos": []
@@ -2191,7 +2286,17 @@
     ],
     "life": "把農業剩餘資源轉為高值化的循環經濟。"
    },
-   "icon": "🔥"
+   "icon": "🔥",
+   "media": {
+    "photos": [
+     {
+      "file": "media/tech55_d1.jpg",
+      "alt": "剩餘資源炭化的照片",
+      "credit": "圖片：桃園區農業改良場提供"
+     }
+    ],
+    "videos": []
+   }
   },
   {
    "no": 56,
@@ -2306,6 +2411,36 @@
      {
       "file": "media/tech57_4.jpg",
       "alt": "非洲鳳仙花：左為循環介質、右為泥炭土",
+      "credit": "圖片：花卉創新園區研究發展中心提供"
+     },
+     {
+      "file": "media/tech57_d1.jpg",
+      "alt": "千日紅左-SSMC 右-泥炭土",
+      "credit": "圖片：花卉創新園區研究發展中心提供"
+     },
+     {
+      "file": "media/tech57_d2.jpg",
+      "alt": "四季秋海棠左-SSMC 右-泥炭土",
+      "credit": "圖片：花卉創新園區研究發展中心提供"
+     },
+     {
+      "file": "media/tech57_d3.jpg",
+      "alt": "日日春 左-SSMC 右-泥炭土",
+      "credit": "圖片：花卉創新園區研究發展中心提供"
+     },
+     {
+      "file": "media/tech57_d4.jpg",
+      "alt": "薰衣草左-SSMC 右-泥炭土",
+      "credit": "圖片：花卉創新園區研究發展中心提供"
+     },
+     {
+      "file": "media/tech57_d5.jpg",
+      "alt": "長壽花ABC(ABC配方)DMK為泥炭土",
+      "credit": "圖片：花卉創新園區研究發展中心提供"
+     },
+     {
+      "file": "media/tech57_d6.jpg",
+      "alt": "香堇左-SSMC 右-泥炭土",
       "credit": "圖片：花卉創新園區研究發展中心提供"
      }
     ],
@@ -2455,6 +2590,11 @@
       "file": "media/tech60_4.jpg",
       "alt": "兩瓶並排的觀賞瓶",
       "credit": "圖片：農業部高雄區農業改良場提供"
+     },
+     {
+      "file": "media/tech60_d1.jpg",
+      "alt": "觀葉植物觀賞瓶的照片",
+      "credit": "圖片：高雄區農業改良場提供"
      }
     ],
     "videos": []
@@ -2642,6 +2782,11 @@
       "file": "media/tech63_3.png",
       "alt": "臺茶18、19、23號與山茶橙茶的風味雷達圖",
       "credit": "農業部茶及飲料作物改良場（臺灣橙茶新聞稿）"
+     },
+     {
+      "file": "media/tech63_d1.jpg",
+      "alt": "橙茶三大產區",
+      "credit": "圖片：茶及飲料作物改良場提供"
      }
     ],
     "videos": []
@@ -2735,6 +2880,11 @@
       "file": "media/tech64_3.jpg",
       "alt": "香草莢在環控設備下乾燥",
       "credit": "農業部桃園區農業改良場（2026-03-27 新聞稿）"
+     },
+     {
+      "file": "media/tech64_d1.jpg",
+      "alt": "香草莢一貫化加工的照片",
+      "credit": "圖片：桃園區農業改良場提供"
      }
     ],
     "videos": []
@@ -2754,7 +2904,7 @@
    "icon": "🍦"
   }
  ],
- "version": "v10",
+ "version": "v11",
  "date": "2026-11-01",
- "note": "v9 加上 icon 欄位（64 案各一個圖示，供台灣農業技術地圖使用；有親子版內容的案沿用 kid.e，其餘為暫定圖示）。"
+ "note": "v10 加上 Drive 資料夾中其餘各單位提供的圖片（只略過檔名寫「展示物示意」者與近似重複圖）。"
 }
