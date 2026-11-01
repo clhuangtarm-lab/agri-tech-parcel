@@ -124,7 +124,7 @@ body{
 .zcard{position:fixed;z-index:15;left:16px;top:96px;width:460px;min-width:340px;max-width:calc(100vw - 32px);max-height:calc(100% - 176px);resize:both;overflow:auto;padding:20px 22px 18px;border-radius:22px;
   background:rgba(255,248,244,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow)}
 .zcard .close{position:absolute;right:10px;top:10px;min-width:44px;padding:0;font-size:20px}
-#btnTrack,#finaleTrack{display:none!important}   /* 追蹤與清單的「寄件單位」重複，先隱藏 */
+.tab[data-tab="unit"]{display:none}   /* 寄件單位改由「追蹤」的地圖查看，清單只留技術 */
 .zcard .expand{position:absolute;right:58px;top:10px;min-width:44px;padding:0;font-size:18px}
 .zcard.big{width:min(720px,62vw);max-height:calc(100% - 130px);top:88px}
 .zcard .swatch{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-1px;margin-right:6px}
@@ -204,6 +204,8 @@ body{
 .zcard .tile.empty strong{font-size:16px;color:#a09086}
 .zcard .facts{margin:10px 0 0;padding-left:1.2em;font-size:13px;line-height:1.7}
 .zcard .media{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 0}
+.zcard .media a.slot{text-decoration:none;color:var(--ink);font-weight:700;font-size:13px;grid-column:1 / -1;min-height:56px}
+.zcard .media a.slot small{display:block;font-weight:500;font-size:11px;color:#8a7a70}
 .zcard .media .slot{display:grid;place-items:center;min-height:84px;border-radius:12px;font-size:12px;color:#a09086;text-align:center;padding:6px}
 .zcard .media img{width:100%;border-radius:12px;display:block}
 .zcard .media:not(.multi){grid-template-columns:1fr}
@@ -733,10 +735,10 @@ function factsHTML(t) {
 }
 /* 照片與影片：media.photos[{file,credit}]、media.videos[{youtubeId,title}]；沒有就整區不顯示；影片點了才載入 */
 function mediaHTML(t) {
-  const m = t.media || {}, ph = m.photos || [], vd = (m.videos || [])[0];
-  if (!ph.length && !vd) return '';
+  const m = t.media || {}, ph = m.photos || [], vds = m.videos || [];
+  if (!ph.length && !vds.length) return '';
   const photos = ph.map((p) => `<figure style="margin:0"><img src="${p.file}" alt="${p.alt || t.name}" loading="lazy"><figcaption class="meta" style="margin:4px 0 0">${noMOA(p.credit)}</figcaption></figure>`).join('');
-  const video = vd ? `<button class="slot" type="button" data-yt="${vd.youtubeId}">▶ ${vd.title || '播放影片'}</button>` : '';
+  const video = vds.map((vd) => vd.youtubeId ? `<button class="slot" type="button" data-yt="${vd.youtubeId}">▶ ${vd.title || '播放影片'}</button>` : vd.url ? `<a class="slot" href="${vd.url}" target="_blank" rel="noopener">▶ ${vd.title || '觀看影片'}${vd.credit ? `<small>${noMOA(vd.credit)}</small>` : ''}</a>` : '').join('');
   return `<div class="media ${ph.length > 1 ? 'multi' : ''}">${photos}${video}</div>`;
 }
 /* 資料來源收在摺疊裡，需要時再展開 */
@@ -2253,7 +2255,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     if (t.classList.contains('close')) closeZone();
     else if (t.dataset.ci !== undefined) selectCase(+t.dataset.ci);
     else if (t.dataset.no !== undefined) openTech(+t.dataset.no);
-    else if (t.dataset.unit !== undefined) openSide('unit', t.dataset.unit);
+    else if (t.dataset.unit !== undefined) showUnitTechs(t.dataset.unit);
     else if (t.dataset.g !== undefined) focusGroup(+t.dataset.g);
     else if (t.dataset.act === 'back') deselectCase();
     else if (t.dataset.act === 'copy') copyLink();
@@ -2334,6 +2336,10 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     const zs = zsOf(sel);
     if (sel < 0) { const f = overviewShot(); flyTo(f.p, f.t, 700); }
     else if (zs && zoneReady()) { const s = selCase >= 0 ? caseShot(zs, zs.cases[selCase]) : zoneShot(zs); flyTo(s.p, s.t, 700); }
+  }
+  function showUnitTechs(key) {   // 清單只留技術：以單位篩選顯示
+    sideTab = 'tech'; unitView = null; fUnit = key; const sel = $('#fUnitSel'); if (sel) sel.value = key;
+    openSide('tech'); renderSide(true);
   }
   function openSide(tab, unit) {
     if (phase !== 'done') return;
@@ -2515,7 +2521,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     if (b.id === 'trackClose') closeTrack();
     else if (b.dataset.ttab) { trackTab = b.dataset.ttab; renderTrack(); }
     else if (b.dataset.u) { trackUnit = b.dataset.u; renderTrack(); }
-    else if (b.dataset.ulist) { closeTrack(); openSide('unit', b.dataset.ulist); }
+    else if (b.dataset.ulist) { closeTrack(); showUnitTechs(b.dataset.ulist); }
     else if (b.dataset.no) { closeTrack(); openTech(+b.dataset.no); }
     else if (b.dataset.zone !== undefined) { closeTrack(); selectZone(+b.dataset.zone); }
   });
