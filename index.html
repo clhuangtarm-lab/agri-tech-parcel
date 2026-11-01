@@ -361,17 +361,17 @@ body{
 .tmap{display:block;width:100%;height:auto}
 .tmap .tbp{animation:tbin .7s both cubic-bezier(.2,1.3,.4,1)}
 @keyframes tbin{from{opacity:0;transform:translateY(-70px)}to{opacity:1;transform:none}}
+.tmap .tbi{text-anchor:middle;font-size:22px;font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif}
 .tmap .tbl{text-anchor:middle;font:700 20px Georgia,serif;font-style:italic;fill:#fff8f4;paint-order:stroke;stroke:#211d1d55;stroke-width:3px}
 .tmap .tbl.ch{font:700 44px "Huninn","Noto Sans TC",sans-serif;font-style:normal;fill:#211d1d;stroke:#fff8f4;stroke-width:5px}
 .tmap .tbl.no{font:700 30px "Huninn",sans-serif;font-style:normal;fill:#b9a99b;stroke:none}
 .tmap .tbn{text-anchor:middle;font:700 11px ui-monospace,Menlo,monospace;fill:#211d1d}
 .tmcap{margin:4px 0 0;text-align:center;font-size:12.5px;font-weight:700;color:#6b5d55}
-.qtop{display:flex;gap:14px;align-items:flex-start}
-.qtop .kline{flex:1}
-.qmap{flex:none;width:112px}
-.qmapbig{margin:14px auto 0;width:min(240px,70%)}
-@media (max-width:560px){.qtop{flex-direction:column}.qmap{width:130px;align-self:center}}
-.pieces svg{width:min(170px,50vw);height:auto}
+.qgrid{display:grid;grid-template-columns:200px 1fr;gap:18px;align-items:start}
+.qmap{width:200px}
+.qmapbig{margin:14px auto 0;width:min(230px,70%)}
+@media (max-width:560px){.qgrid{grid-template-columns:1fr}.qmap{width:190px;margin:0 auto}}
+.pieces svg{width:min(220px,60vw);height:auto}
 .qkeys{display:flex;gap:8px;margin:0 0 12px}
 .qkeys span{flex:1;min-height:52px;display:grid;place-items:center;border-radius:14px;background:#fffdf9;border:2.5px dashed var(--stone);font:700 26px "Huninn","Noto Sans TC",sans-serif;color:#b9a99b}
 .qkeys span.on{border:2.5px solid var(--coral);background:#fff3d6;color:var(--ink);animation:gpop2 .5s}
@@ -559,7 +559,6 @@ body.lite .zcard,body.lite .side{background:rgba(255,248,244,.97)}
   <div class="game-card">
     <div class="eyebrow">Mini game</div>
     <h2 id="gameTitle">🧺 田間配對</h2>
-    <p class="gsub">翻兩張牌，找出一對：技術名稱和它的重點說明。</p>
     <div class="gbar"><div class="gstat"><span>步數 <b id="gMoves">0</b></span><span>配對 <b id="gPairs">0</b> / <b id="gTotal">6</b></span></div><button class="btn" id="gAgain" type="button">換一批</button></div>
     <div class="ggrid" id="gGrid"></div>
     <div id="gWin" class="gwin" hidden></div>
@@ -629,7 +628,7 @@ const DATA = {
   ],
   /* 64 案資料（由 PDF 簡報 p.61–64 抽出；每案自帶 model 欄位，格式「種類:變體」） */
   dataFile: 'data/techs_v9_2026-11-01.json',
-  questFile: 'data/quest_v2_2026-11-01.json',
+  questFile: 'data/quest_v3_2026-11-01.json',
   /* 寄件單位：key 為資料檔 unit 欄的開頭；n 為簡報 p.60 載明的案數；
      full 為機關全名；county、lat、lon 為場址所在縣市鄉鎮與座標（OpenStreetMap，見 data/units_geo_2026-10-23.json）；
      花創中心的場址尚未確認，不顯示位置 */
@@ -2408,7 +2407,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   }
   function showFinale() {
     if (phase !== 'done') return;
-    $('#pieces').innerHTML = techMapSVG(new Set(zones.map((z, i) => i)), null, { id: 'fin', anim: true, markers: true }) + `<p class="tmcap">台灣農業技術地圖：${DATA.units.length} 個單位、${techList.length} 項技術</p>`;
+    $('#pieces').innerHTML = techMapSVG(new Set(REG.map((r, i) => i)), { id: 'fin', anim: true });
     $('#finaleTitle').textContent = '拼圖完成：台灣農業技術地圖';
     $('#finaleExit').textContent = DATA.exitLine;
     finaleEl.hidden = false; $('#finaleTrack').focus();
@@ -2439,26 +2438,33 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
       ${cur ? `<div class="ucap"><b>${cur.key}</b>寄出 ${unitCount(cur)} 項技術。<br><button class="btn primary" type="button" data-ulist="${cur.key}">看這個單位的技術</button></div>` : ''}</div></div>
       <p class="exitline">${DATA.exitLine}</p>`;
   }
-  /* 台灣農業技術地圖：由北到南切成五片拼圖，每片對應一個包裹；got 為已拿到的片，chars 為印在片上的字（可為 null） */
-  function techMapSVG(got, chars, o = {}) {
-    const edges = [8, 128, 228, 322, 408, 482], id = o.id || 'tm';
-    const pts = TW.map(([lo, la]) => proj(lo, la).map(Number));
-    const path = pts.map(([x, y], i) => (i ? 'L' : 'M') + x + ',' + y).join(' ') + 'Z';
-    const cx = (i) => { const sel = pts.filter(([, y]) => y >= edges[i] && y < edges[i + 1]); return sel.length ? Math.round(sel.reduce((a, b) => a + b[0], 0) / sel.length) : 140; };
-    const clips = zones.map((z, i) => `<clipPath id="${id}c${i}"><rect x="0" y="${edges[i]}" width="280" height="${edges[i + 1] - edges[i]}"/></clipPath>`).join('');
-    const bands = zones.map((z, i) => got.has(i)
-      ? `<path class="tbp" d="${path}" clip-path="url(#${id}c${i})" fill="${z.color}" style="animation-delay:${o.anim ? i * .3 : 0}s"/>`
-      : `<path d="${path}" clip-path="url(#${id}c${i})" fill="#eadfd3" stroke="#c5b5a7" stroke-width="2" stroke-dasharray="5 5"/>`).join('');
-    const seams = edges.slice(1, 5).map((y) => `<line x1="0" x2="280" y1="${y}" y2="${y}" stroke="#fff8f4" stroke-width="3"/>`).join('');
-    const labels = zones.map((z, i) => { const c = chars && chars[i], y = (edges[i] + edges[i + 1]) / 2;
-      return `<text class="tbl${c ? ' ch' : got.has(i) ? '' : ' no'}" x="${cx(i)}" y="${y + (c ? 14 : 10)}">${c || (got.has(i) ? z.id : '？')}</text>`; }).join('');
-    let mk = '';
-    if (o.markers) {
-      const us = DATA.units.filter((u) => u.lat != null).map((u) => { const [x, y] = proj(u.lon, u.lat); return { u, x: +x, y: +y }; });
-      for (let k = 0; k < 40; k++) us.forEach((a, i) => us.forEach((b, j) => { if (j <= i) return; const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || .1; if (d < 24) { const f = (24 - d) / 2; a.x -= dx / d * f; a.y -= dy / d * f; b.x += dx / d * f; b.y += dy / d * f; } }));
-      mk = us.map((p) => `<g><circle cx="${p.x}" cy="${p.y}" r="10" fill="#fffdf9" stroke="#211d1d" stroke-width="2"/><text class="tbn" x="${p.x}" y="${p.y + 4}">${unitCount(p.u)}</text></g>`).join('');
-    }
-    return `<svg class="tmap" viewBox="0 0 280 488" role="img" aria-label="台灣農業技術地圖，已拿到 ${got.size} / ${zones.length} 片拼圖"><defs>${clips}</defs>${bands}${seams}${o.markers ? '' : labels}${mk}</svg>`;
+  /* 台灣農業技術地圖：北、中、南、東、中間五片拼圖（經緯度多邊形，超出海岸線的部分由台灣輪廓裁掉）；
+     片上放該區寄件單位的技術圖示。got 為已拿到的片（0–4） */
+  const REG = [
+    [[119.5, 25.8], [122.5, 25.8], [122.5, 24.55], [119.5, 24.55]],
+    [[119.5, 24.55], [120.72, 24.55], [120.78, 23.55], [119.5, 23.55]],
+    [[119.5, 23.55], [120.78, 23.55], [120.95, 22.95], [121.08, 22.95], [121.08, 22.5], [122.5, 22.5], [122.5, 21.5], [119.5, 21.5]],
+    [[121.33, 24.55], [122.5, 24.55], [122.5, 22.5], [121.08, 22.5], [121.08, 22.95], [121.30, 23.7]],
+    [[120.72, 24.55], [121.33, 24.55], [121.30, 23.7], [121.08, 22.95], [120.95, 22.95], [120.78, 23.55]]];
+  const inPoly = (pt, poly) => { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [xi, yi] = poly[i], [xj, yj] = poly[j]; if ((yi > pt[1]) !== (yj > pt[1]) && pt[0] < (xj - xi) * (pt[1] - yi) / (yj - yi) + xi) c = !c; } return c; };
+  function techMapSVG(got, o = {}) {
+    const id = o.id || 'tm';
+    const path = TW.map(([lo, la], i) => (i ? 'L' : 'M') + proj(lo, la).join(',')).join(' ') + 'Z';
+    const poly = (r) => r.map(([lo, la]) => proj(lo, la).join(',')).join(' ');
+    const clips = REG.map((r, i) => `<clipPath id="${id}c${i}"><polygon points="${poly(r)}"/></clipPath>`).join('') + `<clipPath id="${id}i"><path d="${path}"/></clipPath>`;
+    const bands = REG.map((r, i) => got.has(i)
+      ? `<path class="tbp" d="${path}" clip-path="url(#${id}c${i})" fill="${zones[i].color}" style="animation-delay:${o.anim ? i * .3 : 0}s"/>`
+      : `<path d="${path}" clip-path="url(#${id}c${i})" fill="#eadfd3"/>`).join('');
+    const seams = `<g clip-path="url(#${id}i)">${REG.map((r) => `<polygon points="${poly(r)}" fill="none" stroke="#fff8f4" stroke-width="3"/>`).join('')}</g>`;
+    const us = DATA.units.filter((u) => u.lat != null).map((u) => {
+      const [x, y] = proj(u.lon, u.lat);
+      const ri = REG.findIndex((r) => inPoly([u.lon, u.lat], r));
+      const em = [...new Set(techList.filter((t) => unitOf(t) === u && t.kid).map((t) => t.kid.e))].slice(0, 2);
+      return { ri, x: +x, y: +y, em: em.length ? em : ['🌱'] };
+    });
+    for (let k = 0; k < 60; k++) us.forEach((a, i) => us.forEach((b, j) => { if (j <= i) return; const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || .1; if (d < 40) { const f = (40 - d) / 2; a.x -= dx / d * f; a.y -= dy / d * f; b.x += dx / d * f; b.y += dy / d * f; } }));
+    const icons = us.filter((u) => got.has(u.ri)).map((u) => u.em.map((e, k) => `<text class="tbi" x="${(u.x + (k ? 10 : -10)).toFixed(1)}" y="${(u.y + (k ? 14 : 2)).toFixed(1)}">${e}</text>`).join('')).join('');
+    return `<svg class="tmap" viewBox="0 0 280 488" role="img" aria-label="台灣農業技術地圖，已拿到 ${got.size} / ${REG.length} 片拼圖"><defs>${clips}</defs>${bands}${seams}${icons}</svg>`;
   }
   function chainHTML() {
     const chip = (n) => { const t = techByNo.get(n); return t ? `<button class="gchip" type="button" data-no="${n}" style="--c:${zones[zoneIdxOf(t)].color}">${n} ${t.name.length > 9 ? t.name.slice(0, 9) + '…' : t.name}</button>` : ''; };
@@ -2634,37 +2640,37 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   const qOK = (pz, v) => pz.answers.some((a) => qNorm(a) === qNorm(v));
   const qStageDone = (st) => st.puzzles.every((p) => qs.solved[p.id]);
   const qAllDone = () => QD.stages.every(qStageDone);
-  const qPuz = (id) => id === 'final' ? { ...QD.final, id: 'final', type: 'web', related: [] } : QD.stages.flatMap((st) => st.puzzles).find((p) => p.id === id);
+  const qPuz = (id) => id === 'final' ? { ...QD.final, id: 'final', type: 'web', related: [], answers: [qFinalAns()], len: QD.stages.length } : QD.stages.flatMap((st) => st.puzzles).find((p) => p.id === id);
   function qBurst() {
     if (reduceMQ.matches) return;
     const cf = document.createElement('div'); cf.className = 'confetti'; cf.setAttribute('aria-hidden', 'true');
     cf.innerHTML = Array.from({ length: 22 }, (_, i) => `<i style="left:${Math.random() * 96}%;animation-delay:${(Math.random() * 1.2).toFixed(2)}s">${['🎉', '⭐', '💖', '🌸', '🍓', '🌟'][i % 6]}</i>`).join('');
     document.body.appendChild(cf); setTimeout(() => cf.remove(), 4200);
   }
-  const qMapHTML = (o) => techMapSVG(o && o.all ? new Set(zones.map((z, i) => i)) : gotSet(), QD.keys.map((k, i) => qStageDone(QD.stages[i]) ? k : null), o);
+  const qMapHTML = (o) => techMapSVG(o && o.all ? new Set(REG.map((r, i) => i)) : gotSet(), o);
+  const qFinalAns = () => QD.stages.map((st) => st.reward).join('');
   function qRender() {
     const v = qView; let h = '';
     qBackBtn.hidden = v.v === 'home';
     if (v.v === 'home') {
       const n = QD.stages.filter(qStageDone).length, fin = qs.solved.final;
-      h = `<div class="qtop"><div class="kline"><span class="kemo" aria-hidden="true">${QD.guide.emoji}</span><p>${QD.intro}</p></div><div class="qmap">${qMapHTML({ id: 'q' })}<p class="tmcap">拼圖 ${gotSet().size}/5</p></div></div>
-        <div class="qstages">${QD.stages.map((st, i) => { const z = zones[st.zone], d = st.puzzles.filter((p) => qs.solved[p.id]).length;
-          return `<button class="qstage ${qStageDone(st) ? 'done' : ''}" type="button" data-act="stage" data-i="${i}" style="--c:${z.color}"><b>${z.id}</b><span>${st.title}</span><i>${d}/${st.puzzles.length}</i></button>`; }).join('')}
-          <button class="qstage final ${qAllDone() ? '' : 'lock'} ${fin ? 'done' : ''}" type="button" data-act="final" ${qAllDone() ? '' : 'aria-disabled="true"'}><b>★</b><span>${QD.final.title}</span><i>${fin ? '完成' : qAllDone() ? '開始' : `${n}/5`}</i></button></div>
-        ${fin ? `<div class="qexp">${QD.final.ending}</div><div class="qrow"><button class="btn" type="button" data-act="reset">重玩一次</button></div>` : ''}`;
+      h = `<div class="qgrid"><div class="qmap">${qMapHTML({ id: 'q' })}</div><div><div class="kline"><span class="kemo" aria-hidden="true">${QD.guide.emoji}</span><p>${QD.intro}</p></div><div class="qstages">${QD.stages.map((st, i) => { const z = zones[st.zone], d = st.puzzles.filter((p) => qs.solved[p.id]).length;
+          return `<button class="qstage ${qStageDone(st) ? 'done' : ''}" type="button" data-act="stage" data-i="${i}" style="--c:${z.color}"><b>${z.id}</b><span>${st.title}</span><i>${qStageDone(st) ? st.reward : '●'.repeat(d) + '○'.repeat(st.puzzles.length - d)}</i></button>`; }).join('')}
+          <button class="qstage final ${qAllDone() ? '' : 'lock'} ${fin ? 'done' : ''}" type="button" data-act="final" ${qAllDone() ? '' : 'aria-disabled="true"'}><b>★</b><span>${QD.final.title}</span><i>${fin ? '✓' : qAllDone() ? '▶' : '🔒'}</i></button></div>
+        ${fin ? `<div class="qrow"><button class="btn" type="button" data-act="reset">重玩一次</button></div>` : ''}</div></div>`;
     } else if (v.v === 'stage') {
       const st = QD.stages[v.i], z = zones[st.zone];
-      h = `<p class="qprompt" style="color:${'var(--ink)'}">${st.title}</p><p class="gsub">${st.intro}</p>
-        <div class="qstages">${st.puzzles.map((p, i) => `<button class="qstage ${qs.solved[p.id] ? 'done' : ''}" type="button" data-act="puz" data-id="${p.id}" style="--c:${z.color}"><b>${i + 1}</b><span>${p.type === 'board' ? '展板題' : '網站題'}</span><i>${qs.solved[p.id] ? '已解開' : '挑戰'}</i></button>`).join('')}</div>`;
+      h = `<p class="qprompt">${st.title}</p>
+        <div class="qstages">${st.puzzles.map((p, i) => `<button class="qstage ${qs.solved[p.id] ? 'done' : ''}" type="button" data-act="puz" data-id="${p.id}" style="--c:${z.color}"><b>${i + 1}</b><span>${p.type === 'board' ? '📍 展板題' : '🌐 網站題'}</span><i>${qs.solved[p.id] ? '✓' : '▶'}</i></button>`).join('')}</div>`;
     } else {
       const pz = qPuz(v.id), solved = !!qs.solved[pz.id], shown = Math.min(qs.hints[pz.id] || 0, pz.hints.length), isF = pz.id === 'final';
-      const scr = isF ? `<div class="qbig" aria-label="打亂的字">${QD.final.scramble.map((i) => QD.keys[i]).join(' ')}</div>` : '';
-      h = `${isF ? '' : `<span class="qtag">${pz.type === 'board' ? '展板題' : '網站題'}</span>`}
+      const scr = isF ? `<div class="qbig" aria-label="打亂的字">${QD.final.scramble.map((i) => QD.stages[i].reward).join(' ')}</div>` : '';
+      h = `${isF ? '' : `<span class="qtag">${pz.type === 'board' ? '📍 展板題' : '🌐 網站題'}</span>`}
         <p class="qprompt">${pz.prompt}</p>${scr}
-        ${solved ? `<div class="qexp">答對了！答案是「${pz.answers[0]}」。${pz.explain || ''}${isF ? `<br>${QD.final.ending}` : ''}</div>${isF ? `<div class="qmapbig">${qMapHTML({ id: 'qf', all: true, anim: true, markers: true })}<p class="tmcap">${DATA.units.length} 個單位、${techList.length} 項技術</p></div>` : ''}`
+        ${solved ? `<div class="qexp">答對了！答案是「${pz.answers[0]}」。${pz.explain || ''}${isF ? `<br>${QD.final.ending}` : ''}</div>${isF ? `<div class="qmapbig">${qMapHTML({ id: 'qf', all: true, anim: true })}</div>` : ''}`
           : `<div class="qans"><input id="qIn" type="text" maxlength="12" autocomplete="off" placeholder="${pz.len} 個字或數字" aria-label="答案"><button class="btn primary" type="button" data-act="check">送出</button></div><p class="qmsg" id="qMsg" aria-live="polite"></p>`}
-        ${pz.hints.slice(0, shown).map((t, i) => `<p class="qhint">提示 ${i + 1}：${t}</p>`).join('')}
-        <div class="qrow">${solved ? '' : shown < pz.hints.length ? `<button class="btn" type="button" data-act="hint">看提示（${shown}/${pz.hints.length}）</button>` : `<button class="btn" type="button" data-act="reveal">看答案</button>`}
+        ${pz.hints.slice(0, shown).map((t, i) => `<p class="qhint">💡 ${t}</p>`).join('')}
+        <div class="qrow">${solved ? '' : shown < pz.hints.length ? `<button class="btn" type="button" data-act="hint">💡 提示 ${shown}/${pz.hints.length}</button>` : `<button class="btn" type="button" data-act="reveal">看答案</button>`}
           ${(pz.related || []).map((no) => `<button class="btn" type="button" data-act="tech" data-no="${no}">到卡片找答案</button>`).join('')}
           ${solved && isF ? '<button class="btn" type="button" data-act="home">回闖關首頁</button>' : ''}</div>`;
     }
@@ -2675,7 +2681,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     qs.solved[pz.id] = true; qSave();
     const st = QD.stages.find((x) => x.puzzles.includes(pz));
     if (pz.id === 'final') { qBurst(); qView = { v: 'puz', id: 'final' }; }
-    else if (st && qStageDone(st)) { qs.stages[QD.stages.indexOf(st)] = true; qSave(); markDone(); qBurst(); toast(`拿到一片拼圖，上面的字是「${QD.keys[QD.stages.indexOf(st)]}」`); qView = { v: 'home' }; }
+    else if (st && qStageDone(st)) { qs.stages[QD.stages.indexOf(st)] = true; qSave(); markDone(); qBurst(); toast(`拿到一片拼圖：「${st.reward}」`); qView = { v: 'home' }; }
     else { qView = { v: 'stage', i: QD.stages.indexOf(st) }; toast('答對了！'); }
     qRender();
   }
@@ -2723,7 +2729,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     $('#gTotal').textContent = n; $('#gMoves').textContent = 0; $('#gPairs').textContent = 0; gWin.hidden = true;
     gGrid.innerHTML = G.cards.map((c, i) => {
       const col = zones[zoneIdxOf(c.t)].color;
-      return `<button class="gcard ${c.k === 'name' ? 't' : ''}" type="button" data-i="${i}" style="--c:${col}" aria-label="第 ${i + 1} 張牌，還沒翻開"><div class="gin"><div class="gb"><span>•ᴗ•</span></div><div class="gf">${c.k === 'name' ? `<span class="gemo" aria-hidden="true">${c.t.kid.e}</span><strong>${c.t.kid.nick}</strong>` : `<small>重點說明</small><span>${c.t.kid.line}</span>`}</div></div></button>`;
+      return `<button class="gcard ${c.k === 'name' ? 't' : ''}" type="button" data-i="${i}" style="--c:${col}" aria-label="第 ${i + 1} 張牌，還沒翻開"><div class="gin"><div class="gb"><span>•ᴗ•</span></div><div class="gf">${c.k === 'name' ? `<span class="gemo" aria-hidden="true">${c.t.kid.e}</span><strong>${c.t.kid.nick}</strong>` : `<span>${c.t.kid.line}</span>`}</div></div></button>`;
     }).join('');
   }
   function gameWin() {
