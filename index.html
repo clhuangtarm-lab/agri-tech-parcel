@@ -371,7 +371,10 @@ body{
 .qmap{width:200px}
 .qmapbig{margin:14px auto 0;width:min(230px,70%)}
 @media (max-width:560px){.qgrid{grid-template-columns:1fr}.qmap{width:190px;margin:0 auto}}
-.pieces svg{width:min(220px,60vw);height:auto}
+.redeem{margin:0 0 14px;padding:10px 16px;border-radius:999px;background:#fff3d6;border:2.5px dashed var(--coral);color:var(--ink);font-weight:800;font-size:15px;line-height:1.5;text-align:center}
+.qmapbig+.redeem{margin:12px 0 0}
+.pieces svg{height:min(330px,40dvh);width:auto;max-width:70vw}
+@media (min-width:700px){.finale-card{width:min(780px,100%);display:grid;grid-template-columns:auto 1fr;gap:6px 30px;align-items:center;text-align:left}.finale-card>:not(.pieces){grid-column:2}.finale-card .pieces{grid-column:1;grid-row:1 / span 6;margin:0}.pieces svg{height:min(540px,76dvh);max-width:none}.finale-card .redeem{text-align:center}.finale-card .stampbig{right:auto;left:18px;top:18px}}
 .qkeys{display:flex;gap:8px;margin:0 0 12px}
 .qkeys span{flex:1;min-height:52px;display:grid;place-items:center;border-radius:14px;background:#fffdf9;border:2.5px dashed var(--stone);font:700 26px "Huninn","Noto Sans TC",sans-serif;color:#b9a99b}
 .qkeys span.on{border:2.5px solid var(--coral);background:#fff3d6;color:var(--ink);animation:gpop2 .5s}
@@ -526,6 +529,7 @@ body.lite .zcard,body.lite .side{background:rgba(255,248,244,.97)}
     <div class="stampbig" aria-hidden="true">簽收完成</div>
     <h2 id="finaleTitle">五個包裹都拆完了</h2>
     <p class="exit" id="finaleExit"></p>
+    <p class="redeem">到展場服務台出示此畫面，兌換好禮</p>
     <div class="finale-actions"><button class="btn primary" id="finaleTrack" type="button">看包裹從哪裡來</button><button class="btn" id="finaleClose" type="button">再逛逛</button></div>
   </div>
 </div>
@@ -627,7 +631,7 @@ const DATA = {
       { name: '風味與生活', text: '採收後的風味與加工，走進日常。', zone: 4 } ] }
   ],
   /* 64 案資料（由 PDF 簡報 p.61–64 抽出；每案自帶 model 欄位，格式「種類:變體」） */
-  dataFile: 'data/techs_v9_2026-11-01.json',
+  dataFile: 'data/techs_v10_2026-11-01.json',
   questFile: 'data/quest_v5_2026-11-01.json',
   /* 寄件單位：key 為資料檔 unit 欄的開頭；n 為簡報 p.60 載明的案數；
      full 為機關全名；county、lat、lon 為場址所在縣市鄉鎮與座標（OpenStreetMap，見 data/units_geo_2026-10-23.json）；
@@ -2451,6 +2455,31 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     [[121.33, 24.55], [122.5, 24.55], [122.5, 22.5], [121.08, 22.5], [121.08, 22.95], [121.30, 23.7]],
     [[120.72, 24.55], [121.33, 24.55], [121.30, 23.7], [121.08, 22.95], [120.95, 22.95], [120.78, 23.55]]];
   const inPoly = (pt, poly) => { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [xi, yi] = poly[i], [xj, yj] = poly[j]; if ((yi > pt[1]) !== (yj > pt[1]) && pt[0] < (xj - xi) * (pt[1] - yi) / (yj - yi) + xi) c = !c; } return c; };
+  /* 64 項技術的圖示：依寄件單位所在的片，鋪排在該片的台灣輪廓內（花創中心位置未定，放在中間那片） */
+  let ICONS = null;
+  function iconLayout() {
+    if (ICONS) return ICONS;
+    const isl = TW.map(([lo, la]) => proj(lo, la).map(Number)), regs = REG.map((r) => r.map(([lo, la]) => proj(lo, la).map(Number)));
+    const regOf = (t) => { const u = unitOf(t); if (!u || u.lat == null) return 4; const i = REG.findIndex((r) => inPoly([u.lon, u.lat], r)); return i < 0 ? 4 : i; };
+    const order = (t) => DATA.units.indexOf(unitOf(t));
+    ICONS = [];
+    regs.forEach((poly, ri) => {
+      const list = techList.filter((t) => regOf(t) === ri).sort((a, b) => order(a) - order(b) || a.no - b.no); if (!list.length) return;
+      let pts = [], sp = 24;
+      for (; sp >= 12; sp -= 1) {
+        pts = [];
+        for (let row = 0, y = 12; y < 480; row++, y += sp * .87) for (let x = 8 + (row % 2 ? sp / 2 : 0); x < 272; x += sp) {
+          const m = sp * .45;
+          if ([[0, 0], [m, 0], [-m, 0], [0, m], [0, -m]].every(([dx, dy]) => inPoly([x + dx, y + dy], poly) && inPoly([x + dx, y + dy], isl))) pts.push([x, y]);
+        }
+        if (pts.length >= list.length) break;
+      }
+      pts.sort((a, b) => a[1] - b[1] || a[0] - b[0]);
+      const step = pts.length / list.length, fs = Math.min(22, Math.round(sp * .92));
+      list.forEach((t, i) => { const [x, y] = pts[Math.min(pts.length - 1, Math.floor(i * step + step / 2))] || [140, 240]; ICONS.push({ ri, x: x.toFixed(1), y: (y + fs * .36).toFixed(1), fs, e: t.icon || (t.kid && t.kid.e) || '🌱' }); });
+    });
+    return ICONS;
+  }
   function techMapSVG(got, o = {}) {
     const id = o.id || 'tm';
     const path = TW.map(([lo, la], i) => (i ? 'L' : 'M') + proj(lo, la).join(',')).join(' ') + 'Z';
@@ -2460,14 +2489,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
       ? `<path class="tbp" d="${path}" clip-path="url(#${id}c${i})" fill="${zones[i].color}" style="animation-delay:${o.anim ? i * .3 : 0}s"/>`
       : `<path d="${path}" clip-path="url(#${id}c${i})" fill="#eadfd3"/>`).join('');
     const seams = `<g clip-path="url(#${id}i)">${REG.map((r) => `<polygon points="${poly(r)}" fill="none" stroke="#fff8f4" stroke-width="3"/>`).join('')}</g>`;
-    const us = DATA.units.filter((u) => u.lat != null).map((u) => {
-      const [x, y] = proj(u.lon, u.lat);
-      const ri = REG.findIndex((r) => inPoly([u.lon, u.lat], r));
-      const em = [...new Set(techList.filter((t) => unitOf(t) === u && t.kid).map((t) => t.kid.e))].slice(0, 2);
-      return { ri, x: +x, y: +y, em: em.length ? em : ['🌱'] };
-    });
-    for (let k = 0; k < 60; k++) us.forEach((a, i) => us.forEach((b, j) => { if (j <= i) return; const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || .1; if (d < 40) { const f = (40 - d) / 2; a.x -= dx / d * f; a.y -= dy / d * f; b.x += dx / d * f; b.y += dy / d * f; } }));
-    const icons = us.filter((u) => got.has(u.ri)).map((u) => u.em.map((e, k) => `<text class="tbi" x="${(u.x + (k ? 10 : -10)).toFixed(1)}" y="${(u.y + (k ? 14 : 2)).toFixed(1)}">${e}</text>`).join('')).join('');
+    const icons = iconLayout().filter((c) => got.has(c.ri)).map((c) => `<text class="tbi" style="font-size:${c.fs}px" x="${c.x}" y="${c.y}">${c.e}</text>`).join('');
     return `<svg class="tmap" viewBox="0 0 280 488" role="img" aria-label="台灣農業技術地圖，已拿到 ${got.size} / ${REG.length} 片拼圖"><defs>${clips}</defs>${bands}${seams}${icons}</svg>`;
   }
   function chainHTML() {
@@ -2671,7 +2693,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
       const scr = isF ? `<div class="qbig" aria-label="打亂的字">${QD.final.scramble.map((i) => QD.stages[i].reward).join(' ')}</div>` : '';
       h = `${isF ? '' : `<span class="qtag">${pz.type === 'board' ? '📍 展板題' : '🌐 網站題'}</span>`}
         <p class="qprompt">${pz.prompt}</p>${scr}
-        ${solved ? `<div class="qexp">答對了！答案是「${pz.answers[0]}」。${pz.explain || ''}${isF ? `<br>${QD.final.ending}` : ''}</div>${isF ? `<div class="qmapbig">${qMapHTML({ id: 'qf', all: true, anim: true })}</div>` : ''}`
+        ${solved ? `<div class="qexp">答對了！答案是「${pz.answers[0]}」。${pz.explain || ''}${isF ? `<br>${QD.final.ending}` : ''}</div>${isF ? `<div class="qmapbig">${qMapHTML({ id: 'qf', all: true, anim: true })}</div><p class="redeem">到展場服務台出示此畫面，兌換好禮</p>` : ''}`
           : `<div class="qans"><input id="qIn" type="text" maxlength="12" autocomplete="off" placeholder="${pz.len} 個字或數字" aria-label="答案"><button class="btn primary" type="button" data-act="check">送出</button></div><p class="qmsg" id="qMsg" aria-live="polite"></p>`}
         <div class="qrow">${!solved && (qs.hints[pz.id] || 0) > 0 ? '<button class="btn" type="button" data-act="reveal">看答案</button>' : ''}
           ${(pz.related || []).map((no) => `<button class="btn" type="button" data-act="tech" data-no="${no}">到卡片找答案</button>`).join('')}
