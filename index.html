@@ -135,6 +135,7 @@ body{
 .zcard .num em{margin-left:auto;font:700 12px ui-monospace,Menlo,Consolas,monospace;font-style:normal;color:#8a7a70}
 .zcard .opener{margin:0 0 12px;font-size:13px;color:#5b4f49}
 .zcard .back{position:static;min-height:36px;margin:0 0 10px;padding:0 12px;font-size:13px}
+.zcard .fullname{margin:0 44px 8px 0;font-size:12px;line-height:1.5;color:#8a7a70}
 .zcard .oneline{margin:0 0 4px;font-size:15px;font-weight:700;line-height:1.6}
 .zcard .oneline small{display:block;margin-top:2px;font-weight:500;font-size:11.5px;color:#8a7a70}
 .zcard .pager{display:flex;gap:8px;margin-top:12px}.zcard .pager .btn{flex:1;min-width:0;padding:0 8px}
@@ -494,8 +495,8 @@ const DATA = {
       { name: '02 交給機械', text: '毛豆一貫化機械：用機械把種、收的工作接起來（02 包的主角）。', zone: 1 } ] },
     { id: 'loop', title: '剩餘物循環', src: '簡報 p.33、36', stages: [
       { name: '看見材料', text: '開場展示：先把剩餘物看清楚，有哪些、有多少。' },
-      { name: '處理轉化', text: '粉碎、炭化、循環再利用，把剩餘物變成能用的東西。', techNos: [51, 54, 55] },
-      { name: '回到生產', text: '轉成介質、培養土、稻草資材，回到田裡和育苗場。', techNos: [50, 52, 56, 57] },
+      { name: '處理轉化', text: '粉碎、炭化、循環再利用，把剩餘物變成能用的東西。', techNos: [50, 51, 54, 55] },
+      { name: '回到生產', text: '轉成介質、培養土、稻草資材，回到田裡和育苗場。', techNos: [52, 56, 57] },
       { name: '走進生活', text: '變成生活裡用得到的產品。', techNos: [53] } ] },
     { id: 'route', title: '五個包裹，一條路', src: '簡報 p.16、23、30、32、42', stages: [
       { name: '好品種', text: '口味、氣候、缺工都在變，先有更多選擇。', zone: 0 },
@@ -505,10 +506,10 @@ const DATA = {
       { name: '風味與生活', text: '採收後的風味與加工，走進日常。', zone: 4 } ] }
   ],
   /* 64 案資料（由 PDF 簡報 p.61–64 抽出；每案自帶 model 欄位，格式「種類:變體」） */
-  dataFile: 'data/techs_v5_2026-10-23.json',
+  dataFile: 'data/techs_v6_2026-11-01.json',
   /* 寄件單位：key 為資料檔 unit 欄的開頭；n 為簡報 p.60 載明的案數；
      full 為機關全名；county、lat、lon 為場址所在縣市鄉鎮與座標（OpenStreetMap，見 data/units_geo_2026-10-23.json）；
-     花創中心的單位身分與位置未確認，不顯示全名與位置 */
+     花創中心的場址尚未確認，不顯示位置 */
   units: [
     { key: '農試所', full: '農業部農業試驗所', n: 14, county: '臺中市霧峰區', lat: 24.032, lon: 120.69 },
     { key: '臺南場', full: '農業部臺南區農業改良場', n: 10, county: '臺南市新化區', lat: 23.06, lon: 120.344 },
@@ -520,7 +521,7 @@ const DATA = {
     { key: '桃園場', full: '農業部桃園區農業改良場（含樹林分場）', n: 5, county: '桃園市新屋區', lat: 24.951, lon: 121.029 },
     { key: '種苗場', full: '農業部種苗改良繁殖場', n: 4, county: '臺中市新社區', lat: 24.221, lon: 120.802 },
     { key: '臺中場', full: '農業部臺中區農業改良場', n: 2, county: '彰化縣大村鄉', lat: 24.004, lon: 120.533 },
-    { key: '花創中心', full: null, n: 1 }
+    { key: '花創中心', full: '花卉創新園區研究發展中心', n: 1 }
   ],
   /* 拆包與微縮場景：托盤中心（世界座標 z）、展開總長（秒） */
   tray: { z: 2.3, y: .3, tModels: 2.6 },
@@ -529,19 +530,19 @@ const DATA = {
   zones: [
     { id: '01', big: '薯於你的好味道', short: '品種創新', full: '品種改良與生產調適', count: 28, pages: 'p.11–16',
       opener: '台農57號甘藷', openerNo: null, openerModel: 'fruit:sweetpotato', color: '#e39a4f', sticker: '活體種苗・小心輕放', pattern: 'dots',
-      groups: ['想吃得更好、更多選擇', '氣候適應', '配合省工新種法', '種原保存與選育'] },
+      groups: ['我們想吃得更好，也想有更多選擇', '天氣變了，作物也要更能適應', '農業缺工，品種也要配合新種法', '先保存，才有面對未來的選擇'] },
     { id: '02', big: '豆陣來省力', short: '智慧生產', full: '智慧生產與資源管理', count: 10, pages: 'p.17–23',
       opener: '毛豆高雄9號一貫化', openerNo: null, openerModel: 'pod:edamame', color: '#7fb06a', sticker: '精密機具・請勿倒置', pattern: 'stripes',
-      groups: ['先看懂', '用水精準', '交給機械', '採後整理'] },
+      groups: ['先看清楚，再決定怎麼做', '每一滴水，都用在需要的地方', '把辛苦的工作交給機械', '收成之後，還要又快又乾淨'] },
     { id: '03', big: '果真健康，好苗先行', short: '健康安心', full: '健康生產與友善環境', count: 11, pages: 'p.24–30',
       opener: '無特定病毒百香果苗', openerNo: 47, openerModel: null, color: '#f2b5c6', sticker: '活體種苗・小心輕放', pattern: 'bricks',
-      groups: ['好苗先行', '早期發現', '友善防護', '顧好土地'] },
+      groups: ['健康要從第一株苗開始', '看得早，才來得及保護', '保護作物，也要照顧環境', '田健康，作物才能長久健康'] },
     { id: '04', big: '菇掰浪費，資源再生', short: '韌性永續', full: '韌性永續與資源循環', count: 8, pages: 'p.31–37',
       opener: '香菇廢菇包', openerNo: 57, openerModel: null, color: '#6f7fb5', sticker: '循環再利用・請分類', pattern: 'dots',
-      groups: ['處理轉化', '回到生產', '走進生活'] },
+      groups: ['變小、變乾、變安全再利用', '舊材料，成為新一輪生產的起點', '不只回到田裡，也能走進生活'] },
     { id: '05', big: '茶點不一樣', short: '多元應用', full: '農產品品質與多元應用', count: 7, pages: 'p.38–43',
       opener: '紅烏龍', openerNo: null, openerModel: 'cup:redoolong', color: '#58a6a6', sticker: '易碎・請輕拿', pattern: 'stripes',
-      groups: ['形式變不同', '風味變多', '生活情境'] }
+      groups: ['同樣原料，不同風味', '農產品換一種樣子', '不只能吃，也能陪伴生活'] }
   ]
 };
 
@@ -610,7 +611,7 @@ function sourcesHTML(t) {
   const s = t.sources || [];
   if (!s.length) return '';
   const ph = ((t.media || {}).photos || []).filter((p) => p.credit).map((p) => p.credit);
-  return `<details class="srcbox"><summary>資料來源</summary><ul class="srcs">${s.map((x) => `<li><a href="${x.url}" target="_blank" rel="noopener">${x.title}</a>${x.publisher ? `（${x.publisher}${x.date ? `，${x.date}` : ''}）` : ''}</li>`).join('')}${ph.length ? `<li>圖片：${[...new Set(ph)].join('；')}</li>` : ''}</ul></details>`;
+  return `<details class="srcbox"><summary>資料來源</summary><ul class="srcs">${s.map((x) => `<li>${x.url ? `<a href="${x.url}" target="_blank" rel="noopener">${x.title}</a>` : x.title}${x.publisher ? `（${x.publisher}${x.date ? `，${x.date}` : ''}）` : ''}</li>`).join('')}${ph.length ? `<li>圖片：${[...new Set(ph)].join('；')}</li>` : ''}</ul></details>`;
 }
 
 
@@ -2034,6 +2035,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
       <button class="btn back" type="button" data-act="back">← ${z.short}</button>
       <div class="eyebrow"><span class="swatch" style="background:${z.color}"></span>${c.opener ? '本包主角' : 'No.' + t.no} ・ ${t.group}</div>
       <h2>${t.name}</h2>
+      ${t.fullName && t.fullName !== t.name ? `<p class="fullname">展出名稱：${t.fullName}</p>` : ''}
       <dl>
         ${unit ? `<div><dt>寄件單位</dt><dd><button class="ulink" type="button" data-unit="${unit.key}">${t.unit}</button></dd></div>` : ''}
         <div><dt>所屬</dt><dd>${z.id} ${z.short}｜${t.group}</dd></div>
@@ -2128,7 +2130,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   const unitOf = (t) => DATA.units.find((u) => t.unit.startsWith(u.key));
   let sideTab = 'tech', unitView = null, fZone = -1, fUnit = '';
   const qWords = () => qEl.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
-  const qMatch = (t) => { const st = t.story ? `${t.story.problem} ${t.story.solution} ${t.story.features.join(' ')} ${t.story.life}` : ''; const hay = `${t.no} ${t.name} ${t.unit} ${t.group} ${t.oneLine || ''} ${st} ${t.zone}`.toLowerCase(); return qWords().every((w) => hay.includes(w)); };
+  const qMatch = (t) => { const st = t.story ? `${t.story.problem} ${t.story.solution} ${t.story.features.join(' ')} ${t.story.life}` : ''; const hay = `${t.no} ${t.name} ${t.fullName || ''} ${t.unit} ${t.group} ${t.oneLine || ''} ${st} ${t.zone}`.toLowerCase(); return qWords().every((w) => hay.includes(w)); };
   const matchTech = (t) => (fZone < 0 || zoneIdxOf(t) === fZone) && (!fUnit || (unitOf(t) || {}).key === fUnit) && qMatch(t);
   const filterActive = () => fZone >= 0 || !!fUnit || qWords().length > 0;
   const curNo = () => { const zs = zsOf(sel); return selCase >= 0 && zs ? zs.cases[selCase].tech.no : null; };
