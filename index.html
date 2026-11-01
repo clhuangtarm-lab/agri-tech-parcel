@@ -2291,13 +2291,13 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     if (!list.length) return '<p class="empty">找不到符合的單位。</p>';
     return `<p class="count">${list.length} 個寄件單位</p>` + list.map((u) => {
       const l = techList.filter((t) => unitOf(t) === u);
-      return `<button class="ucard" type="button" data-u="${u.key}"><div class="un"><b>${u.full || u.key}</b><span>${u.county || ''}</span></div><div class="uc"><strong>${l.length}</strong>案</div><div class="uz">${zoneDots(l)}</div></button>`;
+      return `<button class="ucard" type="button" data-u="${u.key}"><div class="un"><b>${u.full || u.key}</b></div><div class="uc"><strong>${l.length}</strong>案</div><div class="uz">${zoneDots(l)}</div></button>`;
     }).join('');
   }
   function unitDetailHTML(key) {
     const u = DATA.units.find((x) => x.key === key), l = techList.filter((t) => unitOf(t) === u), cur = curNo();
     let html = `<button class="btn uback" type="button" data-uback>← 全部單位</button>
-      <div class="uhead"><div class="eyebrow">寄件單位</div><h3>${u.full || u.key}</h3>${u.county ? `<p>${u.county}</p>` : ''}
+      <div class="uhead"><div class="eyebrow">寄件單位</div><h3>${u.full || u.key}</h3>
       <p>共 ${l.length} 項技術</p><div class="uz" style="display:flex;flex-wrap:wrap;gap:4px">${zoneDots(l)}</div></div>`;
     zones.forEach((z, zi) => {
       const zl = l.filter((t) => zoneIdxOf(t) === zi); if (!zl.length) return;
@@ -2438,7 +2438,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     const cur = trackUnit && DATA.units.find((u) => u.key === trackUnit);
     return `<div class="mapwrap"><svg viewBox="0 0 280 480" role="img" aria-label="台灣示意地圖，標示寄件單位的位置"><path class="tw" d="${path}"/>
       ${pts.map((p) => `<g class="mk${trackUnit === p.u.key ? ' on' : ''}" data-u="${p.u.key}" tabindex="0" role="button" aria-label="${p.u.full || p.u.key}，${unitCount(p.u)} 案"><circle cx="${p.x}" cy="${p.y}" r="11"/><text x="${p.x}" y="${p.y}">${unitCount(p.u)}</text>${trackUnit === p.u.key ? `<text class="mklabel" x="${Math.min(Math.max(p.x, 36), 244)}" y="${p.y - 21}">${p.u.full || p.u.key}</text>` : ''}</g>`).join('')}</svg>
-      <div><div class="ulist">${DATA.units.map((u) => `<button class="urow${trackUnit === u.key ? ' on' : ''}" type="button" data-u="${u.key}"><i>${unitCount(u)}</i><div><b>${u.full || u.key}</b><span>${u.county || ''}</span></div><em>${unitCount(u)}</em></button>`).join('')}</div>
+      <div><div class="ulist">${DATA.units.map((u) => `<button class="urow${trackUnit === u.key ? ' on' : ''}" type="button" data-u="${u.key}"><i>${unitCount(u)}</i><div><b>${u.full || u.key}</b></div><em>${unitCount(u)}</em></button>`).join('')}</div>
       ${cur ? `<div class="ucap"><b>${cur.full || cur.key}</b>寄出 ${unitCount(cur)} 項技術。<br><button class="btn primary" type="button" data-ulist="${cur.key}">看這個單位的技術</button></div>` : ''}</div></div>
       <p class="exitline">${DATA.exitLine}</p>`;
   }
