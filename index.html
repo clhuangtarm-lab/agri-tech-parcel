@@ -121,9 +121,11 @@ body{
 .tip{position:fixed;z-index:30;max-width:230px;padding:6px 11px;border-radius:10px;background:var(--ink);color:var(--cream);font-size:13px;font-weight:700;pointer-events:none;box-shadow:var(--shadow)}
 
 /* 區卡 */
-.zcard{position:fixed;z-index:15;left:16px;top:112px;width:340px;max-height:calc(100% - 200px);overflow:auto;padding:20px 20px 18px;border-radius:22px;
+.zcard{position:fixed;z-index:15;left:16px;top:96px;width:460px;min-width:340px;max-width:calc(100vw - 32px);max-height:calc(100% - 176px);resize:both;overflow:auto;padding:20px 22px 18px;border-radius:22px;
   background:rgba(255,248,244,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow)}
 .zcard .close{position:absolute;right:10px;top:10px;min-width:44px;padding:0;font-size:20px}
+.zcard .expand{position:absolute;right:58px;top:10px;min-width:44px;padding:0;font-size:18px}
+.zcard.big{width:min(720px,62vw);max-height:calc(100% - 130px);top:88px}
 .zcard .swatch{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-1px;margin-right:6px}
 .zcard h2{margin:8px 44px 4px 0;font-size:24px;line-height:1.25;font-family:"Huninn","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
 .zcard .full{margin:0 0 14px;font-size:13px;color:#6b5d55}
@@ -306,12 +308,11 @@ body{
 .kpts li:nth-child(3)::before{content:"💗"}
 .klife{margin:12px 0 0;padding:11px 16px;border-radius:20px;background:#ffe3e6;border:2.5px dashed #f5a9b8;font-size:14.5px;font-weight:700;line-height:1.6}
 @media (prefers-reduced-motion:reduce){.kline .kemo{animation:none}}
-.more{margin:14px 0 0;border-top:2px dotted var(--stone);padding-top:6px}
-.more>summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:800;font-size:14px;color:var(--coral)}
+.more{margin:14px 0 0;border-top:2px dotted var(--stone);padding-top:2px}
 .sec{margin:14px 0 0}
 .sec h3{margin:0 0 4px;display:inline-block;padding:2px 10px;border-radius:999px;background:var(--c);color:#fff;font-size:12px;letter-spacing:1px}
-.sec p{margin:4px 0 0;font-size:14px;line-height:1.75}
-.sec ul{margin:4px 0 0;padding-left:1.2em;font-size:14px;line-height:1.75}
+.sec p{margin:4px 0 0;font-size:15px;line-height:1.8}
+.sec ul{margin:4px 0 0;padding-left:1.2em;font-size:15px;line-height:1.8}
 .sec.l{padding:10px 12px;border-radius:12px;background:#fff3d6}
 .sec.l h3{background:var(--coral)}
 .soon{margin:14px 0 0;font-size:13px;color:#8a7a70}
@@ -435,7 +436,8 @@ body.lite .zcard,body.lite .side{background:rgba(255,248,244,.97)}
   .ship.out{animation:shipout-m .6s ease-in forwards}
   @keyframes shipin-m{from{opacity:0;transform:translateX(-50%) translateY(40px) rotate(-4deg)}to{opacity:1;transform:translateX(-50%) rotate(1deg)}}
   @keyframes shipout-m{to{opacity:0;transform:translateX(-50%) translateY(-60px) rotate(4deg)}}
-  .zcard{left:8px;right:8px;top:auto;bottom:8px;width:auto;max-height:40vh;border-radius:22px;padding-top:6px}
+  .zcard{left:8px;right:8px;top:auto;bottom:8px;width:auto;min-width:0;max-width:none;max-height:56vh;resize:none;border-radius:22px;padding-top:6px}
+  .zcard .expand{display:none}
   .side{left:8px;right:8px;top:auto;bottom:8px;width:auto;height:52vh;border-radius:22px}
   body.side-open .zcard{display:none}
   .fz{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}.fz::-webkit-scrollbar{display:none}
@@ -752,7 +754,7 @@ function storyHTML(t, opener) {
   const block = (cls, title, body) => `<section class="sec ${cls}"><h3>${title}</h3>${body}</section>`;
   const full = block('q', '面臨什麼問題', `<p>${st.problem}</p>`) + block('s', '怎麼解決', `<p>${st.solution}</p>`)
     + block('f', '特色', `<ul>${st.features.map((x) => `<li>${x}</li>`).join('')}</ul>`) + block('l', '和生活的連結', `<p>${st.life}</p>`);
-  return t.kid ? `<details class="more"><summary>了解更多</summary>${full}</details>` : full;
+  return t.kid ? `<div class="more">${full}</div>` : full;
 }
 /* 親子版短文：一句話、三個重點、和生活的連結；有 kid 欄位的案才有，沒有就退回一句話 */
 function kidHTML(t) {
@@ -2113,13 +2115,14 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   const ZDIR = new T.Vector3(0, 1.05, .9).normalize();
   let sideOpen = false;   // 右側清單是否開著
   const sheetFrac = () => { const el = sideOpen ? $('#side') : zcard; return Math.min(.8, ((el.hidden ? 0 : el.getBoundingClientRect().height) + 8) / innerHeight); };
+  const cardPx = () => isMobile() ? 0 : Math.round((zcard.hidden ? 460 : zcard.getBoundingClientRect().width) + 32);
   function viewShot(c, w, d, hExtra, minD) {
     const mob = isMobile(), rightPx = !mob && sideOpen ? 340 : 0, sf = mob ? Math.max(.2, sheetFrac()) : 0;
-    const availW = mob ? 1 : Math.max(.4, (innerWidth - 390 - rightPx) / innerWidth), availH = mob ? 1 - sf : 1;
+    const availW = mob ? 1 : Math.max(.4, (innerWidth - cardPx() - rightPx) / innerWidth), availH = mob ? 1 - sf : 1;
     const hw = (w / 2 + .6) * 1.2, hh = ((d / 2) * .76 + hExtra) * 1.12;
     const dist = Math.min(Math.max(hw / (TAN * camera.aspect * availW), hh / (TAN * availH), minD), 42);
     const t = c.clone();
-    if (mob) t.z += 1.3 * sf * dist * TAN; else t.x -= (((390 - rightPx) / 2) / (innerWidth / 2)) * (dist * TAN * camera.aspect);
+    if (mob) t.z += 1.3 * sf * dist * TAN; else t.x -= (((cardPx() - rightPx) / 2) / (innerWidth / 2)) * (dist * TAN * camera.aspect);
     return { p: t.clone().addScaledVector(ZDIR, dist), t, dist };
   }
   function overviewShot() {   // 全景：五個包裹；右側清單開著時往左讓出空間
@@ -2152,6 +2155,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
       body = `<p class="note">64 案資料沒有讀到（${techsErr ? techsErr.message : '未知原因'}）。請用「啟動預覽.bat」或本機伺服器開啟網頁，直接點兩下 index.html 讀不到 data 資料夾。</p>`;
     }
     zcard.innerHTML = `${GRAB}
+      <button class="btn expand" type="button" data-act="expand" aria-label="放大或縮小視窗" title="放大／縮小">⤢</button>
       <button class="btn close" type="button" aria-label="關閉">×</button>
       <div class="eyebrow"><span class="swatch" style="background:${z.color}"></span>第 ${z.id} 包</div>
       <h2>${z.big}</h2>
@@ -2167,6 +2171,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     const unit = t.unit && unitOf(t), same = unit ? techList.filter((x) => x.no !== t.no && unitOf(x) === unit).slice(0, 6) : [];
     const story = storyHTML(t, c.opener);
     zcard.innerHTML = `${GRAB}
+      <button class="btn expand" type="button" data-act="expand" aria-label="放大或縮小視窗" title="放大／縮小">⤢</button>
       <button class="btn close" type="button" aria-label="關閉">×</button>
       <button class="btn back" type="button" data-act="back">← ${z.short}</button>
       <div class="eyebrow"><span class="swatch" style="background:${z.color}"></span>${c.opener ? '本包主角' : 'No.' + t.no} ・ ${t.group}</div>
@@ -2251,6 +2256,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     else if (t.dataset.g !== undefined) focusGroup(+t.dataset.g);
     else if (t.dataset.act === 'back') deselectCase();
     else if (t.dataset.act === 'copy') copyLink();
+    else if (t.dataset.act === 'expand') { zcard.classList.toggle('big'); zcard.style.width = zcard.style.height = ''; LS.set('parcel-zbig', zcard.classList.contains('big') ? '1' : '0'); refit(); }
     else if (t.dataset.yt) { t.outerHTML = `<iframe class="slot" style="border:0;width:100%;min-height:120px" src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(t.dataset.yt)}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen title="影片"></iframe>`; }
     else if (t.dataset.act === 'prev' || t.dataset.act === 'next') {
       const zs = zsOf(sel); if (!zs) return; const n = zs.cases.length;
@@ -2394,7 +2400,8 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
       g.addEventListener('pointermove', mv); g.addEventListener('pointerup', up);
     });
   }
-  enableGrab(side, .52); enableGrab(zcard, .4);
+  enableGrab(side, .52); enableGrab(zcard, .56);
+  if (LS.get('parcel-zbig') === '1') zcard.classList.add('big');
 
   /* ---------- 進度、結尾、包裹追蹤 ---------- */
   const visited = new Set(); let finaleShown = false;
