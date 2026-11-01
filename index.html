@@ -287,6 +287,16 @@ body{
 .pcase summary b{font:italic 700 14px Georgia,serif;color:var(--c,var(--coral))}
 .pcase summary small{width:100%;color:#8a7a70;font-weight:500;font-size:12px}
 .zcard.static{position:static;width:auto;max-height:none;overflow:visible;padding:0 14px 14px;background:none;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;border-radius:0}
+.kid{margin:12px 0 0}
+.kline{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:18px;background:#fff3d6}
+.kline .kemo{flex:none;font-size:42px;line-height:1}
+.kline p{margin:0;font-size:18px;font-weight:800;line-height:1.5}
+.kpts{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}
+.kpts li{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:#fffdf9;border:2px solid var(--c);font-size:14.5px;font-weight:700;line-height:1.4}
+.kpts li::before{content:"";flex:none;width:10px;height:10px;border-radius:50%;background:var(--c)}
+.klife{margin:10px 0 0;padding:10px 14px;border-radius:14px;background:#ffe3e6;font-size:14.5px;font-weight:700;line-height:1.6}
+.more{margin:14px 0 0;border-top:2px dotted var(--stone);padding-top:6px}
+.more>summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:800;font-size:14px;color:var(--coral)}
 .sec{margin:14px 0 0}
 .sec h3{margin:0 0 4px;display:inline-block;padding:2px 10px;border-radius:999px;background:var(--c);color:#fff;font-size:12px;letter-spacing:1px}
 .sec p{margin:4px 0 0;font-size:14px;line-height:1.75}
@@ -332,6 +342,7 @@ body{
 .gcard .gb{background:repeating-linear-gradient(135deg,#e8c9a0 0 8px,#f0d7b4 8px 16px);border:2px solid #d3a975;font:italic 700 26px Georgia,serif;color:#fff8f4;text-shadow:0 1px 2px #8a5a2a88}
 .gcard .gf{transform:rotateY(180deg);background:#fffdf9;border:2px solid var(--c,#d3a975);font-size:13px;font-weight:700;line-height:1.45}
 .gcard .gf small{font-size:10.5px;font-weight:600;color:#8a7a70;letter-spacing:.04em}
+.gcard .gemo{font-size:30px;line-height:1}
 .gcard.t .gf strong{font-size:14.5px}
 .gcard.done .gf{background:var(--c,#d3a975);color:var(--ink);border-color:transparent}
 .gcard.done .gf small{color:#211d1dcc}
@@ -478,7 +489,7 @@ body.lite .zcard,body.lite .side{background:rgba(255,248,244,.97)}
   <div class="game-card">
     <div class="eyebrow">Mini game</div>
     <h2 id="gameTitle">田間配對</h2>
-    <p class="gsub">翻開兩張牌：左邊是技術名稱，右邊是它在做的事。配對成功，牌會留在桌上。</p>
+    <p class="gsub">翻兩張牌，找出一對：小主角和它做的事。</p>
     <div class="gbar"><div class="gstat"><span>步數 <b id="gMoves">0</b></span><span>配對 <b id="gPairs">0</b> / <b id="gTotal">6</b></span></div><button class="btn" id="gAgain" type="button">換一批</button></div>
     <div class="ggrid" id="gGrid"></div>
     <div id="gWin" class="gwin" hidden></div>
@@ -547,7 +558,7 @@ const DATA = {
       { name: '風味與生活', text: '採收後的風味與加工，走進日常。', zone: 4 } ] }
   ],
   /* 64 案資料（由 PDF 簡報 p.61–64 抽出；每案自帶 model 欄位，格式「種類:變體」） */
-  dataFile: 'data/techs_v6_2026-11-01.json',
+  dataFile: 'data/techs_v7_2026-11-01.json',
   /* 寄件單位：key 為資料檔 unit 欄的開頭；n 為簡報 p.60 載明的案數；
      full 為機關全名；county、lat、lon 為場址所在縣市鄉鎮與座標（OpenStreetMap，見 data/units_geo_2026-10-23.json）；
      花創中心的場址尚未確認，不顯示位置 */
@@ -661,8 +672,16 @@ function storyHTML(t, opener) {
   const st = t.story;
   if (!st) return opener ? '' : '<p class="soon">這項技術的故事正在整理中。</p>';
   const block = (cls, title, body) => `<section class="sec ${cls}"><h3>${title}</h3>${body}</section>`;
-  return block('q', '面臨什麼問題', `<p>${st.problem}</p>`) + block('s', '怎麼解決', `<p>${st.solution}</p>`)
+  const full = block('q', '面臨什麼問題', `<p>${st.problem}</p>`) + block('s', '怎麼解決', `<p>${st.solution}</p>`)
     + block('f', '特色', `<ul>${st.features.map((x) => `<li>${x}</li>`).join('')}</ul>`) + block('l', '和生活的連結', `<p>${st.life}</p>`);
+  return t.kid ? `<details class="more"><summary>想知道更多（完整說明）</summary>${full}</details>` : full;
+}
+/* 親子版短文：一句話、三個重點、和生活的連結；有 kid 欄位的案才有，沒有就退回一句話 */
+function kidHTML(t) {
+  const k = t.kid;
+  if (!k) return t.oneLine ? `<p class="oneline">${t.oneLine}</p>` : '';
+  return `<div class="kid"><div class="kline"><span class="kemo" aria-hidden="true">${k.e}</span><p>${k.line}</p></div>
+    <ul class="kpts">${k.pts.map((x) => `<li>${x}</li>`).join('')}</ul><p class="klife">💛 ${k.life}</p></div>`;
 }
 
 /* ---------- 備援：3D 無法啟動時，用 2D 清單頁顯示全部內容 ---------- */
@@ -678,7 +697,7 @@ function renderPlain(techs) {
     <nav>${DATA.zones.map((z) => `<a href="#p-${z.id}" style="--c:${z.color}"><b>${z.id}</b>${z.short}</a>`).join('')}</nav></header>
     ${DATA.zones.map((z, zi) => `<section class="pz" id="p-${z.id}" style="--c:${z.color}"><h2><b>${z.id}</b>${z.big}<small>${z.short}｜${z.count} 案</small></h2>
       ${techs.filter((t) => zoneOf(t) === zi).map((t) => `<details class="pcase" data-q="${(`${t.no} ${t.name} ${t.unit} ${t.group} ${t.oneLine || ''}`).toLowerCase()}"><summary><b>${t.no}</b>${t.name}<small>${t.unit}・${t.group}</small></summary>
-        <div class="zcard static" style="--c:${z.color}">${t.oneLine ? `<p class="oneline">${t.oneLine}</p>` : ''}${factsHTML(t)}${mediaHTML(t)}${storyHTML(t, false)}${sourcesHTML(t)}</div></details>`).join('')}</section>`).join('')}`;
+        <div class="zcard static" style="--c:${z.color}">${kidHTML(t)}${t.kid ? '' : factsHTML(t)}${mediaHTML(t)}${storyHTML(t, false)}${sourcesHTML(t)}</div></details>`).join('')}</section>`).join('')}`;
   document.body.appendChild(root);
   root.querySelector('#pq').addEventListener('input', (e) => {
     const ws = e.target.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
@@ -2081,8 +2100,8 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
         ${unit ? `<div><dt>寄件單位</dt><dd><button class="ulink" type="button" data-unit="${unit.key}">${t.unit}</button></dd></div>` : ''}
         <div><dt>所屬</dt><dd>${z.id} ${z.short}｜${t.group}</dd></div>
       </dl>
-      ${t.oneLine ? `<p class="oneline">${t.oneLine}</p>` : ''}
-      ${factsHTML(t)}
+      ${kidHTML(t)}
+      ${t.kid ? '' : factsHTML(t)}
       ${mediaHTML(t)}
       ${story}
       ${sourcesHTML(t)}
@@ -2175,7 +2194,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   const matchTech = (t) => (fZone < 0 || zoneIdxOf(t) === fZone) && (!fUnit || (unitOf(t) || {}).key === fUnit) && qMatch(t);
   const filterActive = () => fZone >= 0 || !!fUnit || qWords().length > 0;
   const curNo = () => { const zs = zsOf(sel); return selCase >= 0 && zs ? zs.cases[selCase].tech.no : null; };
-  const itemHTML = (t, cur) => `<button class="citem${t.no === cur ? ' cur' : ''}" type="button" data-no="${t.no}" style="--c:${zones[zoneIdxOf(t)].color}"><b>${t.no}</b><span>${t.name}</span><small>${t.unit}・${t.group}</small></button>`;
+  const itemHTML = (t, cur) => `<button class="citem${t.no === cur ? ' cur' : ''}" type="button" data-no="${t.no}" style="--c:${zones[zoneIdxOf(t)].color}"><b>${t.no}</b><span>${t.kid ? t.kid.e + ' ' : ''}${t.name}</span><small>${t.unit}・${t.group}</small></button>`;
   const zoneDots = (list) => zones.map((z, zi) => { const n = list.filter((t) => zoneIdxOf(t) === zi).length; return n ? `<i style="--c:${z.color}">${z.id}・${n}</i>` : ''; }).join('');
 
   filtersEl.innerHTML = `<div class="fz"><button class="fchip" type="button" data-z="-1" aria-pressed="true">全部</button>${zones.map((z, i) => `<button class="fchip" type="button" data-z="${i}" style="--c:${z.color}" aria-pressed="false">${z.id} ${z.short}</button>`).join('')}</div>
@@ -2511,7 +2530,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   $('#btnReplay').addEventListener('click', () => { ensureAudio(); startIntro(); });
   /* ---------- 小遊戲：田間配對（只用單位已填報的案） ---------- */
   const gameEl = $('#game'), gGrid = $('#gGrid'), gWin = $('#gWin');
-  const gPlayable = () => techList.filter((t) => t.story && t.oneLine);
+  const gPlayable = () => techList.filter((t) => t.kid);
   const G = { cards: [], first: null, lock: false, moves: 0, pairs: 0, picked: [] };
   const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   function gameDeal() {
@@ -2522,7 +2541,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     $('#gTotal').textContent = n; $('#gMoves').textContent = 0; $('#gPairs').textContent = 0; gWin.hidden = true;
     gGrid.innerHTML = G.cards.map((c, i) => {
       const col = zones[zoneIdxOf(c.t)].color;
-      return `<button class="gcard ${c.k === 'name' ? 't' : ''}" type="button" data-i="${i}" style="--c:${col}" aria-label="第 ${i + 1} 張牌，還沒翻開"><div class="gin"><div class="gb">?</div><div class="gf">${c.k === 'name' ? `<small>技術</small><strong>${c.t.name}</strong>` : `<small>它在做什麼</small><span>${c.t.oneLine}</span>`}</div></div></button>`;
+      return `<button class="gcard ${c.k === 'name' ? 't' : ''}" type="button" data-i="${i}" style="--c:${col}" aria-label="第 ${i + 1} 張牌，還沒翻開"><div class="gin"><div class="gb">?</div><div class="gf">${c.k === 'name' ? `<span class="gemo" aria-hidden="true">${c.t.kid.e}</span><strong>${c.t.kid.nick}</strong>` : `<small>它在做什麼</small><span>${c.t.kid.line}</span>`}</div></div></button>`;
     }).join('');
   }
   function gameWin() {
@@ -2534,7 +2553,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   gGrid.addEventListener('click', (e) => {
     const b = e.target.closest('.gcard'); if (!b || G.lock || b.classList.contains('up') || b.classList.contains('done')) return;
     const i = +b.dataset.i, c = G.cards[i];
-    b.classList.add('up'); b.setAttribute('aria-label', `第 ${i + 1} 張牌：${c.k === 'name' ? c.t.name : c.t.oneLine}`);
+    b.classList.add('up'); b.setAttribute('aria-label', `第 ${i + 1} 張牌：${c.k === 'name' ? c.t.kid.nick : c.t.kid.line}`);
     if (G.first === null) { G.first = i; return; }
     const j = G.first; G.first = null; G.moves++; $('#gMoves').textContent = G.moves;
     const d = G.cards[j], bj = gGrid.children[j];
