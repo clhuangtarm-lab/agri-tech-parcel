@@ -318,6 +318,34 @@ body{
 .help-card ol{margin:0 0 18px;padding-left:1.4em;display:grid;gap:10px;line-height:1.6}
 .help-card .btn{width:100%}
 
+/* 小遊戲：田間配對 */
+.game-card{width:min(640px,100%);max-height:calc(100dvh - 40px);overflow:auto;background:var(--cream);border-radius:22px;padding:22px;box-shadow:var(--shadow)}
+.game-card h2{margin:4px 0 4px;font-size:22px}
+.game-card .gsub{margin:0 0 12px;font-size:13.5px;line-height:1.6;color:#6b5d55}
+.gbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 10px;font-weight:700;font-size:13px}
+.gbar .gstat{display:flex;gap:14px}
+.ggrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;perspective:900px}
+.gcard{position:relative;min-height:96px;padding:0;border:0;background:none;cursor:pointer;font:inherit;color:inherit;text-align:center}
+.gcard .gin{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .35s}
+.gcard.up .gin,.gcard.done .gin{transform:rotateY(180deg)}
+.gcard .gf,.gcard .gb{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px 6px;border-radius:12px;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 2px 8px #4a2a1420}
+.gcard .gb{background:repeating-linear-gradient(135deg,#e8c9a0 0 8px,#f0d7b4 8px 16px);border:2px solid #d3a975;font:italic 700 26px Georgia,serif;color:#fff8f4;text-shadow:0 1px 2px #8a5a2a88}
+.gcard .gf{transform:rotateY(180deg);background:#fffdf9;border:2px solid var(--c,#d3a975);font-size:13px;font-weight:700;line-height:1.45}
+.gcard .gf small{font-size:10.5px;font-weight:600;color:#8a7a70;letter-spacing:.04em}
+.gcard.t .gf strong{font-size:14.5px}
+.gcard.done .gf{background:var(--c,#d3a975);color:var(--ink);border-color:transparent}
+.gcard.done .gf small{color:#211d1dcc}
+.gcard:focus-visible .gb,.gcard:focus-visible .gf{outline:3px solid var(--ink);outline-offset:2px}
+.gwin{margin-top:14px;padding:14px;border-radius:14px;background:#fffdf9;border:2px dashed var(--coral)}
+.gwin h3{margin:0 0 6px;font-size:16px}
+.gwin p{margin:0 0 10px;font-size:13px;line-height:1.6}
+.gwin .gchips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.gactions{display:flex;gap:8px;margin-top:14px}
+.gactions .btn{flex:1}
+.gcard:not(.t) .gf{font-size:12.5px;font-weight:600}
+@media (max-width:560px){.ggrid{grid-template-columns:repeat(3,1fr);gap:6px}.gcard{min-height:124px}.game-card{padding:16px}.gcard .gf{padding:6px 4px}.gcard:not(.t) .gf{font-size:11px;line-height:1.35}.gcard.t .gf strong{font-size:13px}}
+@media (prefers-reduced-motion:reduce){.gcard .gin{transition:none}}
+
 @keyframes pop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
 
 body.lite .brand,body.lite .zcard,body.lite .side,body.lite .hint,body.lite .chips .puz{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
@@ -383,6 +411,7 @@ body.lite .zcard,body.lite .side{background:rgba(255,248,244,.97)}
   <button class="btn tool" id="btnSkip" type="button"><span class="ico">⏭</span>略過</button>
   <button class="btn tool" id="btnSound" type="button" aria-pressed="false"><span class="ico">🔔</span>聲音</button>
   <button class="btn tool" id="btnReplay" type="button"><span class="ico">↺</span>重播</button>
+  <button class="btn tool" id="btnGame" type="button"><span class="ico">🎮</span>遊戲</button>
   <button class="btn tool" id="btnHelp" type="button"><span class="ico">?</span>說明</button>
 </nav>
 
@@ -444,6 +473,18 @@ body.lite .zcard,body.lite .side{background:rgba(255,248,244,.97)}
 </aside>
 <div class="hint off" id="hint">拆開五個包裹，集滿五片拼圖</div>
 <div class="chips" id="chips" hidden aria-label="五個小包裹"></div>
+
+<div class="help" id="game" hidden role="dialog" aria-modal="true" aria-labelledby="gameTitle">
+  <div class="game-card">
+    <div class="eyebrow">Mini game</div>
+    <h2 id="gameTitle">田間配對</h2>
+    <p class="gsub">翻開兩張牌：左邊是技術名稱，右邊是它在做的事。配對成功，牌會留在桌上。</p>
+    <div class="gbar"><div class="gstat"><span>步數 <b id="gMoves">0</b></span><span>配對 <b id="gPairs">0</b> / <b id="gTotal">6</b></span></div><button class="btn" id="gAgain" type="button">換一批</button></div>
+    <div class="ggrid" id="gGrid"></div>
+    <div id="gWin" class="gwin" hidden></div>
+    <div class="gactions"><button class="btn primary" id="gClose" type="button">回到包裹</button></div>
+  </div>
+</div>
 
 <div class="help" id="help" hidden role="dialog" aria-modal="true" aria-labelledby="helpTitle">
   <div class="help-card">
@@ -627,7 +668,7 @@ function storyHTML(t, opener) {
 /* ---------- 備援：3D 無法啟動時，用 2D 清單頁顯示全部內容 ---------- */
 function renderPlain(techs) {
   $('#loading').hidden = true;
-  document.querySelectorAll('#stage,#fade,.brand,.tools,.ship,.zcard,.side,.chips,.hint,.tip').forEach((e) => { e.hidden = true; });
+  document.querySelectorAll('#stage,#fade,#game,.brand,.tools,.ship,.zcard,.side,.chips,.hint,.tip').forEach((e) => { e.hidden = true; });
   document.body.style.overflow = 'auto'; document.documentElement.style.overflow = 'auto';
   const zoneOf = (t) => DATA.zones.findIndex((z) => t.zone.startsWith(z.id));
   const root = document.createElement('main'); root.className = 'plain'; root.id = 'plain';
@@ -2380,6 +2421,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
       if (closeLightbox()) return;
       if (!finaleEl.hidden) { closeFinale(); return; }
       if (!trackEl.hidden) { closeTrack(); return; }
+      if (!gameEl.hidden) { closeGame(); return; }
       if (!$('#help').hidden) { $('#help').hidden = true; return; }
       if (selCase >= 0) deselectCase(); else if (sel >= 0) closeZone(); else if (sideOpen) closeSide();
       return;
@@ -2467,6 +2509,51 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
 
   $('#btnSkip').addEventListener('click', () => { if (phase === 'A' || phase === 'wait' || phase === 'B') enterDone(); });
   $('#btnReplay').addEventListener('click', () => { ensureAudio(); startIntro(); });
+  /* ---------- 小遊戲：田間配對（只用單位已填報的案） ---------- */
+  const gameEl = $('#game'), gGrid = $('#gGrid'), gWin = $('#gWin');
+  const gPlayable = () => techList.filter((t) => t.story && t.oneLine);
+  const G = { cards: [], first: null, lock: false, moves: 0, pairs: 0, picked: [] };
+  const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  function gameDeal() {
+    const pool = gPlayable(), n = Math.min(6, pool.length);
+    G.picked = shuffle(pool.slice()).slice(0, n);
+    G.cards = shuffle(G.picked.flatMap((t) => [{ t, k: 'name' }, { t, k: 'line' }]));
+    G.first = null; G.lock = false; G.moves = 0; G.pairs = 0;
+    $('#gTotal').textContent = n; $('#gMoves').textContent = 0; $('#gPairs').textContent = 0; gWin.hidden = true;
+    gGrid.innerHTML = G.cards.map((c, i) => {
+      const col = zones[zoneIdxOf(c.t)].color;
+      return `<button class="gcard ${c.k === 'name' ? 't' : ''}" type="button" data-i="${i}" style="--c:${col}" aria-label="第 ${i + 1} 張牌，還沒翻開"><div class="gin"><div class="gb">?</div><div class="gf">${c.k === 'name' ? `<small>技術</small><strong>${c.t.name}</strong>` : `<small>它在做什麼</small><span>${c.t.oneLine}</span>`}</div></div></button>`;
+    }).join('');
+  }
+  function gameWin() {
+    const win = `<h3>全部配對成功，用了 ${G.moves} 步</h3><p>點下面的名稱，可以直接看這項技術的內容。</p><div class="gchips">${G.picked.map((t) => phase === 'done'
+      ? `<button class="gchip" type="button" data-no="${t.no}" style="--c:${zones[zoneIdxOf(t)].color}">${t.no} ${t.name.length > 12 ? t.name.slice(0, 12) + '…' : t.name}</button>`
+      : `<span class="gchip" style="--c:${zones[zoneIdxOf(t)].color}">${t.no} ${t.name.length > 12 ? t.name.slice(0, 12) + '…' : t.name}</span>`).join('')}</div>`;
+    gWin.innerHTML = win; gWin.hidden = false; gWin.scrollIntoView({ block: 'nearest', behavior: reduceMQ.matches ? 'auto' : 'smooth' });
+  }
+  gGrid.addEventListener('click', (e) => {
+    const b = e.target.closest('.gcard'); if (!b || G.lock || b.classList.contains('up') || b.classList.contains('done')) return;
+    const i = +b.dataset.i, c = G.cards[i];
+    b.classList.add('up'); b.setAttribute('aria-label', `第 ${i + 1} 張牌：${c.k === 'name' ? c.t.name : c.t.oneLine}`);
+    if (G.first === null) { G.first = i; return; }
+    const j = G.first; G.first = null; G.moves++; $('#gMoves').textContent = G.moves;
+    const d = G.cards[j], bj = gGrid.children[j];
+    if (d.t.no === c.t.no && d.k !== c.k) {
+      [b, bj].forEach((x) => { x.classList.remove('up'); x.classList.add('done'); });
+      G.pairs++; $('#gPairs').textContent = G.pairs;
+      if (G.pairs === G.picked.length) setTimeout(gameWin, 450);
+    } else {
+      G.lock = true;
+      setTimeout(() => { [b, bj].forEach((x) => { x.classList.remove('up'); x.setAttribute('aria-label', `第 ${+x.dataset.i + 1} 張牌，還沒翻開`); }); G.lock = false; }, 950);
+    }
+  });
+  gWin.addEventListener('click', (e) => { const b = e.target.closest('button[data-no]'); if (b) { closeGame(); openTech(+b.dataset.no); } });
+  function openGame() { if (!gPlayable().length) { toast('資料還沒載入'); return; } gameDeal(); gameEl.hidden = false; const f = gGrid.querySelector('.gcard'); if (f) f.focus({ preventScroll: true }); }
+  function closeGame() { gameEl.hidden = true; }
+  $('#btnGame').addEventListener('click', openGame);
+  $('#gAgain').addEventListener('click', gameDeal);
+  $('#gClose').addEventListener('click', closeGame);
+  gameEl.addEventListener('click', (e) => { if (e.target.id === 'game') closeGame(); });
   $('#btnHelp').addEventListener('click', () => { $('#help').hidden = false; });
   $('#helpClose').addEventListener('click', () => { $('#help').hidden = true; });
   $('#help').addEventListener('click', (e) => { if (e.target.id === 'help') $('#help').hidden = true; });
