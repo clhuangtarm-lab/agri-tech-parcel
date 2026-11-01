@@ -2617,11 +2617,11 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     } else if (v.v === 'stage') {
       const st = QD.stages[v.i], z = zones[st.zone];
       h = `<p class="qprompt" style="color:${'var(--ink)'}">${st.title}</p><p class="gsub">${st.intro}</p>
-        <div class="qstages">${st.puzzles.map((p, i) => `<button class="qstage ${qs.solved[p.id] ? 'done' : ''}" type="button" data-act="puz" data-id="${p.id}" style="--c:${z.color}"><b>${i + 1}</b><span>${p.type === 'board' ? '展板題' : '網站題'}${p.draft ? '（範例）' : ''}</span><i>${qs.solved[p.id] ? '已解開' : '挑戰'}</i></button>`).join('')}</div>`;
+        <div class="qstages">${st.puzzles.map((p, i) => `<button class="qstage ${qs.solved[p.id] ? 'done' : ''}" type="button" data-act="puz" data-id="${p.id}" style="--c:${z.color}"><b>${i + 1}</b><span>${p.type === 'board' ? '展板題' : '網站題'}</span><i>${qs.solved[p.id] ? '已解開' : '挑戰'}</i></button>`).join('')}</div>`;
     } else {
       const pz = qPuz(v.id), solved = !!qs.solved[pz.id], shown = Math.min(qs.hints[pz.id] || 0, pz.hints.length), isF = pz.id === 'final';
       const scr = isF ? `<div class="qbig" aria-label="打亂的關鍵字">${QD.final.scramble.map((i) => QD.keys[i]).join(' ')}</div>` : '';
-      h = `${isF ? '' : `<span class="qtag">${pz.type === 'board' ? '展板題' : '網站題'}</span>${pz.draft ? '<span class="qtag draft">範例題</span>' : ''}`}
+      h = `${isF ? '' : `<span class="qtag">${pz.type === 'board' ? '展板題' : '網站題'}</span>`}
         <p class="qprompt">${pz.prompt}</p>${scr}
         ${solved ? `<div class="qexp">答對了！答案是「${pz.answers[0]}」。${pz.explain || ''}${isF ? `<br>${QD.final.ending}` : ''}</div>`
           : `<div class="qans"><input id="qIn" type="text" maxlength="12" autocomplete="off" placeholder="${pz.len} 個字或數字" aria-label="答案"><button class="btn primary" type="button" data-act="check">送出</button></div><p class="qmsg" id="qMsg" aria-live="polite"></p>`}
