@@ -693,7 +693,7 @@ function storyHTML(t, opener) {
   const block = (cls, title, body) => `<section class="sec ${cls}"><h3>${title}</h3>${body}</section>`;
   const full = block('q', '面臨什麼問題', `<p>${st.problem}</p>`) + block('s', '怎麼解決', `<p>${st.solution}</p>`)
     + block('f', '特色', `<ul>${st.features.map((x) => `<li>${x}</li>`).join('')}</ul>`) + block('l', '和生活的連結', `<p>${st.life}</p>`);
-  return t.kid ? `<details class="more"><summary>想知道更多（完整說明）</summary>${full}</details>` : full;
+  return t.kid ? `<details class="more"><summary>了解更多</summary>${full}</details>` : full;
 }
 /* 親子版短文：一句話、三個重點、和生活的連結；有 kid 欄位的案才有，沒有就退回一句話 */
 function kidHTML(t) {
