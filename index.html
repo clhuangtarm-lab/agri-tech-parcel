@@ -617,7 +617,7 @@ const DATA = {
   chains: [
     { id: 'bean', title: '毛豆：從品種到機械', src: '簡報 p.15', stages: [
       { name: '01 品種與種法', text: '毛豆「高雄13號」配合新種法，育成可外銷的品種。', techNos: [19] },
-      { name: '02 交給機械', text: '毛豆一貫化機械：用機械把種、收的工作接起來（02 包的主角）。', zone: 1 } ] },
+      { name: '02 交給機械', text: '毛豆一貫化機械：用機械把種、收的工作接起來。', zone: 1 } ] },
     { id: 'loop', title: '剩餘物循環', src: '簡報 p.33、36', stages: [
       { name: '看見材料', text: '開場展示：先把剩餘物看清楚，有哪些、有多少。' },
       { name: '處理轉化', text: '粉碎、炭化、循環再利用，把剩餘物變成能用的東西。', techNos: [50, 51, 54, 55] },
@@ -655,19 +655,19 @@ const DATA = {
      groups 為故事段順序（簡報 p.13、19、26、33、40），openerModel 為不在 64 案內的本包主角模型 */
   zones: [
     { id: '01', big: '薯於你的好味道', short: '品種創新', full: '品種改良與生產調適', count: 28, pages: 'p.11–16',
-      opener: '台農57號甘藷', openerNo: null, openerModel: 'fruit:sweetpotato', color: '#e39a4f', sticker: '活體種苗・小心輕放', pattern: 'dots',
+       color: '#e39a4f', sticker: '活體種苗・小心輕放', pattern: 'dots',
       groups: ['我們想吃得更好，也想有更多選擇', '天氣變了，作物也要更能適應', '農業缺工，品種也要配合新種法', '先保存，才有面對未來的選擇'] },
     { id: '02', big: '豆陣來省力', short: '智慧生產', full: '智慧生產與資源管理', count: 10, pages: 'p.17–23',
-      opener: '毛豆高雄9號一貫化', openerNo: null, openerModel: 'pod:edamame', color: '#7fb06a', sticker: '精密機具・請勿倒置', pattern: 'stripes',
+       color: '#7fb06a', sticker: '精密機具・請勿倒置', pattern: 'stripes',
       groups: ['先看清楚，再決定怎麼做', '每一滴水，都用在需要的地方', '把辛苦的工作交給機械', '收成之後，還要又快又乾淨'] },
     { id: '03', big: '果真健康，好苗先行', short: '健康安心', full: '健康生產與友善環境', count: 11, pages: 'p.24–30',
-      opener: '無特定病毒百香果苗', openerNo: 47, openerModel: null, color: '#f2b5c6', sticker: '活體種苗・小心輕放', pattern: 'bricks',
+       color: '#f2b5c6', sticker: '活體種苗・小心輕放', pattern: 'bricks',
       groups: ['健康要從第一株苗開始', '看得早，才來得及保護', '保護作物，也要照顧環境', '田健康，作物才能長久健康'] },
     { id: '04', big: '菇掰浪費，資源再生', short: '韌性永續', full: '韌性永續與資源循環', count: 8, pages: 'p.31–37',
-      opener: '香菇廢菇包', openerNo: 57, openerModel: null, color: '#6f7fb5', sticker: '循環再利用・請分類', pattern: 'dots',
+       color: '#6f7fb5', sticker: '循環再利用・請分類', pattern: 'dots',
       groups: ['變小、變乾、變安全再利用', '舊材料，成為新一輪生產的起點', '不只回到田裡，也能走進生活'] },
     { id: '05', big: '茶點不一樣', short: '多元應用', full: '農產品品質與多元應用', count: 7, pages: 'p.38–43',
-      opener: '紅烏龍', openerNo: null, openerModel: 'cup:redoolong', color: '#58a6a6', sticker: '易碎・請輕拿', pattern: 'stripes',
+       color: '#58a6a6', sticker: '易碎・請輕拿', pattern: 'stripes',
       groups: ['同樣原料，不同風味', '農產品換一種樣子', '不只能吃，也能陪伴生活'] }
   ]
 };
@@ -2143,7 +2143,6 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   const GRAB = '<div class="grab" role="separator" aria-label="拖曳調整高度"></div>';
   function renderZoneCard(i) {
     const z = zones[i], zs = zsOf(i);
-    const opener = z.opener;
     zcard.hidden = false; zcard.style.setProperty('--c', z.color);
     let body;
     if (zs) {
@@ -2158,7 +2157,6 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
       <h2>${z.big}</h2>
       <p class="full">${z.short}｜${z.full}</p>
       <div class="num"><strong>${z.count}</strong><span>案技術</span><em>${z.pages}</em></div>
-      <p class="opener">本包主角：${opener}</p>
       ${body}
 `;
     zcard.scrollTop = 0;
