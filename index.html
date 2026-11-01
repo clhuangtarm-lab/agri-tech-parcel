@@ -358,6 +358,20 @@ body{
 @keyframes gpop{0%{transform:rotateY(180deg) scale(1)}50%{transform:rotateY(180deg) scale(1.12)}100%{transform:rotateY(180deg) scale(1)}}
 /* 闖關 */
 .quest-card{width:min(680px,100%)}
+.tmap{display:block;width:100%;height:auto}
+.tmap .tbp{animation:tbin .7s both cubic-bezier(.2,1.3,.4,1)}
+@keyframes tbin{from{opacity:0;transform:translateY(-70px)}to{opacity:1;transform:none}}
+.tmap .tbl{text-anchor:middle;font:700 20px Georgia,serif;font-style:italic;fill:#fff8f4;paint-order:stroke;stroke:#211d1d55;stroke-width:3px}
+.tmap .tbl.ch{font:700 44px "Huninn","Noto Sans TC",sans-serif;font-style:normal;fill:#211d1d;stroke:#fff8f4;stroke-width:5px}
+.tmap .tbl.no{font:700 30px "Huninn",sans-serif;font-style:normal;fill:#b9a99b;stroke:none}
+.tmap .tbn{text-anchor:middle;font:700 11px ui-monospace,Menlo,monospace;fill:#211d1d}
+.tmcap{margin:4px 0 0;text-align:center;font-size:12.5px;font-weight:700;color:#6b5d55}
+.qtop{display:flex;gap:14px;align-items:flex-start}
+.qtop .kline{flex:1}
+.qmap{flex:none;width:112px}
+.qmapbig{margin:14px auto 0;width:min(240px,70%)}
+@media (max-width:560px){.qtop{flex-direction:column}.qmap{width:130px;align-self:center}}
+.pieces svg{width:min(170px,50vw);height:auto}
 .qkeys{display:flex;gap:8px;margin:0 0 12px}
 .qkeys span{flex:1;min-height:52px;display:grid;place-items:center;border-radius:14px;background:#fffdf9;border:2.5px dashed var(--stone);font:700 26px "Huninn","Noto Sans TC",sans-serif;color:#b9a99b}
 .qkeys span.on{border:2.5px solid var(--coral);background:#fff3d6;color:var(--ink);animation:gpop2 .5s}
@@ -615,7 +629,7 @@ const DATA = {
   ],
   /* 64 案資料（由 PDF 簡報 p.61–64 抽出；每案自帶 model 欄位，格式「種類:變體」） */
   dataFile: 'data/techs_v9_2026-11-01.json',
-  questFile: 'data/quest_v1_2026-11-01.json',
+  questFile: 'data/quest_v2_2026-11-01.json',
   /* 寄件單位：key 為資料檔 unit 欄的開頭；n 為簡報 p.60 載明的案數；
      full 為機關全名；county、lat、lon 為場址所在縣市鄉鎮與座標（OpenStreetMap，見 data/units_geo_2026-10-23.json）；
      花創中心的場址尚未確認，不顯示位置 */
@@ -2379,17 +2393,23 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
 
   /* ---------- 進度、結尾、包裹追蹤 ---------- */
   const visited = new Set(); let finaleShown = false;
+  const qs = (() => { try { return JSON.parse(LS.get('parcel-quest') || '') || {}; } catch (e) { return {}; } })();
+  qs.solved = qs.solved || {}; qs.hints = qs.hints || {}; qs.stages = qs.stages || {};
+  const qSave = () => LS.set('parcel-quest', JSON.stringify(qs));
+  const gotSet = () => { const g = new Set(visited); Object.keys(qs.stages).forEach((k) => g.add(+k)); return g; };
   const trackEl = $('#track'), trackBody = $('#trackBody'), finaleEl = $('#finale'), btnTrack = $('#btnTrack');
   let trackTab = 'map', trackUnit = null;
   function markDone() {
     chipsEl.querySelectorAll('.chip').forEach((c) => c.classList.toggle('done', visited.has(+c.dataset.i)));
-    chipsEl.querySelectorAll('.puz i').forEach((e, i) => e.classList.toggle('on', visited.has(i)));
-    chipsEl.querySelector('.puz span').textContent = `拼圖 ${visited.size}/${zones.length}`;
-    chipsEl.querySelector('.puz').setAttribute('aria-label', `拼圖進度 ${visited.size} / ${zones.length}`);
+    const got = gotSet();
+    chipsEl.querySelectorAll('.puz i').forEach((e, i) => e.classList.toggle('on', got.has(i)));
+    chipsEl.querySelector('.puz span').textContent = `拼圖 ${got.size}/${zones.length}`;
+    chipsEl.querySelector('.puz').setAttribute('aria-label', `拼圖進度 ${got.size} / ${zones.length}`);
   }
   function showFinale() {
     if (phase !== 'done') return;
-    $('#pieces').innerHTML = zones.map((z, i) => `<span class="piece" style="--c:${z.color};--r:${(i % 2 ? 1 : -1) * (6 + i * 3)}deg;--d:${i * .18}s">${z.id}</span>`).join('');
+    $('#pieces').innerHTML = techMapSVG(new Set(zones.map((z, i) => i)), null, { id: 'fin', anim: true, markers: true }) + `<p class="tmcap">台灣農業技術地圖：${DATA.units.length} 個單位、${techList.length} 項技術</p>`;
+    $('#finaleTitle').textContent = '拼圖完成：台灣農業技術地圖';
     $('#finaleExit').textContent = DATA.exitLine;
     finaleEl.hidden = false; $('#finaleTrack').focus();
   }
@@ -2418,6 +2438,27 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
       <div><div class="ulist">${DATA.units.map((u) => `<button class="urow${trackUnit === u.key ? ' on' : ''}" type="button" data-u="${u.key}"><i>${unitCount(u)}</i><div><b>${u.key}</b><span>${[u.county, u.full].filter(Boolean).join('・')}</span></div><em>${unitCount(u)}</em></button>`).join('')}</div>
       ${cur ? `<div class="ucap"><b>${cur.key}</b>寄出 ${unitCount(cur)} 項技術。<br><button class="btn primary" type="button" data-ulist="${cur.key}">看這個單位的技術</button></div>` : ''}</div></div>
       <p class="exitline">${DATA.exitLine}</p>`;
+  }
+  /* 台灣農業技術地圖：由北到南切成五片拼圖，每片對應一個包裹；got 為已拿到的片，chars 為印在片上的字（可為 null） */
+  function techMapSVG(got, chars, o = {}) {
+    const edges = [8, 128, 228, 322, 408, 482], id = o.id || 'tm';
+    const pts = TW.map(([lo, la]) => proj(lo, la).map(Number));
+    const path = pts.map(([x, y], i) => (i ? 'L' : 'M') + x + ',' + y).join(' ') + 'Z';
+    const cx = (i) => { const sel = pts.filter(([, y]) => y >= edges[i] && y < edges[i + 1]); return sel.length ? Math.round(sel.reduce((a, b) => a + b[0], 0) / sel.length) : 140; };
+    const clips = zones.map((z, i) => `<clipPath id="${id}c${i}"><rect x="0" y="${edges[i]}" width="280" height="${edges[i + 1] - edges[i]}"/></clipPath>`).join('');
+    const bands = zones.map((z, i) => got.has(i)
+      ? `<path class="tbp" d="${path}" clip-path="url(#${id}c${i})" fill="${z.color}" style="animation-delay:${o.anim ? i * .3 : 0}s"/>`
+      : `<path d="${path}" clip-path="url(#${id}c${i})" fill="#eadfd3" stroke="#c5b5a7" stroke-width="2" stroke-dasharray="5 5"/>`).join('');
+    const seams = edges.slice(1, 5).map((y) => `<line x1="0" x2="280" y1="${y}" y2="${y}" stroke="#fff8f4" stroke-width="3"/>`).join('');
+    const labels = zones.map((z, i) => { const c = chars && chars[i], y = (edges[i] + edges[i + 1]) / 2;
+      return `<text class="tbl${c ? ' ch' : got.has(i) ? '' : ' no'}" x="${cx(i)}" y="${y + (c ? 14 : 10)}">${c || (got.has(i) ? z.id : '？')}</text>`; }).join('');
+    let mk = '';
+    if (o.markers) {
+      const us = DATA.units.filter((u) => u.lat != null).map((u) => { const [x, y] = proj(u.lon, u.lat); return { u, x: +x, y: +y }; });
+      for (let k = 0; k < 40; k++) us.forEach((a, i) => us.forEach((b, j) => { if (j <= i) return; const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || .1; if (d < 24) { const f = (24 - d) / 2; a.x -= dx / d * f; a.y -= dy / d * f; b.x += dx / d * f; b.y += dy / d * f; } }));
+      mk = us.map((p) => `<g><circle cx="${p.x}" cy="${p.y}" r="10" fill="#fffdf9" stroke="#211d1d" stroke-width="2"/><text class="tbn" x="${p.x}" y="${p.y + 4}">${unitCount(p.u)}</text></g>`).join('');
+    }
+    return `<svg class="tmap" viewBox="0 0 280 488" role="img" aria-label="台灣農業技術地圖，已拿到 ${got.size} / ${zones.length} 片拼圖"><defs>${clips}</defs>${bands}${seams}${o.markers ? '' : labels}${mk}</svg>`;
   }
   function chainHTML() {
     const chip = (n) => { const t = techByNo.get(n); return t ? `<button class="gchip" type="button" data-no="${n}" style="--c:${zones[zoneIdxOf(t)].color}">${n} ${t.name.length > 9 ? t.name.slice(0, 9) + '…' : t.name}</button>` : ''; };
@@ -2589,9 +2630,6 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   /* ---------- 闖關：題庫在 data/quest_v1_*.json（web 題找網站卡片，board 題找展場展板） ---------- */
   const questEl = $('#quest'), qBody = $('#qBody'), qBackBtn = $('#qBack');
   let QD = null, qView = { v: 'home' };
-  const qs = (() => { try { return JSON.parse(LS.get('parcel-quest') || '') || {}; } catch (e) { return {}; } })();
-  qs.solved = qs.solved || {}; qs.hints = qs.hints || {};
-  const qSave = () => LS.set('parcel-quest', JSON.stringify(qs));
   const qNorm = (v) => String(v).normalize('NFKC').replace(/[\s％%]/g, '').toLowerCase();
   const qOK = (pz, v) => pz.answers.some((a) => qNorm(a) === qNorm(v));
   const qStageDone = (st) => st.puzzles.every((p) => qs.solved[p.id]);
@@ -2603,13 +2641,13 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     cf.innerHTML = Array.from({ length: 22 }, (_, i) => `<i style="left:${Math.random() * 96}%;animation-delay:${(Math.random() * 1.2).toFixed(2)}s">${['🎉', '⭐', '💖', '🌸', '🍓', '🌟'][i % 6]}</i>`).join('');
     document.body.appendChild(cf); setTimeout(() => cf.remove(), 4200);
   }
-  const qKeysHTML = () => `<div class="qkeys" aria-label="關鍵字">${QD.keys.map((k, i) => `<span class="${qStageDone(QD.stages[i]) ? 'on' : ''}">${qStageDone(QD.stages[i]) ? k : '？'}</span>`).join('')}</div>`;
+  const qMapHTML = (o) => techMapSVG(o && o.all ? new Set(zones.map((z, i) => i)) : gotSet(), QD.keys.map((k, i) => qStageDone(QD.stages[i]) ? k : null), o);
   function qRender() {
     const v = qView; let h = '';
     qBackBtn.hidden = v.v === 'home';
     if (v.v === 'home') {
       const n = QD.stages.filter(qStageDone).length, fin = qs.solved.final;
-      h = `<div class="kline"><span class="kemo" aria-hidden="true">${QD.guide.emoji}</span><p>${QD.intro}</p></div><div style="height:18px"></div>${qKeysHTML()}
+      h = `<div class="qtop"><div class="kline"><span class="kemo" aria-hidden="true">${QD.guide.emoji}</span><p>${QD.intro}</p></div><div class="qmap">${qMapHTML({ id: 'q' })}<p class="tmcap">拼圖 ${gotSet().size}/5</p></div></div>
         <div class="qstages">${QD.stages.map((st, i) => { const z = zones[st.zone], d = st.puzzles.filter((p) => qs.solved[p.id]).length;
           return `<button class="qstage ${qStageDone(st) ? 'done' : ''}" type="button" data-act="stage" data-i="${i}" style="--c:${z.color}"><b>${z.id}</b><span>${st.title}</span><i>${d}/${st.puzzles.length}</i></button>`; }).join('')}
           <button class="qstage final ${qAllDone() ? '' : 'lock'} ${fin ? 'done' : ''}" type="button" data-act="final" ${qAllDone() ? '' : 'aria-disabled="true"'}><b>★</b><span>${QD.final.title}</span><i>${fin ? '完成' : qAllDone() ? '開始' : `${n}/5`}</i></button></div>
@@ -2620,10 +2658,10 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
         <div class="qstages">${st.puzzles.map((p, i) => `<button class="qstage ${qs.solved[p.id] ? 'done' : ''}" type="button" data-act="puz" data-id="${p.id}" style="--c:${z.color}"><b>${i + 1}</b><span>${p.type === 'board' ? '展板題' : '網站題'}</span><i>${qs.solved[p.id] ? '已解開' : '挑戰'}</i></button>`).join('')}</div>`;
     } else {
       const pz = qPuz(v.id), solved = !!qs.solved[pz.id], shown = Math.min(qs.hints[pz.id] || 0, pz.hints.length), isF = pz.id === 'final';
-      const scr = isF ? `<div class="qbig" aria-label="打亂的關鍵字">${QD.final.scramble.map((i) => QD.keys[i]).join(' ')}</div>` : '';
+      const scr = isF ? `<div class="qbig" aria-label="打亂的字">${QD.final.scramble.map((i) => QD.keys[i]).join(' ')}</div>` : '';
       h = `${isF ? '' : `<span class="qtag">${pz.type === 'board' ? '展板題' : '網站題'}</span>`}
         <p class="qprompt">${pz.prompt}</p>${scr}
-        ${solved ? `<div class="qexp">答對了！答案是「${pz.answers[0]}」。${pz.explain || ''}${isF ? `<br>${QD.final.ending}` : ''}</div>`
+        ${solved ? `<div class="qexp">答對了！答案是「${pz.answers[0]}」。${pz.explain || ''}${isF ? `<br>${QD.final.ending}` : ''}</div>${isF ? `<div class="qmapbig">${qMapHTML({ id: 'qf', all: true, anim: true, markers: true })}<p class="tmcap">${DATA.units.length} 個單位、${techList.length} 項技術</p></div>` : ''}`
           : `<div class="qans"><input id="qIn" type="text" maxlength="12" autocomplete="off" placeholder="${pz.len} 個字或數字" aria-label="答案"><button class="btn primary" type="button" data-act="check">送出</button></div><p class="qmsg" id="qMsg" aria-live="polite"></p>`}
         ${pz.hints.slice(0, shown).map((t, i) => `<p class="qhint">提示 ${i + 1}：${t}</p>`).join('')}
         <div class="qrow">${solved ? '' : shown < pz.hints.length ? `<button class="btn" type="button" data-act="hint">看提示（${shown}/${pz.hints.length}）</button>` : `<button class="btn" type="button" data-act="reveal">看答案</button>`}
@@ -2637,7 +2675,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     qs.solved[pz.id] = true; qSave();
     const st = QD.stages.find((x) => x.puzzles.includes(pz));
     if (pz.id === 'final') { qBurst(); qView = { v: 'puz', id: 'final' }; }
-    else if (st && qStageDone(st)) { qBurst(); toast(`拿到關鍵字「${QD.keys[QD.stages.indexOf(st)]}」`); qView = { v: 'home' }; }
+    else if (st && qStageDone(st)) { qs.stages[QD.stages.indexOf(st)] = true; qSave(); markDone(); qBurst(); toast(`拿到一片拼圖，上面的字是「${QD.keys[QD.stages.indexOf(st)]}」`); qView = { v: 'home' }; }
     else { qView = { v: 'stage', i: QD.stages.indexOf(st) }; toast('答對了！'); }
     qRender();
   }
@@ -2651,7 +2689,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     else if (a === 'hint') { const pz = qPuz(qView.id); qs.hints[pz.id] = (qs.hints[pz.id] || 0) + 1; qSave(); qRender(); }
     else if (a === 'reveal') { qSolve(qPuz(qView.id)); }
     else if (a === 'tech') { if (phase !== 'done') { toast('先拆開包裹，才找得到卡片'); return; } closeQuest(); openTech(+b.dataset.no); }
-    else if (a === 'reset') { if (confirm('要清除闖關紀錄，重新開始嗎？')) { qs.solved = {}; qs.hints = {}; qSave(); qView = { v: 'home' }; qRender(); } }
+    else if (a === 'reset') { if (confirm('要清除闖關紀錄，重新開始嗎？')) { qs.solved = {}; qs.hints = {}; qs.stages = {}; qSave(); markDone(); qView = { v: 'home' }; qRender(); } }
     else if (a === 'check') qCheck();
   });
   function qCheck() {
@@ -2663,6 +2701,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   qBackBtn.addEventListener('click', () => { qView = qView.v === 'puz' && qView.id !== 'final' ? { v: 'stage', i: QD.stages.indexOf(QD.stages.find((x) => x.puzzles.includes(qPuz(qView.id)))) } : { v: 'home' }; qRender(); });
   async function openQuest() {
     if (!QD) { try { const r = await fetch(DATA.questFile); if (!r.ok) throw new Error(r.status); QD = await r.json(); } catch (e) { toast('闖關資料載入失敗'); return; } }
+    QD.stages.forEach((st, i) => { if (qStageDone(st)) qs.stages[i] = true; }); qSave(); markDone();
     qView = { v: 'home' }; $('#questTitle').textContent = `🗝️ ${QD.title}`; qRender(); questEl.hidden = false;
   }
   function closeQuest() { questEl.hidden = true; }
