@@ -628,21 +628,21 @@ const DATA = {
   ],
   /* 64 案資料（由 PDF 簡報 p.61–64 抽出；每案自帶 model 欄位，格式「種類:變體」） */
   dataFile: 'data/techs_v9_2026-11-01.json',
-  questFile: 'data/quest_v4_2026-11-01.json',
+  questFile: 'data/quest_v5_2026-11-01.json',
   /* 寄件單位：key 為資料檔 unit 欄的開頭；n 為簡報 p.60 載明的案數；
      full 為機關全名；county、lat、lon 為場址所在縣市鄉鎮與座標（OpenStreetMap，見 data/units_geo_2026-10-23.json）；
      花創中心的場址尚未確認，不顯示位置 */
   units: [
-    { key: '農試所', full: '農業部農業試驗所', n: 14, county: '臺中市霧峰區', lat: 24.032, lon: 120.69 },
-    { key: '臺南場', full: '農業部臺南區農業改良場', n: 10, county: '臺南市新化區', lat: 23.06, lon: 120.344 },
-    { key: '苗栗場', full: '農業部苗栗區農業改良場', n: 7, county: '苗栗縣公館鄉', lat: 24.495, lon: 120.827 },
-    { key: '花蓮場', full: '農業部花蓮區農業改良場', n: 6, county: '花蓮縣吉安鄉', lat: 23.975, lon: 121.564 },
-    { key: '臺東場', full: '農業部臺東區農業改良場', n: 5, county: '臺東縣臺東市', lat: 22.748, lon: 121.148 },
-    { key: '高雄場', full: '農業部高雄區農業改良場', n: 5, county: '屏東縣長治鄉', lat: 22.709, lon: 120.528 },
-    { key: '茶改場', full: '農業部茶及飲料作物改良場', n: 5, county: '桃園市楊梅區', lat: 24.909, lon: 121.186 },
-    { key: '桃園場', full: '農業部桃園區農業改良場（含樹林分場）', n: 5, county: '桃園市新屋區', lat: 24.951, lon: 121.029 },
-    { key: '種苗場', full: '農業部種苗改良繁殖場', n: 4, county: '臺中市新社區', lat: 24.221, lon: 120.802 },
-    { key: '臺中場', full: '農業部臺中區農業改良場', n: 2, county: '彰化縣大村鄉', lat: 24.004, lon: 120.533 },
+    { key: '農試所', full: '農業試驗所', n: 14, county: '臺中市霧峰區', lat: 24.032, lon: 120.69 },
+    { key: '臺南場', full: '臺南區農業改良場', n: 10, county: '臺南市新化區', lat: 23.06, lon: 120.344 },
+    { key: '苗栗場', full: '苗栗區農業改良場', n: 7, county: '苗栗縣公館鄉', lat: 24.495, lon: 120.827 },
+    { key: '花蓮場', full: '花蓮區農業改良場', n: 6, county: '花蓮縣吉安鄉', lat: 23.975, lon: 121.564 },
+    { key: '臺東場', full: '臺東區農業改良場', n: 5, county: '臺東縣臺東市', lat: 22.748, lon: 121.148 },
+    { key: '高雄場', full: '高雄區農業改良場', n: 5, county: '屏東縣長治鄉', lat: 22.709, lon: 120.528 },
+    { key: '茶改場', full: '茶及飲料作物改良場', n: 5, county: '桃園市楊梅區', lat: 24.909, lon: 121.186 },
+    { key: '桃園場', full: '桃園區農業改良場', n: 5, county: '桃園市新屋區', lat: 24.951, lon: 121.029 },
+    { key: '種苗場', full: '種苗改良繁殖場', n: 4, county: '臺中市新社區', lat: 24.221, lon: 120.802 },
+    { key: '臺中場', full: '臺中區農業改良場', n: 2, county: '彰化縣大村鄉', lat: 24.004, lon: 120.533 },
     { key: '花創中心', full: '花卉創新園區研究發展中心', n: 1 }
   ],
   /* 拆包與微縮場景：托盤中心（世界座標 z）、展開總長（秒） */
@@ -715,6 +715,10 @@ function mkPath(pts) {
   return path;
 }
 
+/* 寄件單位顯示全名（不含「農業部」）；資料檔裡的 unit 是簡稱 */
+const unitLabel = (k) => { const u = DATA.units.find((x) => (k || '').startsWith(x.key)); return u && u.full ? u.full : String(k || '').replace('農業部', ''); };
+const noMOA = (t) => String(t || '').replace('農業部', '');
+
 /* 數字磚：facts 放 {value,label}（最多 3 個）；沒有資料就不顯示 */
 function factsHTML(t) {
   const f = (t.facts || []).filter((x) => x && typeof x === 'object').slice(0, 3);
@@ -724,7 +728,7 @@ function factsHTML(t) {
 function mediaHTML(t) {
   const m = t.media || {}, ph = m.photos || [], vd = (m.videos || [])[0];
   if (!ph.length && !vd) return '';
-  const photos = ph.map((p) => `<figure style="margin:0"><img src="${p.file}" alt="${p.alt || t.name}" loading="lazy"><figcaption class="meta" style="margin:4px 0 0">${p.credit || ''}</figcaption></figure>`).join('');
+  const photos = ph.map((p) => `<figure style="margin:0"><img src="${p.file}" alt="${p.alt || t.name}" loading="lazy"><figcaption class="meta" style="margin:4px 0 0">${noMOA(p.credit)}</figcaption></figure>`).join('');
   const video = vd ? `<button class="slot" type="button" data-yt="${vd.youtubeId}">▶ ${vd.title || '播放影片'}</button>` : '';
   return `<div class="media ${ph.length > 1 ? 'multi' : ''}">${photos}${video}</div>`;
 }
@@ -732,8 +736,8 @@ function mediaHTML(t) {
 function sourcesHTML(t) {
   const s = t.sources || [];
   if (!s.length) return '';
-  const ph = ((t.media || {}).photos || []).filter((p) => p.credit).map((p) => p.credit);
-  return `<details class="srcbox"><summary>資料來源</summary><ul class="srcs">${s.map((x) => `<li>${x.url ? `<a href="${x.url}" target="_blank" rel="noopener">${x.title}</a>` : x.title}${x.publisher ? `（${x.publisher}${x.date ? `，${x.date}` : ''}）` : ''}</li>`).join('')}${ph.length ? `<li>圖片：${[...new Set(ph)].join('；')}</li>` : ''}</ul></details>`;
+  const ph = ((t.media || {}).photos || []).filter((p) => p.credit).map((p) => noMOA(p.credit));
+  return `<details class="srcbox"><summary>資料來源</summary><ul class="srcs">${s.map((x) => `<li>${x.url ? `<a href="${x.url}" target="_blank" rel="noopener">${x.title}</a>` : x.title}${x.publisher ? `（${noMOA(x.publisher)}${x.date ? `，${x.date}` : ''}）` : ''}</li>`).join('')}${ph.length ? `<li>圖片：${[...new Set(ph)].join('；')}</li>` : ''}</ul></details>`;
 }
 
 
@@ -766,7 +770,7 @@ function renderPlain(techs) {
     <input id="pq" type="search" placeholder="搜尋名稱、單位、作物…" aria-label="搜尋技術" autocomplete="off">
     <nav>${DATA.zones.map((z) => `<a href="#p-${z.id}" style="--c:${z.color}"><b>${z.id}</b>${z.short}</a>`).join('')}</nav></header>
     ${DATA.zones.map((z, zi) => `<section class="pz" id="p-${z.id}" style="--c:${z.color}"><h2><b>${z.id}</b>${z.big}<small>${z.short}｜${z.count} 案</small></h2>
-      ${techs.filter((t) => zoneOf(t) === zi).map((t) => `<details class="pcase" data-q="${(`${t.no} ${t.name} ${t.unit} ${t.group} ${t.oneLine || ''}`).toLowerCase()}"><summary><b>${t.no}</b>${t.name}<small>${t.unit}・${t.group}</small></summary>
+      ${techs.filter((t) => zoneOf(t) === zi).map((t) => `<details class="pcase" data-q="${(`${t.no} ${t.name} ${t.unit} ${t.group} ${t.oneLine || ''}`).toLowerCase()}"><summary><b>${t.no}</b>${t.name}<small>${unitLabel(t.unit)}・${t.group}</small></summary>
         <div class="zcard static" style="--c:${z.color}">${kidHTML(t)}${t.kid ? '' : factsHTML(t)}${mediaHTML(t)}${storyHTML(t, false)}${sourcesHTML(t)}</div></details>`).join('')}</section>`).join('')}`;
   document.body.appendChild(root);
   root.querySelector('#pq').addEventListener('input', (e) => {
@@ -2140,7 +2144,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     let body;
     if (zs) {
       body = `<div class="gchips" aria-label="故事段">${zs.groups.map((g, gi) => `<button class="gchip" type="button" data-g="${gi}">${g.name}<i>${g.cases.length}</i></button>`).join('')}</div>
-        <div class="clist">${zs.groups.map((g) => `<h3>${g.name}</h3>${g.cases.map((c) => `<button class="citem" type="button" data-ci="${c.ci}"><b>${c.opener ? '★' : c.tech.no}</b><span>${c.tech.name}</span><small>${c.opener ? '本包主角' : c.tech.unit}</small></button>`).join('')}`).join('')}</div>`;
+        <div class="clist">${zs.groups.map((g) => `<h3>${g.name}</h3>${g.cases.map((c) => `<button class="citem" type="button" data-ci="${c.ci}"><b>${c.opener ? '★' : c.tech.no}</b><span>${c.tech.name}</span><small>${c.opener ? '本包主角' : unitLabel(c.tech.unit)}</small></button>`).join('')}`).join('')}</div>`;
     } else {
       body = `<p class="note">64 案資料沒有讀到（${techsErr ? techsErr.message : '未知原因'}）。請用「啟動預覽.bat」或本機伺服器開啟網頁，直接點兩下 index.html 讀不到 data 資料夾。</p>`;
     }
@@ -2167,7 +2171,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
       <h2>${t.name}</h2>
       ${t.fullName && t.fullName !== t.name ? `<p class="fullname">展出名稱：${t.fullName}</p>` : ''}
       <dl>
-        ${unit ? `<div><dt>寄件單位</dt><dd><button class="ulink" type="button" data-unit="${unit.key}">${t.unit}</button></dd></div>` : ''}
+        ${unit ? `<div><dt>寄件單位</dt><dd><button class="ulink" type="button" data-unit="${unit.key}">${unitLabel(t.unit)}</button></dd></div>` : ''}
         <div><dt>所屬</dt><dd>${z.id} ${z.short}｜${t.group}</dd></div>
       </dl>
       ${kidHTML(t)}
@@ -2264,11 +2268,11 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   const matchTech = (t) => (fZone < 0 || zoneIdxOf(t) === fZone) && (!fUnit || (unitOf(t) || {}).key === fUnit) && qMatch(t);
   const filterActive = () => fZone >= 0 || !!fUnit || qWords().length > 0;
   const curNo = () => { const zs = zsOf(sel); return selCase >= 0 && zs ? zs.cases[selCase].tech.no : null; };
-  const itemHTML = (t, cur) => `<button class="citem${t.no === cur ? ' cur' : ''}" type="button" data-no="${t.no}" style="--c:${zones[zoneIdxOf(t)].color}"><b>${t.no}</b><span>${t.kid ? t.kid.e + ' ' : ''}${t.name}</span><small>${t.unit}・${t.group}</small></button>`;
+  const itemHTML = (t, cur) => `<button class="citem${t.no === cur ? ' cur' : ''}" type="button" data-no="${t.no}" style="--c:${zones[zoneIdxOf(t)].color}"><b>${t.no}</b><span>${t.kid ? t.kid.e + ' ' : ''}${t.name}</span><small>${unitLabel(t.unit)}・${t.group}</small></button>`;
   const zoneDots = (list) => zones.map((z, zi) => { const n = list.filter((t) => zoneIdxOf(t) === zi).length; return n ? `<i style="--c:${z.color}">${z.id}・${n}</i>` : ''; }).join('');
 
   filtersEl.innerHTML = `<div class="fz"><button class="fchip" type="button" data-z="-1" aria-pressed="true">全部</button>${zones.map((z, i) => `<button class="fchip" type="button" data-z="${i}" style="--c:${z.color}" aria-pressed="false">${z.id} ${z.short}</button>`).join('')}</div>
-    <label class="fu">單位<select id="fUnitSel"><option value="">全部單位</option>${DATA.units.map((u) => `<option value="${u.key}">${u.key}（${techList.filter((t) => unitOf(t) === u).length}）</option>`).join('')}</select></label>`;
+    <label class="fu">單位<select id="fUnitSel"><option value="">全部單位</option>${DATA.units.map((u) => `<option value="${u.key}">${u.full || u.key}（${techList.filter((t) => unitOf(t) === u).length}）</option>`).join('')}</select></label>`;
 
   function techListHTML() {
     let n = 0, html = '';
@@ -2287,13 +2291,13 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     if (!list.length) return '<p class="empty">找不到符合的單位。</p>';
     return `<p class="count">${list.length} 個寄件單位</p>` + list.map((u) => {
       const l = techList.filter((t) => unitOf(t) === u);
-      return `<button class="ucard" type="button" data-u="${u.key}"><div class="un"><b>${u.key}</b><span>${u.full || ''}</span></div><div class="uc"><strong>${l.length}</strong>案</div><div class="uz">${zoneDots(l)}</div></button>`;
+      return `<button class="ucard" type="button" data-u="${u.key}"><div class="un"><b>${u.full || u.key}</b><span>${u.county || ''}</span></div><div class="uc"><strong>${l.length}</strong>案</div><div class="uz">${zoneDots(l)}</div></button>`;
     }).join('');
   }
   function unitDetailHTML(key) {
     const u = DATA.units.find((x) => x.key === key), l = techList.filter((t) => unitOf(t) === u), cur = curNo();
     let html = `<button class="btn uback" type="button" data-uback>← 全部單位</button>
-      <div class="uhead"><div class="eyebrow">寄件單位</div><h3>${u.key}</h3>${u.full ? `<p>${u.full}</p>` : ''}
+      <div class="uhead"><div class="eyebrow">寄件單位</div><h3>${u.full || u.key}</h3>${u.county ? `<p>${u.county}</p>` : ''}
       <p>共 ${l.length} 項技術</p><div class="uz" style="display:flex;flex-wrap:wrap;gap:4px">${zoneDots(l)}</div></div>`;
     zones.forEach((z, zi) => {
       const zl = l.filter((t) => zoneIdxOf(t) === zi); if (!zl.length) return;
@@ -2433,9 +2437,9 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     const path = TW.map(([lo, la], i) => (i ? 'L' : 'M') + proj(lo, la).join(',')).join(' ') + 'Z';
     const cur = trackUnit && DATA.units.find((u) => u.key === trackUnit);
     return `<div class="mapwrap"><svg viewBox="0 0 280 480" role="img" aria-label="台灣示意地圖，標示寄件單位的位置"><path class="tw" d="${path}"/>
-      ${pts.map((p) => `<g class="mk${trackUnit === p.u.key ? ' on' : ''}" data-u="${p.u.key}" tabindex="0" role="button" aria-label="${p.u.key}，${unitCount(p.u)} 案"><circle cx="${p.x}" cy="${p.y}" r="11"/><text x="${p.x}" y="${p.y}">${unitCount(p.u)}</text>${trackUnit === p.u.key ? `<text class="mklabel" x="${Math.min(Math.max(p.x, 36), 244)}" y="${p.y - 21}">${p.u.key}</text>` : ''}</g>`).join('')}</svg>
-      <div><div class="ulist">${DATA.units.map((u) => `<button class="urow${trackUnit === u.key ? ' on' : ''}" type="button" data-u="${u.key}"><i>${unitCount(u)}</i><div><b>${u.key}</b><span>${[u.county, u.full].filter(Boolean).join('・')}</span></div><em>${unitCount(u)}</em></button>`).join('')}</div>
-      ${cur ? `<div class="ucap"><b>${cur.key}</b>寄出 ${unitCount(cur)} 項技術。<br><button class="btn primary" type="button" data-ulist="${cur.key}">看這個單位的技術</button></div>` : ''}</div></div>
+      ${pts.map((p) => `<g class="mk${trackUnit === p.u.key ? ' on' : ''}" data-u="${p.u.key}" tabindex="0" role="button" aria-label="${p.u.full || p.u.key}，${unitCount(p.u)} 案"><circle cx="${p.x}" cy="${p.y}" r="11"/><text x="${p.x}" y="${p.y}">${unitCount(p.u)}</text>${trackUnit === p.u.key ? `<text class="mklabel" x="${Math.min(Math.max(p.x, 36), 244)}" y="${p.y - 21}">${p.u.full || p.u.key}</text>` : ''}</g>`).join('')}</svg>
+      <div><div class="ulist">${DATA.units.map((u) => `<button class="urow${trackUnit === u.key ? ' on' : ''}" type="button" data-u="${u.key}"><i>${unitCount(u)}</i><div><b>${u.full || u.key}</b><span>${u.county || ''}</span></div><em>${unitCount(u)}</em></button>`).join('')}</div>
+      ${cur ? `<div class="ucap"><b>${cur.full || cur.key}</b>寄出 ${unitCount(cur)} 項技術。<br><button class="btn primary" type="button" data-ulist="${cur.key}">看這個單位的技術</button></div>` : ''}</div></div>
       <p class="exitline">${DATA.exitLine}</p>`;
   }
   /* 台灣農業技術地圖：北、中、南、東、中間五片拼圖（經緯度多邊形，超出海岸線的部分由台灣輪廓裁掉）；
@@ -2663,14 +2667,13 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
       h = `<p class="qprompt">${st.title}</p>
         <div class="qstages">${st.puzzles.map((p, i) => `<button class="qstage ${qs.solved[p.id] ? 'done' : ''}" type="button" data-act="puz" data-id="${p.id}" style="--c:${z.color}"><b>${i + 1}</b><span>${p.type === 'board' ? '📍 展板題' : '🌐 網站題'}</span><i>${qs.solved[p.id] ? '✓' : '▶'}</i></button>`).join('')}</div>`;
     } else {
-      const pz = qPuz(v.id), solved = !!qs.solved[pz.id], shown = Math.min(qs.hints[pz.id] || 0, pz.hints.length), isF = pz.id === 'final';
+      const pz = qPuz(v.id), solved = !!qs.solved[pz.id], isF = pz.id === 'final';
       const scr = isF ? `<div class="qbig" aria-label="打亂的字">${QD.final.scramble.map((i) => QD.stages[i].reward).join(' ')}</div>` : '';
       h = `${isF ? '' : `<span class="qtag">${pz.type === 'board' ? '📍 展板題' : '🌐 網站題'}</span>`}
         <p class="qprompt">${pz.prompt}</p>${scr}
         ${solved ? `<div class="qexp">答對了！答案是「${pz.answers[0]}」。${pz.explain || ''}${isF ? `<br>${QD.final.ending}` : ''}</div>${isF ? `<div class="qmapbig">${qMapHTML({ id: 'qf', all: true, anim: true })}</div>` : ''}`
           : `<div class="qans"><input id="qIn" type="text" maxlength="12" autocomplete="off" placeholder="${pz.len} 個字或數字" aria-label="答案"><button class="btn primary" type="button" data-act="check">送出</button></div><p class="qmsg" id="qMsg" aria-live="polite"></p>`}
-        ${pz.hints.slice(0, shown).map((t, i) => `<p class="qhint">💡 ${t}</p>`).join('')}
-        <div class="qrow">${solved ? '' : shown < pz.hints.length ? `<button class="btn" type="button" data-act="hint">💡 提示 ${shown}/${pz.hints.length}</button>` : `<button class="btn" type="button" data-act="reveal">看答案</button>`}
+        <div class="qrow">${!solved && (qs.hints[pz.id] || 0) > 0 ? '<button class="btn" type="button" data-act="reveal">看答案</button>' : ''}
           ${(pz.related || []).map((no) => `<button class="btn" type="button" data-act="tech" data-no="${no}">到卡片找答案</button>`).join('')}
           ${solved && isF ? '<button class="btn" type="button" data-act="home">回闖關首頁</button>' : ''}</div>`;
     }
@@ -2692,7 +2695,6 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     else if (a === 'puz') { qView = { v: 'puz', id: b.dataset.id }; qRender(); }
     else if (a === 'final') { if (!qAllDone()) { toast('先解開五個關卡'); return; } qView = { v: 'puz', id: 'final' }; qRender(); }
     else if (a === 'home') { qView = { v: 'home' }; qRender(); }
-    else if (a === 'hint') { const pz = qPuz(qView.id); qs.hints[pz.id] = (qs.hints[pz.id] || 0) + 1; qSave(); qRender(); }
     else if (a === 'reveal') { qSolve(qPuz(qView.id)); }
     else if (a === 'tech') { if (phase !== 'done') { toast('先拆開包裹，才找得到卡片'); return; } closeQuest(); openTech(+b.dataset.no); }
     else if (a === 'reset') { if (confirm('要清除闖關紀錄，重新開始嗎？')) { qs.solved = {}; qs.hints = {}; qs.stages = {}; qSave(); markDone(); qView = { v: 'home' }; qRender(); } }
@@ -2701,7 +2703,11 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   function qCheck() {
     const pz = qPuz(qView.id), inp = $('#qIn'), msg = $('#qMsg'); if (!inp || !inp.value.trim()) { if (msg) msg.textContent = '先輸入答案'; return; }
     if (qOK(pz, inp.value)) qSolve(pz);
-    else { inp.classList.remove('bad'); void inp.offsetWidth; inp.classList.add('bad'); msg.textContent = '不太對，再試試，或看提示。'; }
+    else {
+      const first = !(qs.hints[pz.id] || 0); qs.hints[pz.id] = (qs.hints[pz.id] || 0) + 1; qSave();
+      if (first) { const v = inp.value; qRender(); const i2 = $('#qIn'); i2.value = v; i2.focus({ preventScroll: true }); }
+      const i3 = $('#qIn'); i3.classList.remove('bad'); void i3.offsetWidth; i3.classList.add('bad'); $('#qMsg').textContent = '再試試';
+    }
   }
   qBody.addEventListener('keydown', (e) => { if (e.key === 'Enter' && e.target.id === 'qIn') { e.preventDefault(); qCheck(); } });
   qBackBtn.addEventListener('click', () => { qView = qView.v === 'puz' && qView.id !== 'final' ? { v: 'stage', i: QD.stages.indexOf(QD.stages.find((x) => x.puzzles.includes(qPuz(qView.id)))) } : { v: 'home' }; qRender(); });
