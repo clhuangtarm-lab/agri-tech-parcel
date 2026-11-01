@@ -204,6 +204,9 @@ body{
 .zcard .tile.empty strong{font-size:16px;color:#a09086}
 .zcard .facts{margin:10px 0 0;padding-left:1.2em;font-size:13px;line-height:1.7}
 .zcard .media{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 0}
+.ytthumb{position:relative;display:block;width:100%;aspect-ratio:16/9;padding:0;border:0;border-radius:12px;background:#000 center/cover no-repeat;cursor:pointer}
+.ytplay{position:absolute;inset:0;margin:auto;width:58px;height:58px;border-radius:50%;background:rgba(220,40,40,.94);color:#fff;display:grid;place-items:center;font-size:22px;padding-left:4px;box-shadow:0 2px 10px #0006}
+.ytthumb:hover .ytplay{background:#e00}
 .zcard .media a.slot{text-decoration:none;color:var(--ink);font-weight:700;font-size:13px;grid-column:1 / -1;min-height:56px}
 .zcard .media a.slot small{display:block;font-weight:500;font-size:11px;color:#8a7a70}
 .zcard .media .slot{display:grid;place-items:center;min-height:84px;border-radius:12px;font-size:12px;color:#a09086;text-align:center;padding:6px}
@@ -738,8 +741,12 @@ function mediaHTML(t) {
   const m = t.media || {}, ph = m.photos || [], vds = m.videos || [];
   if (!ph.length && !vds.length) return '';
   const photos = ph.map((p) => `<figure style="margin:0"><img src="${p.file}" alt="${p.alt || t.name}" loading="lazy"><figcaption class="meta" style="margin:4px 0 0">${noMOA(p.credit)}</figcaption></figure>`).join('');
-  const video = vds.map((vd) => vd.youtubeId ? `<button class="slot" type="button" data-yt="${vd.youtubeId}">▶ ${vd.title || '播放影片'}</button>` : vd.url ? `<a class="slot" href="${vd.url}" target="_blank" rel="noopener">▶ ${vd.title || '觀看影片'}${vd.credit ? `<small>${noMOA(vd.credit)}</small>` : ''}</a>` : '').join('');
+  const video = vds.map((vd) => vd.youtubeId ? `<figure class="yt" style="margin:0;grid-column:1 / -1"><button class="ytthumb" type="button" data-yt="${vd.youtubeId}" style="background-image:url(https://i.ytimg.com/vi/${vd.youtubeId}/hqdefault.jpg)" aria-label="播放影片${vd.title ? '：' + vd.title : ''}"><span class="ytplay" aria-hidden="true">▶</span></button><figcaption class="meta" style="margin:4px 0 0">${vd.title ? vd.title + '　' : ''}<a href="https://www.youtube.com/watch?v=${vd.youtubeId}" target="_blank" rel="noopener">在 YouTube 開啟</a>${vd.credit ? '　' + noMOA(vd.credit) : ''}</figcaption></figure>` : vd.url ? `<a class="slot" href="${vd.url}" target="_blank" rel="noopener">${vd.title || vd.url}${vd.credit ? `<small>${noMOA(vd.credit)}</small>` : ''}</a>` : '').join('');
   return `<div class="media ${ph.length > 1 ? 'multi' : ''}">${photos}${video}</div>`;
+}
+/* 影片縮圖點一下，原地換成 YouTube 內嵌播放器 */
+function ytEmbed(btn) {
+  btn.outerHTML = `<iframe class="slot" style="border:0;width:100%;aspect-ratio:16/9;border-radius:12px" src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(btn.dataset.yt)}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen title="影片"></iframe>`;
 }
 /* 資料來源收在摺疊裡，需要時再展開 */
 function sourcesHTML(t) {
@@ -782,6 +789,7 @@ function renderPlain(techs) {
       ${techs.filter((t) => zoneOf(t) === zi).map((t) => `<details class="pcase" data-q="${(`${t.no} ${t.name} ${t.unit} ${t.group} ${t.oneLine || ''}`).toLowerCase()}"><summary><b>${t.no}</b>${t.name}<small>${unitLabel(t.unit)}・${t.group}</small></summary>
         <div class="zcard static" style="--c:${z.color}">${kidHTML(t)}${t.kid ? '' : factsHTML(t)}${mediaHTML(t)}${storyHTML(t, false)}${sourcesHTML(t)}</div></details>`).join('')}</section>`).join('')}`;
   document.body.appendChild(root);
+  root.addEventListener('click', (e) => { const b = e.target.closest('[data-yt]'); if (b) ytEmbed(b); });
   root.querySelector('#pq').addEventListener('input', (e) => {
     const ws = e.target.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
     root.querySelectorAll('.pcase').forEach((d) => { d.hidden = !ws.every((w) => d.dataset.q.includes(w)); });
@@ -2260,7 +2268,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     else if (t.dataset.act === 'back') deselectCase();
     else if (t.dataset.act === 'copy') copyLink();
     else if (t.dataset.act === 'expand') { zcard.classList.toggle('big'); zcard.style.width = zcard.style.height = ''; LS.set('parcel-zbig', zcard.classList.contains('big') ? '1' : '0'); refit(); }
-    else if (t.dataset.yt) { t.outerHTML = `<iframe class="slot" style="border:0;width:100%;min-height:120px" src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(t.dataset.yt)}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen title="影片"></iframe>`; }
+    else if (t.dataset.yt) ytEmbed(t);
     else if (t.dataset.act === 'prev' || t.dataset.act === 'next') {
       const zs = zsOf(sel); if (!zs) return; const n = zs.cases.length;
       selectCase((selCase + (t.dataset.act === 'next' ? 1 : n - 1)) % n);
