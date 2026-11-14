@@ -497,6 +497,16 @@ body.lite .zcard,body.lite .side{background:rgba(255,248,244,.97)}
 #brandSub{display:none}
 .brand{padding:0!important;background:none!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 .brand p{font-weight:700;color:#4d463f;text-shadow:0 0 6px #fffef1,0 0 6px #fffef1,0 0 10px #fffef1}
+@media (min-width:1000px) and (min-aspect-ratio:13/10){
+  #loading{display:grid;grid-template-columns:minmax(440px,44%) 1fr;grid-template-rows:1fr auto;align-items:stretch;column-gap:0}
+  .ld-box{grid-column:1;grid-row:1;align-self:center;margin:0;padding:0 28px;text-align:center}
+  #ldTitle{width:min(560px,100%,52vh)}
+  .ld-art{grid-column:2;grid-row:1;order:0;margin:0;min-height:0;background-size:contain;background-position:center;-webkit-mask-image:none;mask-image:none}
+  .ld-orgs{grid-column:1 / 3;grid-row:2;order:0;flex-direction:row;align-items:center;justify-content:center;padding:8px 24px 14px;gap:8px 36px}
+  .ld-host{flex-direction:row;align-items:center;flex-wrap:wrap;gap:4px 18px}.ld-host .ld-lab{width:100%}
+  .ld-host img{height:38px}.ld-host img+img{height:22px}.ld-host img+img+img{height:34px}
+  .ld-info{margin-bottom:10px}
+}
 @media (max-width:800px){
   #ldTitle{width:min(430px,94vw)}.ld-info{font-size:13.5px}.ld-info b{font-size:17px}
   .ld-orgs{gap:10px;padding:8px 12px 10px;flex-direction:column;align-items:flex-start}
@@ -680,7 +690,7 @@ const DATA = {
       { name: '風味與生活', text: '採收後的風味與加工，走進日常。', zone: 4 } ] }
   ],
   /* 64 案資料（由 PDF 簡報 p.61–64 抽出；每案自帶 model 欄位，格式「種類:變體」） */
-  dataFile: 'data/techs_v15_2026-11-14.json',
+  dataFile: 'data/techs_v16_2026-11-14.json',
   questFile: 'data/quest_v6_2026-11-14.json',
   /* 寄件單位：key 為資料檔 unit 欄的開頭；n 為簡報 p.60 載明的案數；
      full 為機關全名；county、lat、lon 為場址所在縣市鄉鎮與座標（OpenStreetMap，見 data/units_geo_2026-10-23.json）；
@@ -837,6 +847,8 @@ async function boot() {
     const res = await fetch(DATA.dataFile);
     if (!res.ok) throw new Error('HTTP ' + res.status);
     techs = (await res.json()).techs;
+    const mq = new URLSearchParams(location.search).get('models');   // 除錯：?models=machine:transplant,pot:ricetray 只用指定模型看外觀
+    if (mq) techs = mq.split(',').map((m, i) => ({ ...techs[i], no: 900 + i, zone: '01 品種創新', group: DATA.zones[0].groups[0], name: m, model: m, media: { photos: [], videos: [] } }));
   } catch (e) { techsErr = e; console.warn('64 案資料讀取失敗：', e); }
   try {
     if (new URLSearchParams(location.search).has('plain')) throw new Error('plain mode');   // ?plain 直接用 2D 清單
@@ -1371,6 +1383,14 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
         else P('sph', tx + dx * .03, ty - .05, tz + dz * .03, .09, .27, .09, grain, lean * dz + .5 * dz, 0, -lean * dx - .5 * dx);
       });
       if (v === 'paperrice') P('cyl', .3, .17, .22, .14, .5, .14, COL.cream, 0, 0, PI2);
+      const bowl = () => { P('cyl', .32, .13, .22, .22, .14, .22, '#fffdf9'); P('sph', .32, .22, .22, .22, .12, .22, '#ffffff'); };
+      if (v === 'rice') bowl();
+      else if (v === 'rice2') { bowl(); [-.04, .04, 0].forEach((o, i) => P('sph', .32 + o, .36 + i * .1, .22, .06, .05, .06, '#e8f0f2')); }
+      else if (v === 'rice3') { P('sph', .34, .24, .22, .2, .2, .2, '#f6c744'); ring(8, (k, a) => P('cone', .34 + Math.cos(a) * .15, .24 + Math.sin(a) * .15, .22, .04, .08, .04, '#f2a33c', 0, 0, a - PI2)); }
+      else if (v === 'rice4') [[.28, .17], [.38, .2], [.32, .28], [.24, .26], [.4, .12]].forEach(([x, z], i) => P('sph', x, .12 + (i % 2) * .05, z, .09, .08, .09, i % 2 ? '#fffdf9' : '#f6e3b0'));
+      else if (v === 'rice5') { P('rbox', .32, .26, .22, .2, .26, .04, '#7fb06a'); P('rbox', .32, .26, .245, .06, .18, .01, COL.cream); P('rbox', .32, .26, .245, .14, .05, .01, COL.cream); }
+      else if (v === 'rice6') { P('rbox', .32, .12, .22, .28, .12, .22, '#d94a3a'); P('rbox', .32, .2, .22, .24, .04, .18, '#f4ebdd'); [-.06, .06].forEach((o) => P('sph', .32 + o, .24, .22, .08, .06, .08, '#ffffff')); }
+      else if (v === 'barley') { P('cyl', .32, .22, .22, .16, .28, .16, '#e8a63a'); P('sph', .32, .38, .22, .18, .08, .18, '#fffdf9'); P('tor', .43, .22, .22, .14, .14, .14, '#e8a63a', PI2, 0, 0); }
     },
     pod(P, v) {
       plate(P);
