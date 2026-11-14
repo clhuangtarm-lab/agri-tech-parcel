@@ -488,18 +488,21 @@ body.lite .zcard,body.lite .side{background:rgba(255,248,244,.97)}
 .ld-host{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
 .ld-host img{display:block;height:44px;width:auto;mix-blend-mode:multiply}
 .ld-host img+img{height:26px}
-.ld-host img+img+img{height:38px}
-.ld-joint{max-width:560px}
-.ld-joint p{margin:0;font-size:11.5px;line-height:1.75;color:#4d463f}
-#brandTitle{font-size:0;width:230px;aspect-ratio:700/108;margin:0 0 4px;background:url(media/vis/title_only.png) left center/contain no-repeat}
+.ld-host img+img+img{height:50px}
+.ld-joint{max-width:760px}
+.ld-joint p{margin:0;font-size:12px;line-height:1.9;color:#4d463f}
+.ld-joint .row{display:flex;flex-wrap:wrap;gap:0 16px}
+.ld-joint .row span{white-space:nowrap}
+#brandTitle{font-size:0;width:270px;aspect-ratio:1200/265;margin:0;background:url(media/vis/title.png) left center/contain no-repeat;filter:drop-shadow(0 0 2px rgba(255,254,241,.95)) drop-shadow(0 0 5px rgba(255,254,241,.8))}
+#brandSub{display:none}
 .brand{padding:0!important;background:none!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 .brand p{font-weight:700;color:#4d463f;text-shadow:0 0 6px #fffef1,0 0 6px #fffef1,0 0 10px #fffef1}
 @media (max-width:800px){
   #ldTitle{width:min(430px,94vw)}.ld-info{font-size:13.5px}.ld-info b{font-size:17px}
   .ld-orgs{gap:10px;padding:8px 12px 10px;flex-direction:column;align-items:flex-start}
-  .ld-host{flex-direction:row;align-items:center;flex-wrap:wrap;gap:4px 14px}.ld-host .ld-lab{width:100%}.ld-host img{height:34px}.ld-host img+img{height:22px}.ld-host img+img+img{height:30px}
-  .ld-joint p{font-size:10.5px;line-height:1.6}
-  #brandTitle{width:168px}
+  .ld-host{flex-direction:row;align-items:center;flex-wrap:wrap;gap:4px 14px}.ld-host .ld-lab{width:100%}.ld-host img{height:34px}.ld-host img+img{height:22px}.ld-host img+img+img{height:38px}
+  .ld-joint p{font-size:10.5px;line-height:1.7}.ld-joint .row{gap:0 10px}
+  #brandTitle{width:190px}
 }
 </style>
 <script type="importmap">
@@ -636,7 +639,7 @@ body.lite .zcard,body.lite .side{background:rgba(255,248,244,.97)}
   </div>
   <div class="ld-orgs">
     <div class="ld-host"><span class="ld-lab">主辦單位</span><img src="media/vis/tari.png" alt="農業部農業試驗所"><img src="media/vis/nlpi.png" alt="國立公共資訊圖書館"><img src="media/vis/afa.jpg" alt="農業部農糧署"></div>
-    <div class="ld-joint"><span class="ld-lab">聯合展出</span><p>桃園區農業改良場　苗栗區農業改良場　臺中區農業改良場　臺南區農業改良場　高雄區農業改良場　花蓮區農業改良場　臺東區農業改良場　茶及飲料作物改良場　種苗改良繁殖場　花卉創新園區研究發展中心　農業藥物試驗所</p></div>
+    <div class="ld-joint"><span class="ld-lab">聯合展出</span><p class="row"><span>桃園區農業改良場</span><span>苗栗區農業改良場</span><span>臺中區農業改良場</span><span>臺南區農業改良場</span><span>高雄區農業改良場</span><span>花蓮區農業改良場</span></p><p class="row"><span>臺東區農業改良場</span><span>茶及飲料作物改良場</span><span>種苗改良繁殖場</span><span>花卉創新園區研究發展中心</span><span>農業藥物試驗所</span></p></div>
   </div>
 </div>
 
@@ -677,7 +680,7 @@ const DATA = {
       { name: '風味與生活', text: '採收後的風味與加工，走進日常。', zone: 4 } ] }
   ],
   /* 64 案資料（由 PDF 簡報 p.61–64 抽出；每案自帶 model 欄位，格式「種類:變體」） */
-  dataFile: 'data/techs_v13_2026-11-14.json',
+  dataFile: 'data/techs_v15_2026-11-14.json',
   questFile: 'data/quest_v6_2026-11-14.json',
   /* 寄件單位：key 為資料檔 unit 欄的開頭；n 為簡報 p.60 載明的案數；
      full 為機關全名；county、lat、lon 為場址所在縣市鄉鎮與座標（OpenStreetMap，見 data/units_geo_2026-10-23.json）；
@@ -784,7 +787,7 @@ function ytEmbed(btn) {
 /* 展示文字（對話版）一段；提案原文收合在下方；沒有文字就不顯示 */
 function bodyHTML(t) {
   const text = t.text ? `<div class="pbox"><span class="kemo" aria-hidden="true">${t.icon || '🌱'}</span><p>${t.text}</p></div>` : '';
-  const orig = t.orig ? `<details class="orig"><summary>提案原文</summary><p>${t.orig}</p></details>` : '';
+  const orig = t.orig ? `<details class="orig"><summary>了解更多</summary><p>${t.orig}</p></details>` : '';
   return text + mediaHTML(t) + orig;
 }
 const firstSentence = (x) => { const m = String(x || '').match(/^.*?[？！。]/); return m ? m[0] : String(x || '').slice(0, 30); };
@@ -800,7 +803,7 @@ function renderPlain(techs) {
     <p class="pnote">目前無法顯示 3D 場景，改用清單瀏覽。重新整理頁面，或改用最新版 Chrome、Edge、Safari 或 Firefox，可看到完整的拆包裹體驗。</p>
     <input id="pq" type="search" placeholder="搜尋名稱、單位、作物…" aria-label="搜尋技術" autocomplete="off">
     <nav>${DATA.zones.map((z) => `<a href="#p-${z.id}" style="--c:${z.color}"><b>${z.id}</b>${z.short}</a>`).join('')}</nav></header>
-    ${DATA.zones.map((z, zi) => `<section class="pz" id="p-${z.id}" style="--c:${z.color}"><h2><b>${z.id}</b>${z.big}<small>${z.short}｜${z.count} 案</small></h2>
+    ${DATA.zones.map((z, zi) => `<section class="pz" id="p-${z.id}" style="--c:${z.color}"><h2><b>${z.id}</b>${z.big}<small>${z.short}</small></h2>
       ${techs.filter((t) => zoneOf(t) === zi).map((t) => `<details class="pcase" data-q="${(`${t.name} ${t.unit} ${t.group} ${t.text || ''}`).toLowerCase()}"><summary><b>${t.icon || ''}</b>${t.name}<small>${unitLabel(t.unit)}・${t.group}</small></summary>
         <div class="zcard static" style="--c:${z.color}">${bodyHTML(t)}</div></details>`).join('')}</section>`).join('')}`;
   document.body.appendChild(root);
@@ -821,7 +824,7 @@ function showFatal(err, techs) {
     '<div>可能原因：網路無法連到 Three.js（cdn.jsdelivr.net）、這台裝置的瀏覽器不支援 WebGL，或沒有透過「啟動預覽.bat」開啟（讀不到 data 資料夾）。可以：</div>' +
     '<ol><li>確認網路後重新整理頁面。</li><li>改用最新版 Chrome、Edge、Safari 或 Firefox。</li></ol>' +
     '<div style="margin-top:12px"><b>先看五個小包裹的內容：</b></div><ol>' +
-    DATA.zones.map(z => `<li>${z.id} ${z.short}（${z.big}）：${z.count} 案</li>`).join('') + '</ol>';
+    DATA.zones.map(z => `<li>${z.id} ${z.short}（${z.big}）</li>`).join('') + '</ol>';
   box.querySelector('code').textContent = String(err && err.message ? err.message : err);
 }
 
@@ -1356,7 +1359,8 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   const MODELS = {
     stalks(P, v) {
       plate(P, v === 'paperrice' ? '#ffffff' : COL.plate);
-      const n = v === 'sorghum' ? 3 : 5, h = v === 'asparagus' ? .55 : v === 'sorghum' ? .85 : .7;
+      const SV = { rice2: [6, .62, '#f3d98a'], rice3: [4, .8, '#d9a441'], rice4: [5, .66, '#fff1c2'], rice5: [6, .74, '#b9c05a'], rice6: [7, .56, '#ecd06f'], barley: [8, .72, '#cdbb72'], sorghum: [3, .85], asparagus: [5, .55] }[v] || [5, .7];
+      const n = SV[0], h = SV[1], grain = SV[2] || '#e8c66a';
       ring(n, (k, a) => {
         const r = n === 3 ? .13 : .17, lean = v === 'asparagus' ? .06 : .2, dx = Math.cos(a), dz = Math.sin(a), s = Math.sin(lean);
         const hh = h * (.88 + (k % 3) * .06), cyy = .06 + Math.cos(lean) * hh / 2;
@@ -1364,7 +1368,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
         P('cyl', dx * r + s * hh / 2 * dx, cyy, dz * r + s * hh / 2 * dz, .04, hh, .04, v === 'asparagus' ? '#7fb06a' : COL.g2, lean * dz, 0, -lean * dx);
         if (v === 'asparagus') P('cone', tx, ty + .05, tz, .1, .16, .1, '#8e7bb0');
         else if (v === 'sorghum') P('sph', tx, ty, tz, .17, .22, .17, '#b5503a');
-        else P('sph', tx + dx * .03, ty - .05, tz + dz * .03, .09, .27, .09, '#e8c66a', lean * dz + .5 * dz, 0, -lean * dx - .5 * dx);
+        else P('sph', tx + dx * .03, ty - .05, tz + dz * .03, .09, .27, .09, grain, lean * dz + .5 * dz, 0, -lean * dx - .5 * dx);
       });
       if (v === 'paperrice') P('cyl', .3, .17, .22, .14, .5, .14, COL.cream, 0, 0, PI2);
     },
@@ -1382,7 +1386,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
           P('cyl', dx * .07 + Math.sin(lean) * .3 * dx, .46, dz * .07 + Math.sin(lean) * .3 * dz, .035, .8, .035, '#3b2a20', lean * dz, 0, -lean * dx); });
         P('tor', 0, .3, 0, .2, .2, .2, COL.cream, PI2, 0, 0); P('sph', .3, .1, .2, .16, .06, .16, '#f4ebdd');
       } else {
-        const col = v === 'edamame' ? '#7fb06a' : v === 'soy' ? '#c9a45b' : '#6b4a2f', h = v === 'sesame' ? .85 : .6, n = v === 'edamame' ? 4 : 7;
+        const col = v === 'edamame' ? '#7fb06a' : v === 'soy' ? '#c9a45b' : v === 'soy2' ? '#a9b86a' : '#6b4a2f', h = v === 'sesame' ? .85 : v === 'soy2' ? .72 : .6, n = v === 'edamame' ? 4 : v === 'soy2' ? 5 : 7;
         P('cyl', 0, .06 + h / 2, 0, .04, h, .04, COL.g2);
         for (let i = 0; i < n; i++) {
           const side = i % 2 ? 1 : -1, y = .22 + i * (h - .2) / n;
@@ -1399,6 +1403,11 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
           P('sph', x, .3, z, .34, .4, .34, k ? '#e0577a' : '#d8434a'); P('cone', x, .53, z, .2, .08, .2, COL.g2);
           ring(5, (j, a) => P('sph', x + Math.cos(a) * .15, .28 + (j % 2) * .06, z + Math.sin(a) * .15, .04, .04, .04, COL.yellow));
         });
+      } else if (v === 'melon') {
+        P('sph', 0, .3, 0, .56, .48, .56, '#a9cf8a'); ring(6, (k, a) => P('sph', Math.cos(a) * .25, .3, Math.sin(a) * .25, .05, .42, .05, '#e6f0c8', 0, -a, 0)); P('cyl', 0, .56, 0, .03, .1, .03, '#6b4a2f');
+        P('sph', .3, .14, .2, .3, .2, .12, '#f4a259', 0, .5, 0);
+      } else if (v === 'berry2') {
+        [[-.2, -.1], [.12, -.12], [.0, .14]].forEach(([x, z], k) => { P('cone', x, .3, z, .26, .34, .26, k ? '#f06d6d' : '#e8545a', Math.PI, 0, 0); P('cone', x, .5, z, .16, .06, .16, COL.g2); });
       } else if (v === 'round') {
         P('sph', -.1, .28, 0, .4, .4, .4, '#f2c14e'); P('sph', .18, .22, .12, .3, .3, .3, '#e8a63a');
         P('cyl', -.1, .52, 0, .03, .08, .03, '#6b4a2f'); leafAt(P, -.04, .54, 0, .5);
@@ -1413,7 +1422,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     },
     flower(P, v) {
       plate(P);
-      const pet = { crystal: '#fffdf9', orchid: '#b784c8', daylily: '#f08a3c', roselle: '#7a1f2d', buckwheat: '#fffdf9' }[v] || '#f2b5c6';
+      const pet = { crystal: '#fffdf9', orchid: '#b784c8', orchid2: '#f2b13c', daylily: '#f08a3c', roselle: '#7a1f2d', buckwheat: '#fffdf9' }[v] || '#f2b5c6';
       if (v === 'buckwheat') {
         ring(5, (k, a) => { const x = Math.cos(a) * .16, z = Math.sin(a) * .16;
           P('cyl', x, .35, z, .03, .6, .03, COL.g2);
@@ -1426,7 +1435,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
       }
       P('cyl', 0, .36, 0, .04, .6, .04, COL.g2);
       if (v === 'daylily') { P('cone', 0, .74, 0, .4, .3, .4, pet, Math.PI, 0, 0); P('sph', 0, .8, 0, .1, .1, .1, COL.yellow); }
-      else { ring(6, (k, a) => P('sph', Math.cos(a) * .15, .7, Math.sin(a) * .15, .17, .06, .17, pet, 0, -a, Math.cos(a) * .3)); P('sph', 0, .72, 0, .15, .12, .15, v === 'crystal' ? '#bfe3ec' : COL.yellow); }
+      else { ring(6, (k, a) => P('sph', Math.cos(a) * .15, .7, Math.sin(a) * .15, .17, .06, .17, pet, 0, -a, Math.cos(a) * .3)); P('sph', 0, .72, 0, .15, .12, .15, v === 'crystal' ? '#bfe3ec' : v === 'orchid2' ? '#a23a2a' : COL.yellow); }
       leafAt(P, .12, .22, 0, .4); leafAt(P, -.12, .32, 0, 2.8);
     },
     insect(P, v) {
@@ -1450,6 +1459,10 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
         P('rbox', 0, .3, 0, .6, .2, .3, COL.coral); P('rbox', .17, .48, 0, .22, .2, .24, COL.cream); P('rbox', -.2, .46, 0, .24, .14, .26, COL.wood);
         [-.24, -.14, -.2].forEach((x, i) => P('sph', x, .55 + (i % 2) * .03, (i - 1) * .06, .1, .1, .1, '#fffdf9'));
         wheel(.2, .2, .26); wheel(.2, -.2, .26); wheel(-.2, .2, .22); wheel(-.2, -.2, .22);
+      } else if (v === 'transplant') {
+        P('rbox', 0, .22, 0, .72, .12, .46, '#4a8fa0'); [-.2, .2].forEach((x) => P('rbox', x, .34, 0, .3, .08, .36, '#6b6670'));
+        [-.2, .2].forEach((x) => ring(3, (k, a) => P('cone', x + Math.cos(a) * .08, .46, Math.sin(a) * .08, .05, .16, .05, COL.g1)));
+        P('box', 0, .62, 0, .5, .04, .04, COL.ink); [-.25, .25].forEach((x) => P('cyl', x, .48, 0, .03, .28, .03, COL.ink)); wheel(.28, .26, .18); wheel(-.28, .26, .18); wheel(.28, -.26, .18); wheel(-.28, -.26, .18);
       } else if (v === 'mower') {
         P('rbox', 0, .26, 0, .55, .16, .4, '#7fb06a'); P('cyl', 0, .38, 0, .3, .08, .3, COL.cream); P('box', -.32, .5, 0, .05, .5, .05, COL.ink, 0, 0, -.5);
         wheel(.2, .24, .2); wheel(.2, -.24, .2); wheel(-.2, .24, .2); wheel(-.2, -.24, .2);
@@ -1504,8 +1517,8 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     },
     pot(P, v) {
       plate(P);
-      if (v === 'tray' || v === 'media') {
-        P('rbox', 0, .14, 0, .78, .14, .54, v === 'media' ? '#6b4a2f' : '#6b6670');
+      if (v === 'tray' || v === 'media' || v === 'ricetray') {
+        P('rbox', 0, .14, 0, .78, .14, .54, v === 'media' ? '#6b4a2f' : v === 'ricetray' ? '#3f7f8a' : '#6b6670');
         for (let i = 0; i < 6; i++) {
           const x = (i % 3 - 1) * .24, z = (i < 3 ? -1 : 1) * .12;
           if (v === 'tray') P('cyl', x, .22, z, .16, .04, .16, '#8a6a4a');
@@ -1587,7 +1600,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
           [[-.14, .42, .16], [.12, .4, .14], [0, .44, -.12]].forEach(([x, y, z]) => P('sph', x, y, z, .14, .18, .14, '#f2a33c'));
         } else {
           P('box', 0, .84, 0, .86, .04, .06, COL.wood); P('box', 0, .84, .2, .86, .02, .02, COL.ink); P('box', 0, .84, -.2, .86, .02, .02, COL.ink);
-          ring(5, (k) => { const x = (k - 2) * .17; [[0, 0], [.04, -.1], [-.04, -.1], [0, -.2]].forEach(([dx, dy]) => P('sph', x + dx, .7 + dy, 0, .11, .11, .11, '#b6d56a')); });
+          ring(5, (k) => { const x = (k - 2) * .17; [[0, 0], [.04, -.1], [-.04, -.1], [0, -.2]].forEach(([dx, dy]) => P('sph', x + dx, .7 + dy, 0, .11, .11, .11, v === 'trellis2' ? '#7a4a8f' : '#b6d56a')); });
           leafAt(P, -.2, .9, .1, .4, COL.g3); leafAt(P, .2, .9, -.1, 2.4, COL.g3);
         }
       }
@@ -1658,7 +1671,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
       const obj = new CSS2DObject(holder); obj.visible = false; parent.add(obj); labels.push(obj); return { obj, el };
     };
     cases.forEach((c) => { c.pin = mkLabel('pin', c.tech.icon || '•', group); });
-    groups.forEach((g) => { g.label = mkLabel('glabel', `<span>${g.name}</span>${g.name === '本包主角' ? '' : `<i>${g.cases.length} 案</i>`}`, group); });
+    groups.forEach((g) => { g.label = mkLabel('glabel', `<span>${g.name}</span>`, group); });
 
     // 點選用的隱形外框
     const proxyMat = new T.MeshBasicMaterial({ visible: false });
@@ -2217,9 +2230,8 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
         <div><dt>所屬</dt><dd>${z.id} ${z.short}｜${t.group}</dd></div>
       </dl>
       ${bodyHTML(t)}
-      ${same.length ? `<div class="rel"><h3>同單位的其他案</h3><div class="gchips">${same.map((x) => `<button class="gchip" type="button" data-no="${x.no}" style="--c:${zones[zoneIdxOf(x)].color}">${x.icon || ''} ${x.name.length > 10 ? x.name.slice(0, 10) + '…' : x.name}</button>`).join('')}</div></div>` : ''}
-      <div class="actions"><button class="btn" type="button" data-act="copy">複製連結</button></div>
-      <div class="pager"><button class="btn" type="button" data-act="prev">‹ 上一案</button><button class="btn" type="button" data-act="next">下一案 ›</button></div>`;
+      ${same.length ? `<div class="rel"><h3>認識其他技術</h3><div class="gchips">${same.map((x) => `<button class="gchip" type="button" data-no="${x.no}" style="--c:${zones[zoneIdxOf(x)].color}">${x.icon || ''} ${x.name.length > 10 ? x.name.slice(0, 10) + '…' : x.name}</button>`).join('')}</div></div>` : ''}
+      <div class="pager"><button class="btn" type="button" data-act="prev">‹ 上一項</button><button class="btn" type="button" data-act="next">下一項 ›</button></div>`;
     zcard.scrollTop = 0;
   }
   function syncParcelUI() {
@@ -2322,7 +2334,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
       html += `<h3 class="zh" style="--c:${z.color}"><b>${z.id}</b>${z.short}<i>${zl.length}</i></h3>`;
       z.groups.forEach((g) => { const gl = zl.filter((t) => t.group === g); if (gl.length) html += `<h4>${g}</h4>${gl.map((t) => itemHTML(t, cur)).join('')}`; });
     });
-    return n ? `<p class="count">${filterActive() ? '符合' : '共'} ${n} 案</p>${html}` : '<p class="empty">找不到符合的技術。<br>試試較短的關鍵字，或把篩選改成「全部」。</p>';
+    return n ? `${html}` : '<p class="empty">找不到符合的技術。<br>試試較短的關鍵字，或把篩選改成「全部」。</p>';
   }
   function unitListHTML() {
     const words = qWords();
@@ -2330,7 +2342,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     if (!list.length) return '<p class="empty">找不到符合的單位。</p>';
     return `<p class="count">${list.length} 個寄件單位</p>` + list.map((u) => {
       const l = techList.filter((t) => unitOf(t) === u);
-      return `<button class="ucard" type="button" data-u="${u.key}"><div class="un"><b>${u.full || u.key}</b></div><div class="uc"><strong>${l.length}</strong>案</div><div class="uz">${zoneDots(l)}</div></button>`;
+      return `<button class="ucard" type="button" data-u="${u.key}"><div class="un"><b>${u.full || u.key}</b></div><div class="uc"><strong>${l.length}</strong></div><div class="uz">${zoneDots(l)}</div></button>`;
     }).join('');
   }
   function unitDetailHTML(key) {
@@ -2534,7 +2546,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   }
   function chainHTML() {
     const chip = (n) => { const t = techByNo.get(n); return t ? `<button class="gchip" type="button" data-no="${n}" style="--c:${zones[zoneIdxOf(t)].color}">${t.icon || ''} ${t.name.length > 9 ? t.name.slice(0, 9) + '…' : t.name}</button>` : ''; };
-    return DATA.chains.map((c) => `<section class="chain"><h3>${c.title}</h3><p class="src">${c.src}</p><div class="stages">${c.stages.map((st, i) => `${i ? '<div class="arrow" aria-hidden="true"></div>' : ''}<div class="stage"><h4>${st.name}</h4><p>${st.text}</p>${st.techNos ? `<div class="gchips">${st.techNos.map(chip).join('')}</div>` : ''}${st.zone !== undefined ? `<div class="gchips"><button class="gchip" type="button" data-zone="${st.zone}" style="--c:${zones[st.zone].color}">${zones[st.zone].id} ${zones[st.zone].short}</button></div>` : ''}</div>`).join('')}</div></section>`).join('')
+    return DATA.chains.map((c) => `<section class="chain"><h3>${c.title}</h3><div class="stages">${c.stages.map((st, i) => `${i ? '<div class="arrow" aria-hidden="true"></div>' : ''}<div class="stage"><h4>${st.name}</h4><p>${st.text}</p>${st.techNos ? `<div class="gchips">${st.techNos.map(chip).join('')}</div>` : ''}${st.zone !== undefined ? `<div class="gchips"><button class="gchip" type="button" data-zone="${st.zone}" style="--c:${zones[st.zone].color}">${zones[st.zone].id} ${zones[st.zone].short}</button></div>` : ''}</div>`).join('')}</div></section>`).join('')
       + `<p class="exitline">${DATA.exitLine}</p>`;
   }
   function renderTrack() {
