@@ -113,6 +113,7 @@ body{
 .pin{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 5px;border-radius:999px;background:#fffdf9;border:2px solid var(--c,var(--coral));
   font:700 13px "Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif;color:var(--ink);box-shadow:0 2px 6px #4a2a1430;opacity:0;transform:scale(.5);transition:opacity .25s,transform .3s cubic-bezier(.2,1.8,.4,1),background .2s}
 .pin.on{opacity:1;transform:scale(1)}
+.oic{display:inline-block;width:1.15em;height:1.15em;vertical-align:-.2em}
 .pin.sel{background:var(--ink);color:var(--yellow);transform:scale(1.25)}
 .glabel{display:inline-flex;gap:6px;align-items:baseline;padding:3px 11px;border-radius:999px;background:var(--c,var(--coral));color:#fff;font-weight:800;font-size:12.5px;white-space:nowrap;
   box-shadow:0 2px 8px #4a2a1430;opacity:0;transition:opacity .35s}
@@ -690,7 +691,7 @@ const DATA = {
       { name: '風味與生活', text: '採收後的風味與加工，走進日常。', zone: 4 } ] }
   ],
   /* 64 案資料（由 PDF 簡報 p.61–64 抽出；每案自帶 model 欄位，格式「種類:變體」） */
-  dataFile: 'data/techs_v19_2026-11-14.json',
+  dataFile: 'data/techs_v20_2026-11-14.json',
   questFile: 'data/quest_v6_2026-11-14.json',
   /* 寄件單位：key 為資料檔 unit 欄的開頭；n 為簡報 p.60 載明的案數；
      full 為機關全名；county、lat、lon 為場址所在縣市鄉鎮與座標（OpenStreetMap，見 data/units_geo_2026-10-23.json）；
@@ -847,6 +848,7 @@ async function boot() {
     const res = await fetch(DATA.dataFile);
     if (!res.ok) throw new Error('HTTP ' + res.status);
     techs = (await res.json()).techs;
+    techs.forEach((t) => { if (/^img:/.test(t.icon || '')) t.icon = `<img class="oic" src="media/icons/${t.icon.slice(4)}.svg" alt="">`; });   // 自繪圖示
     const mq = new URLSearchParams(location.search).get('models');   // 除錯：?models=machine:transplant,pot:ricetray 只用指定模型看外觀
     if (mq) techs = mq.split(',').map((m, i) => ({ ...techs[i], no: 900 + i, zone: '01 品種創新', group: DATA.zones[0].groups[0], name: m, model: m, media: { photos: [], videos: [] } }));
   } catch (e) { techsErr = e; console.warn('64 案資料讀取失敗：', e); }
@@ -2570,7 +2572,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
       ? `<path class="tbp" d="${path}" clip-path="url(#${id}c${i})" fill="${zones[i].color}" style="animation-delay:${o.anim ? i * .3 : 0}s"/>`
       : `<path d="${path}" clip-path="url(#${id}c${i})" fill="#eadfd3"/>`).join('');
     const seams = `<g clip-path="url(#${id}i)">${REG.map((r) => `<polygon points="${poly(r)}" fill="none" stroke="#fff8f4" stroke-width="3"/>`).join('')}</g>`;
-    const icons = iconLayout().filter((c) => got.has(c.ri)).map((c) => `<text class="tbi" style="font-size:${c.fs}px" x="${c.x}" y="${c.y}">${c.e}</text>`).join('');
+    const icons = iconLayout().filter((c) => got.has(c.ri)).map((c) => { const m = /src="([^"]+)"/.exec(c.e || ''); return m ? `<image href="${m[1]}" width="${c.fs}" height="${c.fs}" x="${(c.x - c.fs / 2).toFixed(1)}" y="${(c.y - c.fs * .86).toFixed(1)}"/>` : `<text class="tbi" style="font-size:${c.fs}px" x="${c.x}" y="${c.y}">${c.e}</text>`; }).join('');
     return `<svg class="tmap" viewBox="0 0 280 488" role="img" aria-label="台灣農業技術地圖，已拿到 ${got.size} / ${REG.length} 片拼圖"><defs>${clips}</defs>${bands}${seams}${icons}</svg>`;
   }
   function chainHTML() {

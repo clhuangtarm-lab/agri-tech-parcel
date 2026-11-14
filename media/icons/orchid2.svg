@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><g id="f">
+<ellipse cx="0" cy="6" rx="6.5" ry="5" fill="#ffe066"/>
+<ellipse cx="0" cy="-6" rx="3.4" ry="5.6" fill="#f7c52c"/><ellipse cx="0" cy="-6" rx="3.4" ry="5.6" transform="rotate(72)" fill="#f7c52c"/><ellipse cx="0" cy="-6" rx="3.4" ry="5.6" transform="rotate(144)" fill="#f7c52c"/><ellipse cx="0" cy="-6" rx="3.4" ry="5.6" transform="rotate(216)" fill="#f7c52c"/><ellipse cx="0" cy="-6" rx="3.4" ry="5.6" transform="rotate(288)" fill="#f7c52c"/>
+<circle r="2.6" fill="#8a4b1f"/></g></defs>
+<path d="M12 62 Q14 24 52 8" fill="none" stroke="#5f9a48" stroke-width="3" stroke-linecap="round"/>
+<use href="#f" transform="translate(51 11) scale(.95)"/><use href="#f" transform="translate(38 15) scale(1.05) rotate(-20)"/><use href="#f" transform="translate(26 26) scale(1.05) rotate(-35)"/><use href="#f" transform="translate(18 40) scale(.95) rotate(-10)"/>
+</svg>
