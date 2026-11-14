@@ -20,11 +20,11 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Huninn&display=swap">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>來自田間的神奇包裹</title>
-<meta name="description" content="開箱農業科技新生活：農糧農環科技成果特展 64 項技術網站">
+<meta name="description" content="開箱農業科技新生活：農糧農環科技成果特展 69 項成果網站">
 <style>
 :root{
-  --coral:#db6a41;--ink:#211d1d;--cream:#fff8f4;--yellow:#fcea8b;--stone:#c5b5a7;--green:#71806a;
-  --sky-top:#c7e3f1;--sky-bot:#fde6cf;
+  --coral:#e2703a;--ink:#33312e;--cream:#fffef1;--yellow:#f5d475;--stone:#cdb891;--green:#5f8f3a;
+  --sky-top:#c4e6f0;--sky-bot:#fff5d6;
   --shadow:0 2px 8px #4a2a1414,0 14px 36px #4a2a1424;
 }
 *{box-sizing:border-box}
@@ -111,7 +111,7 @@ body{
 .plabel.sel b{color:var(--yellow)}
 .plabel.hide{opacity:0!important}
 .pin{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 5px;border-radius:999px;background:#fffdf9;border:2px solid var(--c,var(--coral));
-  font:italic 700 11.5px Georgia,serif;color:var(--ink);box-shadow:0 2px 6px #4a2a1430;opacity:0;transform:scale(.5);transition:opacity .25s,transform .3s cubic-bezier(.2,1.8,.4,1),background .2s}
+  font:700 13px "Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif;color:var(--ink);box-shadow:0 2px 6px #4a2a1430;opacity:0;transform:scale(.5);transition:opacity .25s,transform .3s cubic-bezier(.2,1.8,.4,1),background .2s}
 .pin.on{opacity:1;transform:scale(1)}
 .pin.sel{background:var(--ink);color:var(--yellow);transform:scale(1.25)}
 .glabel{display:inline-flex;gap:6px;align-items:baseline;padding:3px 11px;border-radius:999px;background:var(--c,var(--coral));color:#fff;font-weight:800;font-size:12.5px;white-space:nowrap;
@@ -314,6 +314,12 @@ body{
 .kpts li:nth-child(3)::before{content:"💗"}
 .klife{margin:12px 0 0;padding:11px 16px;border-radius:20px;background:#ffe3e6;border:2.5px dashed #f5a9b8;font-size:14.5px;font-weight:700;line-height:1.6}
 @media (prefers-reduced-motion:reduce){.kline .kemo{animation:none}}
+.pbox{display:flex;gap:12px;align-items:flex-start;margin:12px 0 0;padding:14px 16px;border-radius:22px;background:#fff3d6;border:3px solid #fde29a}
+.pbox .kemo{flex:none;font-size:34px;line-height:1.1}
+.pbox p{margin:0;font-size:15.5px;line-height:1.9;font-weight:500}
+.orig{margin:14px 0 0;border-top:2px dotted var(--stone);padding-top:2px}
+.orig>summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:800;font-size:14px;color:var(--coral)}
+.orig p{margin:4px 0 0;font-size:13.5px;line-height:1.8;color:#5b4f49}
 .more{margin:14px 0 0;border-top:2px dotted var(--stone);padding-top:2px}
 .sec{margin:14px 0 0}
 .sec h3{margin:0 0 4px;display:inline-block;padding:2px 10px;border-radius:999px;background:var(--c);color:#fff;font-size:12px;letter-spacing:1px}
@@ -467,6 +473,34 @@ body.lite .zcard,body.lite .side{background:rgba(255,248,244,.97)}
   .ship.in,.ship.out{animation:none}
   .spin{animation:none}
 }
+
+/* 主視覺（1113-A1 海報） */
+#loading{background:#fffef1;display:flex;flex-direction:column;align-items:center;place-items:initial;padding:0;overflow:hidden}
+.ld-art{position:relative;order:2;flex:1 1 0;min-height:110px;width:100%;margin-top:4px;background:url(media/vis/art.jpg) center 34%/cover no-repeat;-webkit-mask-image:linear-gradient(transparent,#000 18%);mask-image:linear-gradient(transparent,#000 18%)}
+.ld-box{order:1;position:relative;z-index:1;width:100%;max-width:100%;margin-top:2.5vh;padding:0 14px;flex:none}
+.ld-box .eyebrow,#ldSub{display:none}
+#ldTitle{font-size:0;width:min(640px,92vw);aspect-ratio:1200/265;margin:0 auto 4px;background:url(media/vis/title.png) center/contain no-repeat}
+.ld-info{margin:0 0 12px;font:600 15px/1.7 "Noto Serif TC","Songti TC",serif;color:var(--ink)}
+.ld-info b{font-size:20px;letter-spacing:.04em}
+.ld-info small{display:block;font-size:12.5px;font-weight:500;color:#6b5d55}
+.ld-orgs{order:3;position:relative;z-index:2;width:100%;flex:none;display:flex;gap:18px 28px;align-items:center;justify-content:center;flex-wrap:wrap;padding:8px 16px 12px;background:#fffef1;text-align:left}
+.ld-lab{display:block;margin:0 0 4px;font:700 11.5px/1.2 "Noto Sans TC",sans-serif;color:#6b5d55;letter-spacing:.1em}
+.ld-host{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.ld-host img{display:block;height:44px;width:auto;mix-blend-mode:multiply}
+.ld-host img+img{height:26px}
+.ld-host img+img+img{height:38px}
+.ld-joint{max-width:560px}
+.ld-joint p{margin:0;font-size:11.5px;line-height:1.75;color:#4d463f}
+#brandTitle{font-size:0;width:230px;aspect-ratio:700/108;margin:0 0 4px;background:url(media/vis/title_only.png) left center/contain no-repeat}
+.brand{padding:0!important;background:none!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.brand p{font-weight:700;color:#4d463f;text-shadow:0 0 6px #fffef1,0 0 6px #fffef1,0 0 10px #fffef1}
+@media (max-width:800px){
+  #ldTitle{width:min(430px,94vw)}.ld-info{font-size:13.5px}.ld-info b{font-size:17px}
+  .ld-orgs{gap:10px;padding:8px 12px 10px;flex-direction:column;align-items:flex-start}
+  .ld-host{flex-direction:row;align-items:center;flex-wrap:wrap;gap:4px 14px}.ld-host .ld-lab{width:100%}.ld-host img{height:34px}.ld-host img+img{height:22px}.ld-host img+img+img{height:30px}
+  .ld-joint p{font-size:10.5px;line-height:1.6}
+  #brandTitle{width:168px}
+}
 </style>
 <script type="importmap">
 {"imports":{
@@ -480,7 +514,6 @@ body.lite .zcard,body.lite .side{background:rgba(255,248,244,.97)}
 <div id="fade" aria-hidden="true"></div>
 
 <header class="brand">
-  <div class="eyebrow">Agri-Tech Parcel</div>
   <h1 id="brandTitle">來自田間的神奇包裹</h1>
   <p id="brandSub">開箱農業科技新生活</p>
 </header>
@@ -546,7 +579,7 @@ body.lite .zcard,body.lite .side{background:rgba(255,248,244,.97)}
   <div class="grab" role="separator" aria-label="拖曳調整高度"></div>
   <div class="side-head">
     <div class="tabs" role="tablist">
-      <button class="tab" type="button" role="tab" data-tab="tech" aria-selected="true">技術<i id="nTech">64</i></button>
+      <button class="tab" type="button" role="tab" data-tab="tech" aria-selected="true">技術<i id="nTech">69</i></button>
       <button class="tab" type="button" role="tab" data-tab="unit" aria-selected="false">寄件單位<i id="nUnit">11</i></button>
     </div>
     <button class="btn side-close" id="sideClose" type="button" aria-label="關閉清單">×</button>
@@ -585,20 +618,25 @@ body.lite .zcard,body.lite .side{background:rgba(255,248,244,.97)}
     <ol>
       <li>看貨車送件、門鈴響，按下託運單上的「簽收」。</li>
       <li>住戶開門收下大紙箱，搬進屋裡放上餐桌；箱子會自己長大、打開，五個小包裹從稻殼裡跳出來。</li>
-      <li>點一個包裹，它會拆開成一張托盤，64 項技術各是一個小模型；點模型看內容，下方按鈕可換區。五個包裹都拆過，就集滿五片拼圖。拖曳旋轉、方向鍵也可轉動，Esc 返回。</li>
+      <li>點一個包裹，它會拆開成一張托盤，69 項成果各是一個小模型；點模型看內容，下方按鈕可換區。五個包裹都拆過，就集滿五片拼圖。拖曳旋轉、方向鍵也可轉動，Esc 返回。</li>
     </ol>
     <button class="btn primary" id="helpClose" type="button">知道了</button>
   </div>
 </div>
 
 <div id="loading">
+  <div class="ld-art" aria-hidden="true"></div>
   <div class="ld-box">
-    <div class="eyebrow">Agri-Tech Parcel</div>
     <h1 id="ldTitle">來自田間的神奇包裹</h1>
     <p class="sub" id="ldSub">開箱農業科技新生活</p>
+    <p class="ld-info"><b>115.12.29 — 116.1.10</b><br>週二至週日 09:00–17:00<br>國立公共資訊圖書館 2 樓藝文走廊<small>臺中市南區江川里五權南路 100 號</small></p>
     <p id="ldMsg"><span class="spin"></span>正在組合場景…</p>
     <button class="btn primary" id="startBtn" type="button" hidden>點一下，開始收包裹</button>
     <div id="ldErr" hidden></div>
+  </div>
+  <div class="ld-orgs">
+    <div class="ld-host"><span class="ld-lab">主辦單位</span><img src="media/vis/tari.png" alt="農業部農業試驗所"><img src="media/vis/nlpi.png" alt="國立公共資訊圖書館"><img src="media/vis/afa.jpg" alt="農業部農糧署"></div>
+    <div class="ld-joint"><span class="ld-lab">聯合展出</span><p>桃園區農業改良場　苗栗區農業改良場　臺中區農業改良場　臺南區農業改良場　高雄區農業改良場　花蓮區農業改良場　臺東區農業改良場　茶及飲料作物改良場　種苗改良繁殖場　花卉創新園區研究發展中心　農業藥物試驗所</p></div>
   </div>
 </div>
 
@@ -611,9 +649,9 @@ const DATA = {
   subtitle: '開箱農業科技新生活',
   exhibition: { name: '農糧農環科技成果特展', dates: '115.12.29–116.01.10', venue: '國立公共資訊圖書館 2F 藝文走廊' },
   parcel: {
-    sender: '臺灣田間・11 個試驗研究單位',
+    sender: '臺灣田間・各試驗研究單位',
     receiver: '你的餐桌',
-    total: 64,
+    total: 69,
     stickers: ['活體種苗・小心輕放', '易碎・請輕拿'],
     packs: '5 個小包裹'
   },
@@ -624,13 +662,13 @@ const DATA = {
      毛豆 p.15；剩餘物循環 p.33、36；五區出口串接 p.16、23、30、32、42 */
   chains: [
     { id: 'bean', title: '毛豆：從品種到機械', src: '簡報 p.15', stages: [
-      { name: '01 品種與種法', text: '毛豆「高雄13號」配合新種法，育成可外銷的品種。', techNos: [19] },
+      { name: '01 品種與種法', text: '毛豆「高雄13號」配合新種法，育成可外銷的品種。', techNos: [10] },
       { name: '02 交給機械', text: '毛豆一貫化機械：用機械把種、收的工作接起來。', zone: 1 } ] },
     { id: 'loop', title: '剩餘物循環', src: '簡報 p.33、36', stages: [
       { name: '看見材料', text: '開場展示：先把剩餘物看清楚，有哪些、有多少。' },
-      { name: '處理轉化', text: '粉碎、炭化、循環再利用，把剩餘物變成能用的東西。', techNos: [50, 51, 54, 55] },
-      { name: '回到生產', text: '轉成介質、培養土、稻草資材，回到田裡和育苗場。', techNos: [52, 56, 57] },
-      { name: '走進生活', text: '變成生活裡用得到的產品。', techNos: [53] } ] },
+      { name: '處理轉化', text: '粉碎、炭化、循環再利用，把剩餘物變成能用的東西。', techNos: [36, 59, 54, 60] },
+      { name: '回到生產', text: '轉成介質、培養土、稻草資材，回到田裡和育苗場。', techNos: [62, 61, 40] },
+      { name: '走進生活', text: '變成生活裡用得到的產品。', techNos: [18] } ] },
     { id: 'route', title: '五個包裹，一條路', src: '簡報 p.16、23、30、32、42', stages: [
       { name: '好品種', text: '口味、氣候、缺工都在變，先有更多選擇。', zone: 0 },
       { name: '省力', text: '用機械、數據與精準管理，少一點辛苦。', zone: 1 },
@@ -639,43 +677,43 @@ const DATA = {
       { name: '風味與生活', text: '採收後的風味與加工，走進日常。', zone: 4 } ] }
   ],
   /* 64 案資料（由 PDF 簡報 p.61–64 抽出；每案自帶 model 欄位，格式「種類:變體」） */
-  dataFile: 'data/techs_v11_2026-11-01.json',
-  questFile: 'data/quest_v5_2026-11-01.json',
+  dataFile: 'data/techs_v13_2026-11-14.json',
+  questFile: 'data/quest_v6_2026-11-14.json',
   /* 寄件單位：key 為資料檔 unit 欄的開頭；n 為簡報 p.60 載明的案數；
      full 為機關全名；county、lat、lon 為場址所在縣市鄉鎮與座標（OpenStreetMap，見 data/units_geo_2026-10-23.json）；
      花創中心的場址尚未確認，不顯示位置 */
   units: [
-    { key: '農試所', full: '農業試驗所', n: 14, county: '臺中市霧峰區', lat: 24.032, lon: 120.69 },
-    { key: '臺南場', full: '臺南區農業改良場', n: 10, county: '臺南市新化區', lat: 23.06, lon: 120.344 },
-    { key: '苗栗場', full: '苗栗區農業改良場', n: 7, county: '苗栗縣公館鄉', lat: 24.495, lon: 120.827 },
-    { key: '花蓮場', full: '花蓮區農業改良場', n: 6, county: '花蓮縣吉安鄉', lat: 23.975, lon: 121.564 },
-    { key: '臺東場', full: '臺東區農業改良場', n: 5, county: '臺東縣臺東市', lat: 22.748, lon: 121.148 },
-    { key: '高雄場', full: '高雄區農業改良場', n: 5, county: '屏東縣長治鄉', lat: 22.709, lon: 120.528 },
-    { key: '茶改場', full: '茶及飲料作物改良場', n: 5, county: '桃園市楊梅區', lat: 24.909, lon: 121.186 },
-    { key: '桃園場', full: '桃園區農業改良場', n: 5, county: '桃園市新屋區', lat: 24.951, lon: 121.029 },
-    { key: '種苗場', full: '種苗改良繁殖場', n: 4, county: '臺中市新社區', lat: 24.221, lon: 120.802 },
-    { key: '臺中場', full: '臺中區農業改良場', n: 2, county: '彰化縣大村鄉', lat: 24.004, lon: 120.533 },
-    { key: '花創中心', full: '花卉創新園區研究發展中心', n: 1 }
+    { key: '農業試驗所', full: '農業試驗所', alias: ['嘉義農業試驗分所'], lat: 24.032, lon: 120.69 },
+    { key: '臺南區農業改良場', full: '臺南區農業改良場', lat: 23.06, lon: 120.344 },
+    { key: '苗栗區農業改良場', full: '苗栗區農業改良場', lat: 24.495, lon: 120.827 },
+    { key: '花蓮區農業改良場', full: '花蓮區農業改良場', lat: 23.975, lon: 121.564 },
+    { key: '臺東區農業改良場', full: '臺東區農業改良場', lat: 22.748, lon: 121.148 },
+    { key: '高雄區農業改良場', full: '高雄區農業改良場', lat: 22.709, lon: 120.528 },
+    { key: '茶及飲料作物改良場', full: '茶及飲料作物改良場', lat: 24.909, lon: 121.186 },
+    { key: '桃園區農業改良場', full: '桃園區農業改良場', lat: 24.951, lon: 121.029 },
+    { key: '種苗改良繁殖場', full: '種苗改良繁殖場', lat: 24.221, lon: 120.802 },
+    { key: '臺中區農業改良場', full: '臺中區農業改良場', lat: 24.004, lon: 120.533 },
+    { key: '花卉創新園區研究發展中心', full: '花卉創新園區研究發展中心' }
   ],
   /* 拆包與微縮場景：托盤中心（世界座標 z）、展開總長（秒） */
   tray: { z: 2.3, y: .3, tModels: 2.6 },
   /* 五區：big 為託運單大標，short 為短名，full 為 p.2 全名；
      groups 為故事段順序（簡報 p.13、19、26、33、40），openerModel 為不在 64 案內的本包主角模型 */
   zones: [
-    { id: '01', big: '薯於你的好味道', short: '品種創新', full: '品種改良與生產調適', count: 28, pages: 'p.11–16',
-       color: '#e39a4f', sticker: '活體種苗・小心輕放', pattern: 'dots',
+    { id: '01', big: '薯於你的好味道', short: '品種創新', full: '品種改良與生產調適', count: 32,
+       color: '#f0a030', sticker: '活體種苗・小心輕放', pattern: 'dots',
       groups: ['我們想吃得更好，也想有更多選擇', '天氣變了，作物也要更能適應', '農業缺工，品種也要配合新種法', '先保存，才有面對未來的選擇'] },
-    { id: '02', big: '豆陣來省力', short: '智慧生產', full: '智慧生產與資源管理', count: 10, pages: 'p.17–23',
-       color: '#7fb06a', sticker: '精密機具・請勿倒置', pattern: 'stripes',
+    { id: '02', big: '豆陣來省力', short: '智慧生產', full: '智慧生產與資源管理', count: 9,
+       color: '#7eb12e', sticker: '精密機具・請勿倒置', pattern: 'stripes',
       groups: ['先看清楚，再決定怎麼做', '每一滴水，都用在需要的地方', '把辛苦的工作交給機械', '收成之後，還要又快又乾淨'] },
-    { id: '03', big: '果真健康，好苗先行', short: '健康安心', full: '健康生產與友善環境', count: 11, pages: 'p.24–30',
-       color: '#f2b5c6', sticker: '活體種苗・小心輕放', pattern: 'bricks',
+    { id: '03', big: '果真健康，好苗先行', short: '健康安心', full: '健康生產與友善環境', count: 13,
+       color: '#f3a9b4', sticker: '活體種苗・小心輕放', pattern: 'bricks',
       groups: ['健康要從第一株苗開始', '看得早，才來得及保護', '保護作物，也要照顧環境', '田健康，作物才能長久健康'] },
-    { id: '04', big: '菇掰浪費，資源再生', short: '韌性永續', full: '韌性永續與資源循環', count: 8, pages: 'p.31–37',
-       color: '#6f7fb5', sticker: '循環再利用・請分類', pattern: 'dots',
+    { id: '04', big: '菇掰浪費，資源再生', short: '韌性永續', full: '韌性永續與資源循環', count: 8,
+       color: '#9a6a43', sticker: '循環再利用・請分類', pattern: 'dots',
       groups: ['變小、變乾、變安全再利用', '舊材料，成為新一輪生產的起點', '不只回到田裡，也能走進生活'] },
-    { id: '05', big: '茶點不一樣', short: '多元應用', full: '農產品品質與多元應用', count: 7, pages: 'p.38–43',
-       color: '#58a6a6', sticker: '易碎・請輕拿', pattern: 'stripes',
+    { id: '05', big: '茶點不一樣', short: '多元應用', full: '農產品品質與多元應用', count: 7,
+       color: '#e3b93c', sticker: '易碎・請輕拿', pattern: 'stripes',
       groups: ['同樣原料，不同風味', '農產品換一種樣子', '不只能吃，也能陪伴生活'] }
   ]
 };
@@ -728,14 +766,9 @@ function mkPath(pts) {
 }
 
 /* 寄件單位顯示全名（不含「農業部」）；資料檔裡的 unit 是簡稱 */
-const unitLabel = (k) => { const u = DATA.units.find((x) => (k || '').startsWith(x.key)); return u && u.full ? u.full : String(k || '').replace('農業部', ''); };
+const unitLabel = (k) => String(k || '').replace('農業部', '');
 const noMOA = (t) => String(t || '').replace('農業部', '');
 
-/* 數字磚：facts 放 {value,label}（最多 3 個）；沒有資料就不顯示 */
-function factsHTML(t) {
-  const f = (t.facts || []).filter((x) => x && typeof x === 'object').slice(0, 3);
-  return f.length ? `<div class="tiles">${f.map((x) => `<div class="tile"><strong>${x.value}</strong><span>${x.label}</span></div>`).join('')}</div>` : '';
-}
 /* 照片與影片：media.photos[{file,credit}]、media.videos[{youtubeId,title}]；沒有就整區不顯示；影片點了才載入 */
 function mediaHTML(t) {
   const m = t.media || {}, ph = m.photos || [], vds = m.videos || [];
@@ -748,31 +781,13 @@ function mediaHTML(t) {
 function ytEmbed(btn) {
   btn.outerHTML = `<iframe class="slot" style="border:0;width:100%;aspect-ratio:16/9;border-radius:12px" src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(btn.dataset.yt)}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen title="影片"></iframe>`;
 }
-/* 資料來源收在摺疊裡，需要時再展開 */
-function sourcesHTML(t) {
-  const s = t.sources || [];
-  if (!s.length) return '';
-  const ph = ((t.media || {}).photos || []).filter((p) => p.credit).map((p) => noMOA(p.credit));
-  return `<details class="srcbox"><summary>資料來源</summary><ul class="srcs">${s.map((x) => `<li>${x.url ? `<a href="${x.url}" target="_blank" rel="noopener">${x.title}</a>` : x.title}${x.publisher ? `（${noMOA(x.publisher)}${x.date ? `，${x.date}` : ''}）` : ''}</li>`).join('')}${ph.length ? `<li>圖片：${[...new Set(ph)].join('；')}</li>` : ''}</ul></details>`;
+/* 展示文字（對話版）一段；提案原文收合在下方；沒有文字就不顯示 */
+function bodyHTML(t) {
+  const text = t.text ? `<div class="pbox"><span class="kemo" aria-hidden="true">${t.icon || '🌱'}</span><p>${t.text}</p></div>` : '';
+  const orig = t.orig ? `<details class="orig"><summary>提案原文</summary><p>${t.orig}</p></details>` : '';
+  return text + mediaHTML(t) + orig;
 }
-
-
-/* 四段故事：面臨什麼問題、怎麼解決、特色、和生活的連結；沒有資料就顯示整理中 */
-function storyHTML(t, opener) {
-  const st = t.story;
-  if (!st) return opener ? '' : '<p class="soon">這項技術的故事正在整理中。</p>';
-  const block = (cls, title, body) => `<section class="sec ${cls}"><h3>${title}</h3>${body}</section>`;
-  const full = block('q', '面臨什麼問題', `<p>${st.problem}</p>`) + block('s', '怎麼解決', `<p>${st.solution}</p>`)
-    + block('f', '特色', `<ul>${st.features.map((x) => `<li>${x}</li>`).join('')}</ul>`) + block('l', '和生活的連結', `<p>${st.life}</p>`);
-  return t.kid ? `<div class="more">${full}</div>` : full;
-}
-/* 親子版短文：一句話、三個重點、和生活的連結；有 kid 欄位的案才有，沒有就退回一句話 */
-function kidHTML(t) {
-  const k = t.kid;
-  if (!k) return t.oneLine ? `<p class="oneline">${t.oneLine}</p>` : '';
-  return `<div class="kid"><p class="knick" aria-hidden="true">${k.e} ${k.nick}</p><div class="kline"><span class="kemo" aria-hidden="true">${k.e}</span><p>${k.line}</p></div>
-    <ul class="kpts">${k.pts.map((x) => `<li>${x}</li>`).join('')}</ul><p class="klife">💛 ${k.life}</p></div>`;
-}
+const firstSentence = (x) => { const m = String(x || '').match(/^.*?[？！。]/); return m ? m[0] : String(x || '').slice(0, 30); };
 
 /* ---------- 備援：3D 無法啟動時，用 2D 清單頁顯示全部內容 ---------- */
 function renderPlain(techs) {
@@ -786,8 +801,8 @@ function renderPlain(techs) {
     <input id="pq" type="search" placeholder="搜尋名稱、單位、作物…" aria-label="搜尋技術" autocomplete="off">
     <nav>${DATA.zones.map((z) => `<a href="#p-${z.id}" style="--c:${z.color}"><b>${z.id}</b>${z.short}</a>`).join('')}</nav></header>
     ${DATA.zones.map((z, zi) => `<section class="pz" id="p-${z.id}" style="--c:${z.color}"><h2><b>${z.id}</b>${z.big}<small>${z.short}｜${z.count} 案</small></h2>
-      ${techs.filter((t) => zoneOf(t) === zi).map((t) => `<details class="pcase" data-q="${(`${t.no} ${t.name} ${t.unit} ${t.group} ${t.oneLine || ''}`).toLowerCase()}"><summary><b>${t.no}</b>${t.name}<small>${unitLabel(t.unit)}・${t.group}</small></summary>
-        <div class="zcard static" style="--c:${z.color}">${kidHTML(t)}${t.kid ? '' : factsHTML(t)}${mediaHTML(t)}${storyHTML(t, false)}${sourcesHTML(t)}</div></details>`).join('')}</section>`).join('')}`;
+      ${techs.filter((t) => zoneOf(t) === zi).map((t) => `<details class="pcase" data-q="${(`${t.name} ${t.unit} ${t.group} ${t.text || ''}`).toLowerCase()}"><summary><b>${t.icon || ''}</b>${t.name}<small>${unitLabel(t.unit)}・${t.group}</small></summary>
+        <div class="zcard static" style="--c:${z.color}">${bodyHTML(t)}</div></details>`).join('')}</section>`).join('')}`;
   document.body.appendChild(root);
   root.addEventListener('click', (e) => { const b = e.target.closest('[data-yt]'); if (b) ytEmbed(b); });
   root.querySelector('#pq').addEventListener('input', (e) => {
@@ -1115,7 +1130,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   const BW = 1.5, BH = 1.0, BD = 1.2, BT = .04;
   const BOX_POS = new T.Vector3(0, .15, -1.3);
   const boxG = new T.Group(); boxG.visible = false; scene.add(boxG);
-  const KRAFT = '#c9a27a', KRAFT2 = '#d8b88f';
+  const KRAFT = '#c9955c', KRAFT2 = '#d9a96c';
   bx(boxG, BW, BT, BD, KRAFT, 0, BT / 2, 0);
   bx(boxG, BW, BH, BT, KRAFT, 0, BH / 2, BD / 2 - BT / 2);
   bx(boxG, BW, BH, BT, KRAFT, 0, BH / 2, -BD / 2 + BT / 2);
@@ -1129,7 +1144,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
       c.fillStyle = '#fffdf9'; rrect(c, 10, 8, w - 20, h - 16, 14); c.fill();
       c.fillStyle = '#db6a41'; rrect(c, 10, 8, w - 20, 34, 14); c.fill(); c.fillRect(10, 28, w - 20, 14);
       c.fillStyle = '#fff'; c.font = `900 22px ${FONT}`; c.fillText('田間快遞', 22, 34);
-      c.fillStyle = '#211d1d'; c.font = `700 17px ${FONT}`; c.fillText('農業科技 64 件', 22, 70);
+      c.fillStyle = '#211d1d'; c.font = `700 17px ${FONT}`; c.fillText('農業科技 69 件', 22, 70);
       c.font = `500 13px ${FONT}`; c.fillStyle = '#6b5d55'; c.fillText('收件人：你的餐桌', 22, 92);
       for (let i = 0; i < 38; i++) { c.fillStyle = '#211d1d'; c.fillRect(22 + i * 5.6, 108, 2 + (i % 3), 32); }
       c.strokeStyle = '#db6a41'; c.lineWidth = 3; c.strokeRect(22, 150, 100, 26);
@@ -1137,6 +1152,17 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     }, 1, 1, false);
     const pl = new T.Mesh(new T.PlaneGeometry(.78, .585), new T.MeshStandardMaterial({ map: tex, transparent: true, roughness: .85 }));
     pl.position.set(.25, .5, BD / 2 + .003); boxG.add(pl);
+  }
+  // 郵戳（海報紙箱上的發芽圖案）
+  {
+    const tex = canvasTex(192, 192, (c, w, h) => {
+      c.clearRect(0, 0, w, h);
+      c.strokeStyle = '#a8743f'; c.fillStyle = '#a8743f'; c.lineWidth = 5; c.setLineDash([9, 7]); c.strokeRect(14, 14, w - 28, h - 28); c.setLineDash([]);
+      c.lineWidth = 6; c.lineCap = 'round'; c.beginPath(); c.moveTo(96, 146); c.lineTo(96, 96); c.stroke();
+      c.beginPath(); c.ellipse(70, 88, 28, 15, -0.5, 0, Math.PI * 2); c.fill(); c.beginPath(); c.ellipse(122, 80, 28, 15, 0.5, 0, Math.PI * 2); c.fill();
+    }, 1, 1, false);
+    const st = new T.Mesh(new T.PlaneGeometry(.26, .26), new T.MeshStandardMaterial({ map: tex, transparent: true, roughness: .9, opacity: .8 }));
+    st.position.set(-.3, .5, BD / 2 + .004); boxG.add(st);
   }
   // 摺頁
   const flaps = {};
@@ -1631,7 +1657,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
       el.className = cls; el.style.setProperty('--c', z.color); el.innerHTML = html; holder.appendChild(el);
       const obj = new CSS2DObject(holder); obj.visible = false; parent.add(obj); labels.push(obj); return { obj, el };
     };
-    cases.forEach((c) => { c.pin = mkLabel('pin', c.opener ? '★' : String(c.tech.no), group); });
+    cases.forEach((c) => { c.pin = mkLabel('pin', c.tech.icon || '•', group); });
     groups.forEach((g) => { g.label = mkLabel('glabel', `<span>${g.name}</span>${g.name === '本包主角' ? '' : `<i>${g.cases.length} 案</i>`}`, group); });
 
     // 點選用的隱形外框
@@ -2161,9 +2187,9 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     let body;
     if (zs) {
       body = `<div class="gchips" aria-label="故事段">${zs.groups.map((g, gi) => `<button class="gchip" type="button" data-g="${gi}">${g.name}<i>${g.cases.length}</i></button>`).join('')}</div>
-        <div class="clist">${zs.groups.map((g) => `<h3>${g.name}</h3>${g.cases.map((c) => `<button class="citem" type="button" data-ci="${c.ci}"><b>${c.opener ? '★' : c.tech.no}</b><span>${c.tech.name}</span><small>${c.opener ? '本包主角' : unitLabel(c.tech.unit)}</small></button>`).join('')}`).join('')}</div>`;
+        <div class="clist">${zs.groups.map((g) => `<h3>${g.name}</h3>${g.cases.map((c) => `<button class="citem" type="button" data-ci="${c.ci}"><b>${c.tech.icon || ''}</b><span>${c.tech.name}</span><small>${unitLabel(c.tech.unit)}</small></button>`).join('')}`).join('')}</div>`;
     } else {
-      body = `<p class="note">64 案資料沒有讀到（${techsErr ? techsErr.message : '未知原因'}）。請用「啟動預覽.bat」或本機伺服器開啟網頁，直接點兩下 index.html 讀不到 data 資料夾。</p>`;
+      body = `<p class="note">成果資料沒有讀到（${techsErr ? techsErr.message : '未知原因'}）。請用「啟動預覽.bat」或本機伺服器開啟網頁，直接點兩下 index.html 讀不到 data 資料夾。</p>`;
     }
     zcard.innerHTML = `${GRAB}
       <button class="btn expand" type="button" data-act="expand" aria-label="放大或縮小視窗" title="放大／縮小">⤢</button>
@@ -2171,7 +2197,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
       <div class="eyebrow"><span class="swatch" style="background:${z.color}"></span>第 ${z.id} 包</div>
       <h2>${z.big}</h2>
       <p class="full">${z.short}｜${z.full}</p>
-      <div class="num"><strong>${z.count}</strong><span>案技術</span><em>${z.pages}</em></div>
+      <div class="num"><strong>${z.count}</strong><span>項成果</span></div>
       ${body}
 `;
     zcard.scrollTop = 0;
@@ -2180,24 +2206,18 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     const z = zs.z, c = zs.cases[ci], t = c.tech;
     zcard.style.setProperty('--c', z.color);
     const unit = t.unit && unitOf(t), same = unit ? techList.filter((x) => x.no !== t.no && unitOf(x) === unit).slice(0, 6) : [];
-    const story = storyHTML(t, c.opener);
     zcard.innerHTML = `${GRAB}
       <button class="btn expand" type="button" data-act="expand" aria-label="放大或縮小視窗" title="放大／縮小">⤢</button>
       <button class="btn close" type="button" aria-label="關閉">×</button>
       <button class="btn back" type="button" data-act="back">← ${z.short}</button>
-      <div class="eyebrow"><span class="swatch" style="background:${z.color}"></span>${c.opener ? '本包主角' : 'No.' + t.no} ・ ${t.group}</div>
+      <div class="eyebrow"><span class="swatch" style="background:${z.color}"></span>${t.group}</div>
       <h2>${t.name}</h2>
-      ${t.fullName && t.fullName !== t.name ? `<p class="fullname">展出名稱：${t.fullName}</p>` : ''}
       <dl>
         ${unit ? `<div><dt>寄件單位</dt><dd><button class="ulink" type="button" data-unit="${unit.key}">${unitLabel(t.unit)}</button></dd></div>` : ''}
         <div><dt>所屬</dt><dd>${z.id} ${z.short}｜${t.group}</dd></div>
       </dl>
-      ${kidHTML(t)}
-      ${t.kid ? '' : factsHTML(t)}
-      ${mediaHTML(t)}
-      ${story}
-      ${sourcesHTML(t)}
-      ${same.length ? `<div class="rel"><h3>同單位的其他案</h3><div class="gchips">${same.map((x) => `<button class="gchip" type="button" data-no="${x.no}" style="--c:${zones[zoneIdxOf(x)].color}">${x.no} ${x.name.length > 10 ? x.name.slice(0, 10) + '…' : x.name}</button>`).join('')}</div></div>` : ''}
+      ${bodyHTML(t)}
+      ${same.length ? `<div class="rel"><h3>同單位的其他案</h3><div class="gchips">${same.map((x) => `<button class="gchip" type="button" data-no="${x.no}" style="--c:${zones[zoneIdxOf(x)].color}">${x.icon || ''} ${x.name.length > 10 ? x.name.slice(0, 10) + '…' : x.name}</button>`).join('')}</div></div>` : ''}
       <div class="actions"><button class="btn" type="button" data-act="copy">複製連結</button></div>
       <div class="pager"><button class="btn" type="button" data-act="prev">‹ 上一案</button><button class="btn" type="button" data-act="next">下一案 ›</button></div>`;
     zcard.scrollTop = 0;
@@ -2280,14 +2300,14 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   const techList = techs || [];
   const techByNo = new Map(techList.map((t) => [t.no, t]));
   const zoneIdxOf = (t) => zones.findIndex((z) => t.zone.startsWith(z.id));
-  const unitOf = (t) => DATA.units.find((u) => t.unit.startsWith(u.key));
+  const unitOf = (t) => DATA.units.find((u) => t.unit.startsWith(u.key) || (u.alias || []).some((a) => t.unit.startsWith(a)));
   let sideTab = 'tech', unitView = null, fZone = -1, fUnit = '';
   const qWords = () => qEl.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
-  const qMatch = (t) => { const st = t.story ? `${t.story.problem} ${t.story.solution} ${t.story.features.join(' ')} ${t.story.life}` : ''; const hay = `${t.no} ${t.name} ${t.fullName || ''} ${t.unit} ${t.group} ${t.oneLine || ''} ${st} ${t.zone}`.toLowerCase(); return qWords().every((w) => hay.includes(w)); };
+  const qMatch = (t) => { const hay = `${t.name} ${t.unit} ${t.group} ${t.text || ''} ${t.orig || ''} ${t.zone}`.toLowerCase(); return qWords().every((w) => hay.includes(w)); };
   const matchTech = (t) => (fZone < 0 || zoneIdxOf(t) === fZone) && (!fUnit || (unitOf(t) || {}).key === fUnit) && qMatch(t);
   const filterActive = () => fZone >= 0 || !!fUnit || qWords().length > 0;
   const curNo = () => { const zs = zsOf(sel); return selCase >= 0 && zs ? zs.cases[selCase].tech.no : null; };
-  const itemHTML = (t, cur) => `<button class="citem${t.no === cur ? ' cur' : ''}" type="button" data-no="${t.no}" style="--c:${zones[zoneIdxOf(t)].color}"><b>${t.no}</b><span>${t.kid ? t.kid.e + ' ' : ''}${t.name}</span><small>${unitLabel(t.unit)}・${t.group}</small></button>`;
+  const itemHTML = (t, cur) => `<button class="citem${t.no === cur ? ' cur' : ''}" type="button" data-no="${t.no}" style="--c:${zones[zoneIdxOf(t)].color}"><b>${t.icon || ''}</b><span>${t.name}</span><small>${unitLabel(t.unit)}・${t.group}</small></button>`;
   const zoneDots = (list) => zones.map((z, zi) => { const n = list.filter((t) => zoneIdxOf(t) === zi).length; return n ? `<i style="--c:${z.color}">${z.id}・${n}</i>` : ''; }).join('');
 
   filtersEl.innerHTML = `<div class="fz"><button class="fchip" type="button" data-z="-1" aria-pressed="true">全部</button>${zones.map((z, i) => `<button class="fchip" type="button" data-z="${i}" style="--c:${z.color}" aria-pressed="false">${z.id} ${z.short}</button>`).join('')}</div>
@@ -2329,7 +2349,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     side.querySelectorAll('.tab').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === sideTab)));
     filtersEl.hidden = sideTab !== 'tech';
     qEl.placeholder = sideTab === 'tech' ? '搜尋名稱、單位、作物…' : '搜尋單位或技術名稱…';
-    if (!techList.length) sideBody.innerHTML = '<p class="empty">64 案資料沒有讀到。<br>請雙擊「啟動預覽.bat」開啟網頁。</p>';
+    if (!techList.length) sideBody.innerHTML = '<p class="empty">成果資料沒有讀到。<br>請雙擊「啟動預覽.bat」開啟網頁。</p>';
     else sideBody.innerHTML = sideTab === 'tech' ? techListHTML() : (unitView ? unitDetailHTML(unitView) : unitListHTML());
     sideBody.scrollTop = top ? 0 : keep;
     syncFilter3D();
@@ -2513,13 +2533,13 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     return `<svg class="tmap" viewBox="0 0 280 488" role="img" aria-label="台灣農業技術地圖，已拿到 ${got.size} / ${REG.length} 片拼圖"><defs>${clips}</defs>${bands}${seams}${icons}</svg>`;
   }
   function chainHTML() {
-    const chip = (n) => { const t = techByNo.get(n); return t ? `<button class="gchip" type="button" data-no="${n}" style="--c:${zones[zoneIdxOf(t)].color}">${n} ${t.name.length > 9 ? t.name.slice(0, 9) + '…' : t.name}</button>` : ''; };
+    const chip = (n) => { const t = techByNo.get(n); return t ? `<button class="gchip" type="button" data-no="${n}" style="--c:${zones[zoneIdxOf(t)].color}">${t.icon || ''} ${t.name.length > 9 ? t.name.slice(0, 9) + '…' : t.name}</button>` : ''; };
     return DATA.chains.map((c) => `<section class="chain"><h3>${c.title}</h3><p class="src">${c.src}</p><div class="stages">${c.stages.map((st, i) => `${i ? '<div class="arrow" aria-hidden="true"></div>' : ''}<div class="stage"><h4>${st.name}</h4><p>${st.text}</p>${st.techNos ? `<div class="gchips">${st.techNos.map(chip).join('')}</div>` : ''}${st.zone !== undefined ? `<div class="gchips"><button class="gchip" type="button" data-zone="${st.zone}" style="--c:${zones[st.zone].color}">${zones[st.zone].id} ${zones[st.zone].short}</button></div>` : ''}</div>`).join('')}</div></section>`).join('')
       + `<p class="exitline">${DATA.exitLine}</p>`;
   }
   function renderTrack() {
     trackEl.querySelectorAll('[data-ttab]').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.ttab === trackTab)));
-    trackBody.innerHTML = !techList.length ? '<p class="empty">64 案資料沒有讀到。</p>' : (trackTab === 'map' ? mapHTML() : chainHTML());
+    trackBody.innerHTML = !techList.length ? '<p class="empty">成果資料沒有讀到。</p>' : (trackTab === 'map' ? mapHTML() : chainHTML());
   }
   function openTrack(tab) { if (phase !== 'done') return; if (tab) trackTab = tab; trackEl.hidden = false; renderTrack(); trackEl.querySelector('.tab[aria-selected="true"]').focus(); }
   const closeTrack = () => { trackEl.hidden = true; };
@@ -2579,7 +2599,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
       if (h.i !== hoverCase) { hoverCase = h.i; renderer.domElement.style.cursor = h.i >= 0 ? 'pointer' : ''; invalidate(600); }
       if (h.i >= 0) {
         const c = zsOf(active).cases[h.i];
-        tip.textContent = c.opener ? `★ 本包主角：${c.tech.name}` : `No.${c.tech.no} ${c.tech.name}`;
+        tip.textContent = c.tech.name;
         tip.hidden = false; tip.style.left = Math.min(e.clientX + 14, innerWidth - 240) + 'px'; tip.style.top = (e.clientY + 16) + 'px';
       } else tip.hidden = true;
     }
@@ -2766,7 +2786,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
 
   /* ---------- 小遊戲：田間配對（只用單位已填報的案） ---------- */
   const gameEl = $('#game'), gGrid = $('#gGrid'), gWin = $('#gWin');
-  const gPlayable = () => techList.filter((t) => t.kid);
+  const gPlayable = () => techList.filter((t) => t.text && t.name.length <= 16);
   const G = { cards: [], first: null, lock: false, moves: 0, pairs: 0, picked: [] };
   const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   function gameDeal() {
@@ -2777,13 +2797,13 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     $('#gTotal').textContent = n; $('#gMoves').textContent = 0; $('#gPairs').textContent = 0; gWin.hidden = true;
     gGrid.innerHTML = G.cards.map((c, i) => {
       const col = zones[zoneIdxOf(c.t)].color;
-      return `<button class="gcard ${c.k === 'name' ? 't' : ''}" type="button" data-i="${i}" style="--c:${col}" aria-label="第 ${i + 1} 張牌，還沒翻開"><div class="gin"><div class="gb"><span>•ᴗ•</span></div><div class="gf">${c.k === 'name' ? `<span class="gemo" aria-hidden="true">${c.t.kid.e}</span><strong>${c.t.kid.nick}</strong>` : `<span>${c.t.kid.line}</span>`}</div></div></button>`;
+      return `<button class="gcard ${c.k === 'name' ? 't' : ''}" type="button" data-i="${i}" style="--c:${col}" aria-label="第 ${i + 1} 張牌，還沒翻開"><div class="gin"><div class="gb"><span>•ᴗ•</span></div><div class="gf">${c.k === 'name' ? `<span class="gemo" aria-hidden="true">${c.t.icon || '🌱'}</span><strong>${c.t.name}</strong>` : `<span>${firstSentence(c.t.text)}</span>`}</div></div></button>`;
     }).join('');
   }
   function gameWin() {
     const win = `<h3>🎉 太棒了！全部配對成功，用了 ${G.moves} 步</h3><p>點下面的名字，可以直接看它的故事。</p><div class="gchips">${G.picked.map((t) => phase === 'done'
-      ? `<button class="gchip" type="button" data-no="${t.no}" style="--c:${zones[zoneIdxOf(t)].color}">${t.no} ${t.name.length > 12 ? t.name.slice(0, 12) + '…' : t.name}</button>`
-      : `<span class="gchip" style="--c:${zones[zoneIdxOf(t)].color}">${t.no} ${t.name.length > 12 ? t.name.slice(0, 12) + '…' : t.name}</span>`).join('')}</div>`;
+      ? `<button class="gchip" type="button" data-no="${t.no}" style="--c:${zones[zoneIdxOf(t)].color}">${t.icon || ''} ${t.name.length > 12 ? t.name.slice(0, 12) + '…' : t.name}</button>`
+      : `<span class="gchip" style="--c:${zones[zoneIdxOf(t)].color}">${t.icon || ''} ${t.name.length > 12 ? t.name.slice(0, 12) + '…' : t.name}</span>`).join('')}</div>`;
     if (!reduceMQ.matches) {
       const cf = document.createElement('div'); cf.className = 'confetti'; cf.setAttribute('aria-hidden', 'true');
       cf.innerHTML = Array.from({ length: 22 }, (_, i) => `<i style="left:${Math.random() * 96}%;animation-delay:${(Math.random() * 1.2).toFixed(2)}s">${['🎉', '⭐', '💖', '🌸', '🍓', '🌟'][i % 6]}</i>`).join('');
@@ -2794,7 +2814,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   gGrid.addEventListener('click', (e) => {
     const b = e.target.closest('.gcard'); if (!b || G.lock || b.classList.contains('up') || b.classList.contains('done')) return;
     const i = +b.dataset.i, c = G.cards[i];
-    b.classList.add('up'); b.setAttribute('aria-label', `第 ${i + 1} 張牌：${c.k === 'name' ? c.t.kid.nick : c.t.kid.line}`);
+    b.classList.add('up'); b.setAttribute('aria-label', `第 ${i + 1} 張牌：${c.k === 'name' ? c.t.name : firstSentence(c.t.text)}`);
     if (G.first === null) { G.first = i; return; }
     const j = G.first; G.first = null; G.moves++; $('#gMoves').textContent = G.moves;
     const d = G.cards[j], bj = gGrid.children[j];
