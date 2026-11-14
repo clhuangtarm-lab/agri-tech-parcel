@@ -2985,7 +2985,7 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
   requestAnimationFrame(frame);
 
   /* 就緒：顯示開始鈕（使用者點擊後才能播放聲音） */
-  $('#ldMsg').textContent = '包裹已經在路上了。';
+  $('#ldMsg').hidden = true;   // 載入完成後只留開始按鈕
   const startBtn = $('#startBtn');
   startBtn.hidden = false;
   updateScene(); renderer.render(scene, camera); labelR.render(scene, camera);
