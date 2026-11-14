@@ -1115,8 +1115,6 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     });
     const upper = new T.Group(); upper.position.set(0, .3, 0); root.add(upper);
     put(upper, geo('cap.17', () => new T.CapsuleGeometry(.17, .2, 6, 12)), M(o.shirt), 0, .22, 0);
-    bx(upper, .3, .045, .3, '#fff8f4', 0, .2, 0).scale.set(1.2, 1, 1.1);
-    rb(upper, .27, .32, .12, '#3e7c8c', 0, .22, -.2, .04);
     const arms = [-1, 1].map((s) => {
       const p = new T.Group(); p.position.set(s * .2, .42, 0); upper.add(p);
       put(p, geo('cap.055', () => new T.CapsuleGeometry(.055, .16, 4, 8)), M(o.shirt), 0, -.12, 0);
@@ -1132,8 +1130,18 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     put(upper, geo('hat', () => new T.SphereGeometry(.29, 22, 10, 0, Math.PI * 2, 0, Math.PI / 2)), M(o.hat), 0, .69, 0);
     if (o.hair) {
       sp(upper, .29, o.hat, 0, .72, -.05, 1, .9, 1); sp(upper, .1, o.hat, -.2, .88, -.05); sp(upper, .1, o.hat, .2, .88, -.05);
-      rb(upper, .3, .3, .02, '#db6a41', 0, .22, .17, .02);
+      // 圍裙：胸前圍兜、掛頸帶、腰間綁帶與背後蝴蝶結、下擺口袋
+      rb(upper, .22, .2, .03, '#db6a41', 0, .36, .172, .012); rb(upper, .36, .22, .035, '#db6a41', 0, .13, .168, .016);
+      rb(upper, .15, .1, .03, '#fff8f4', 0, .1, .2, .012); bx(upper, .15, .012, .02, '#db6a41', 0, .1, .219);
+      [-1, 1].forEach((sx) => { const b = bx(upper, .028, .26, .02, '#c85a33', sx * .08, .5, .13); b.rotation.z = -sx * .35; b.rotation.x = -.35; });
+      bx(upper, .4, .034, .36, '#c85a33', 0, .235, 0).scale.set(1, 1, .94);
+      sp(upper, .035, '#c85a33', 0, .235, -.185, 1.2, 1, .8); [-1, 1].forEach((sx) => { const w = sp(upper, .045, '#db6a41', sx * .07, .235, -.2, 1.3, .55, .5); w.rotation.z = sx * .35; });
     } else {
+      // 送件背包：背包本體、上蓋、側袋、肩帶與胸前扣帶
+      rb(upper, .3, .36, .16, '#3e7c8c', 0, .25, -.255, .05); rb(upper, .31, .12, .17, '#2f6572', 0, .42, -.255, .05); rb(upper, .24, .15, .05, '#2f6572', 0, .15, -.35, .02);
+      sp(upper, .03, '#f2c14e', 0, .39, -.34); rb(upper, .07, .18, .08, '#2f6572', .18, .17, -.255, .03);
+      [-1, 1].forEach((sx) => { const b = bx(upper, .05, .36, .03, '#2f6572', sx * .1, .34, .16); b.rotation.x = -.18; });
+      bx(upper, .22, .028, .02, '#2f6572', 0, .36, .185); rb(upper, .05, .035, .02, '#f2c14e', 0, .36, .198, .01);
       const visor = rb(upper, .28, .035, .2, o.hat, 0, .72, .27, .015); visor.rotation.x = .18;
       sp(upper, .055, '#71806a', 0, .82, .275, 1, 1, .35);
     }
