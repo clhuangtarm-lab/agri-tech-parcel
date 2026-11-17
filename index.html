@@ -378,6 +378,8 @@ body{
 .tmap .tbi{text-anchor:middle;font-size:22px;font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif}
 .tmap .tbl{text-anchor:middle;font:700 20px Georgia,serif;font-style:italic;fill:#fff8f4;paint-order:stroke;stroke:#211d1d55;stroke-width:3px}
 .tmap .tbl.ch{font:700 44px "Huninn","Noto Sans TC",sans-serif;font-style:normal;fill:#211d1d;stroke:#fff8f4;stroke-width:5px}
+.tmap .tbl.ch.tbw{font-size:40px;letter-spacing:6px;fill:#db6a41;stroke:#fff8f4;stroke-width:6px}
+.tmap .tbl.ch.tbw.part{fill:#b9a99b}
 .tmap .tbl.no{font:700 30px "Huninn",sans-serif;font-style:normal;fill:#b9a99b;stroke:none}
 .tmap .tbn{text-anchor:middle;font:700 11px ui-monospace,Menlo,monospace;fill:#211d1d}
 .tmcap{margin:4px 0 0;text-align:center;font-size:12.5px;font-weight:700;color:#6b5d55}
@@ -2581,8 +2583,13 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
       : `<path d="${path}" clip-path="url(#${id}c${i})" fill="#eadfd3"/>`).join('');
     const seams = `<g clip-path="url(#${id}i)">${REG.map((r) => `<polygon points="${poly(r)}" fill="none" stroke="#fff8f4" stroke-width="3"/>`).join('')}</g>`;
     const icons = iconLayout().filter((c) => got.has(c.ri)).map((c) => { const m = /src="([^"]+)"/.exec(c.e || ''); return m ? `<image href="${m[1]}" width="${c.fs}" height="${c.fs}" x="${(c.x - c.fs / 2).toFixed(1)}" y="${(c.y - c.fs * .86).toFixed(1)}"/>` : `<text class="tbi" style="font-size:${c.fs}px" x="${c.x}" y="${c.y}">${c.e}</text>`; }).join('');
-    return `<svg class="tmap" viewBox="0 0 280 488" role="img" aria-label="台灣農業技術地圖，已拿到 ${got.size} / ${REG.length} 片拼圖"><defs>${clips}</defs>${bands}${seams}${icons}</svg>`;
+    /* 地圖下方依關卡順序排出暗號：拿到的片顯示該關的字，沒拿到的顯示「○」，集滿即為「台灣農業讚」 */
+    const word = (typeof QD !== 'undefined' && QD) ? QD.stages.map((s) => s.reward) : QWORD;
+    const full = got.size === REG.length;
+    const banner = `<text class="tbl ch tbw${full ? '' : ' part'}" x="140" y="518">${word.map((c, i) => got.has(i) ? c : '○').join('')}</text>`;
+    return `<svg class="tmap" viewBox="0 0 280 540" role="img" aria-label="台灣農業技術地圖，已拿到 ${got.size} / ${REG.length} 片拼圖${full ? '，拼出「' + word.join('') + '」' : ''}"><defs>${clips}</defs>${bands}${seams}${icons}${banner}</svg>`;
   }
+  const QWORD = ['台', '灣', '農', '業', '讚'];
   function chainHTML() {
     const chip = (n) => { const t = techByNo.get(n); return t ? `<button class="gchip" type="button" data-no="${n}" style="--c:${zones[zoneIdxOf(t)].color}">${t.icon || ''} ${t.name.length > 9 ? t.name.slice(0, 9) + '…' : t.name}</button>` : ''; };
     return DATA.chains.map((c) => `<section class="chain"><h3>${c.title}</h3><div class="stages">${c.stages.map((st, i) => `${i ? '<div class="arrow" aria-hidden="true"></div>' : ''}<div class="stage"><h4>${st.name}</h4><p>${st.text}</p>${st.techNos ? `<div class="gchips">${st.techNos.map(chip).join('')}</div>` : ''}${st.zone !== undefined ? `<div class="gchips"><button class="gchip" type="button" data-zone="${st.zone}" style="--c:${zones[st.zone].color}">${zones[st.zone].id} ${zones[st.zone].short}</button></div>` : ''}</div>`).join('')}</div></section>`).join('')
@@ -3006,8 +3013,11 @@ function run(T, { OrbitControls, CSS2DRenderer, CSS2DObject, RoundedBoxGeometry,
     startIntro();
     const qt = parseFloat(new URLSearchParams(location.search).get('t'));
     if (!isNaN(qt)) seekTo(qt);
+    else if (isDirect) seekTo(TA + TB + 1);   // 直接連結（#zone-NN、#tech-NN）：略過開場，直接進到該區或該案
   });
-  if (isAuto) startBtn.click();
+  /* 直接連結不從頭開始：不顯示開始鈕、不播開場動畫 */
+  const isDirect = /^#(zone|tech)-\d+$/.test(location.hash);
+  if (isAuto || isDirect) startBtn.click();
   window.__parcel = { seekTo, ff() { const zs = zsOf(active); if (zs && sel === active) { parcels[active].ot = zs.TO; invalidate(); } },
     bench(n = 10) { updateScene(); const t0 = performance.now(); for (let i = 0; i < n; i++) { renderer.render(scene, camera); labelR.render(scene, camera); } renderer.getContext().finish(); return (performance.now() - t0) / n; },
     get state() { return { phase, a, b, active, sel, selCase, ot: parcels.map((p) => +p.ot.toFixed(2)), pending: pendingTech, ready: zoneReady() }; },
