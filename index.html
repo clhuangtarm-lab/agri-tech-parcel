@@ -19,6 +19,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Huninn&display=swap">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>/* 直接連結（#zone-NN、#tech-NN）：載入時不顯示首頁封面，只留載入提示 */
+if (/^#(zone|tech)-\d+$/.test(location.hash)) document.documentElement.classList.add('direct');</script>
 <title>來自田間的神奇包裹</title>
 <meta name="description" content="開箱農業科技新生活：農糧農環科技成果特展 69 項成果網站">
 <style>
@@ -517,6 +519,10 @@ body.lite .zcard,body.lite .side{background:rgba(255,248,244,.97)}
   .ld-joint p{font-size:10.5px;line-height:1.7}.ld-joint .row{gap:0 10px}
   #brandTitle{width:190px}
 }
+html.direct #loading{display:flex!important;align-items:center!important;justify-content:center!important;background:var(--cream)!important}
+html.direct #loading .ld-art,html.direct #loading .ld-orgs,html.direct #ldTitle,html.direct #ldSub,html.direct #loading .ld-info,html.direct #startBtn{display:none!important}
+html.direct #loading[hidden]{display:none!important}
+html.direct #loading .ld-box{margin:0!important;padding:0 14px!important;width:auto!important}
 </style>
 <script type="importmap">
 {"imports":{
