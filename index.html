@@ -323,6 +323,12 @@ body{
 .orig{margin:14px 0 0;border-top:2px dotted var(--stone);padding-top:2px}
 .orig>summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:800;font-size:14px;color:var(--coral)}
 .orig p{margin:4px 0 0;font-size:13.5px;line-height:1.8;color:#5b4f49}
+.reads{margin:14px 0 0;border-top:2px dotted var(--stone);padding-top:10px}
+.reads h4{margin:0 0 6px;font-size:14px;font-weight:800;color:var(--coral)}
+.reads ul{margin:0;padding:0;list-style:none}
+.reads li{margin:0 0 6px;font-size:13.5px;line-height:1.7}
+.reads li a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--stone);text-underline-offset:3px;overflow-wrap:anywhere}
+.reads li em{display:inline-block;margin-right:6px;padding:0 6px;border-radius:6px;background:var(--yellow);font-style:normal;font-size:11.5px;font-weight:700;color:#7a5a1a}
 .more{margin:14px 0 0;border-top:2px dotted var(--stone);padding-top:2px}
 .sec{margin:14px 0 0}
 .sec h3{margin:0 0 4px;display:inline-block;padding:2px 10px;border-radius:999px;background:var(--c);color:#fff;font-size:12px;letter-spacing:1px}
@@ -699,7 +705,7 @@ const DATA = {
       { name: '風味與生活', text: '採收後的風味與加工，走進日常。', zone: 4 } ] }
   ],
   /* 64 案資料（由 PDF 簡報 p.61–64 抽出；每案自帶 model 欄位，格式「種類:變體」） */
-  dataFile: 'data/techs_v20_2026-11-14.json',
+  dataFile: 'data/techs_v21_2026-11-18.json',
   questFile: 'data/quest_v6_2026-11-14.json',
   /* 寄件單位：key 為資料檔 unit 欄的開頭；n 為簡報 p.60 載明的案數；
      full 為機關全名；county、lat、lon 為場址所在縣市鄉鎮與座標（OpenStreetMap，見 data/units_geo_2026-10-23.json）；
@@ -807,7 +813,14 @@ function ytEmbed(btn) {
 function bodyHTML(t) {
   const text = t.text ? `<div class="pbox"><span class="kemo" aria-hidden="true">${t.icon || '🌱'}</span><p>${t.text}</p></div>` : '';
   const orig = t.orig ? `<details class="orig"><summary>了解更多</summary><p>${t.orig}</p></details>` : '';
-  return text + mediaHTML(t) + orig;
+  return text + mediaHTML(t) + orig + readsHTML(t);
+}
+/* 延伸閱讀：t.reads[{t,u,bg}]，較專業的公開報導或專刊；bg 為同主題背景參考；沒有就整區不顯示 */
+function readsHTML(t) {
+  const rs = (t.reads || []).filter((r) => /^https?:\/\//.test(r.u));
+  if (!rs.length) return '';
+  const esc = (x) => String(x).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  return `<section class="reads"><h4>延伸閱讀</h4><ul>${rs.map((r) => `<li>${r.bg ? '<em>背景參考</em>' : ''}<a href="${esc(r.u)}" target="_blank" rel="noopener noreferrer">${esc(noMOA(r.t))}</a></li>`).join('')}</ul></section>`;
 }
 const firstSentence = (x) => { const m = String(x || '').match(/^.*?[？！。]/); return m ? m[0] : String(x || '').slice(0, 30); };
 
